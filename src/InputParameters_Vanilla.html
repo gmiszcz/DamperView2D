@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <script defer="defer" src="DamperPreview.js"></script>
+    <link href="DamperPreview.css" rel="stylesheet" />
+
+    <title>Parameter Modification App</title>
+    <style>
+      #container {
+        display: flex;
+      }
+      #input-container {
+        flex: 1;
+        padding: 10px;
+      }
+      #iframe-container {
+        flex: 1;
+        padding: 10px;
+      }
+      iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+      }
+    </style>
+    <title>Parameter Modification App</title>
+  </head>
+
+  <body>
+    <h1>Parameter Modification App</h1>
+
+    <div id="container">
+      <div id="input-container"></div>
+      <div id="iframe-container" style="height: 350px">
+        <DamperPreview></DamperPreview>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        window.parameters = {
+          reserveTubeData: {
+            reserveTubeOD: 52.0,
+            reserveTubeThickness: 2.0,
+            reserveTubeLength: 390.0,
+            reserveTubeSwages: [],
+          },
+          pressureTubeData: {
+            pressureTubeID: 32.0,
+            pressureTubeThickness: 1.13,
+            pressureTubeLength: 350.0,
+          },
+          rodData: {
+            rodOD: 22.0,
+            rodLength: 330,
+            rodThickness: 2.0,
+            hardeningDepth: 1.0,
+            hardeningLength: 330.0,
+          },
+          bearingData: { bearingThickness: 1.5 },
+          baseEndData: { baseEndThickness: 3.55, baseEndHeight: 1.65 },
+          pistonData: { pistonHeight: 10.0, pistonPosition: 5.4 },
+          pistonPostData: {
+            pistonPostLength: 28.0,
+            pistonPostShaftDiameter: 9.43,
+            pistonPostChamferRadius: 0.45,
+            pistonPostChamferDiameter: 14.5,
+            pistonPostChamferAngle: 45.0,
+          },
+          footBracketData: {
+            footBracketLength: 120.0,
+            footBracketFrontHolePosition: 35.0,
+            footBracketFrontHoleAxisOffset: 15.0,
+            footBracketHoleSpan: 50.0,
+            footBracketRearHoleAxisOffset: 0.0,
+            footBracketThreadPitchDiameter: 12.0,
+            outerBracketThickness: 2.0,
+            footBracketPosition: 100.0,
+          },
+          knuckleData: {
+            knuckleLength: 90.0,
+            knuckleBoltDiameter: 14.0,
+            knuckleThickness: 10.0,
+            knucklePosition: 90.0,
+          },
+          cesData: {
+            cesValvePosition: 150.0,
+            cesHousingThickness: 5.75,
+            cesHousingOuterDiameter: 40.0,
+            cesHousingHeight: 26.4,
+            cesHoleCutDistance: 25.8,
+            cesStepThickness: 1.5,
+            cesStepHeight: 2.0,
+          },
+          thirdTubeData: {
+            thirdTubeLength: 200.0,
+            thirdTubeOuterDiameter: 40.0,
+            thirdTubeThickness: 1.5,
+            thirdTubeHolePosition: 50.0,
+          },
+        };
+
+        function setParameters(newParams) {
+          window.parameters = { ...window.parameters, ...newParams };
+          renderInputs();
+          window.updateReactParameters(window.parameters);
+        }
+
+        function handleChange(category, parameter, value) {
+          const val = Number(value);
+          setParameters({
+            [category]: {
+              ...window.parameters[category],
+              [parameter]: val,
+            },
+          });
+        }
+
+        function createInput(category, param, value) {
+          const inputWrapper = document.createElement("div");
+          const label = document.createElement("label");
+          label.textContent = `${param}: `;
+
+          const input = document.createElement("input");
+          input.type = "number";
+          input.value = value;
+          input.addEventListener("input", (e) =>
+            handleChange(category, param, e.target.value)
+          );
+
+          inputWrapper.appendChild(label);
+          inputWrapper.appendChild(input);
+
+          return inputWrapper;
+        }
+
+        function renderInputs() {
+          const container = document.getElementById("input-container");
+          container.innerHTML = "";
+
+          Object.entries(window.parameters).forEach(([category, data]) => {
+            const section = document.createElement("div");
+            const heading = document.createElement("h2");
+            heading.textContent = category.replace(/([A-Z])/g, " $1").trim();
+            section.appendChild(heading);
+
+            Object.entries(data).forEach(([param, value]) => {
+              section.appendChild(createInput(category, param, value));
+            });
+
+            container.appendChild(section);
+          });
+        }
+
+        window.updateReactParameters = (params) => {
+          window.DamperPreview.updateParameters(params);
+        };
+
+        renderInputs();
+      });
+    </script>
+  </body>
+</html>
