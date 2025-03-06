@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Damper2DVisualization from "./Damper2DVisualization";
+import Damper2DVisualization from "./DamperModelBuilder";
 import PositionButton from "./PositionButton";
 import DimensionButton from "./DimensionsButton";
 import { useRT } from "../reducers/RT";
@@ -27,9 +27,33 @@ export default function DamperModelPreviewWindow({
 }) {
   const { state: rtState, dispatch: rtDispatch } = useRT();
 
-  const handleRT = () => {
-    rtDispatch({ type: "setOD", payload: rtState.OD * 2 });
-  };
+  useEffect(() => {
+    console.log("Damper data", rtState);
+  }, [rtState]);
+
+  useEffect(() => {
+    if (window.controlRef?.current) {
+      window.controlRef.current.setProperty = (payload) => {
+        rtDispatch({ type: "SET_PROPERTY", payload });
+      };
+      window.controlRef.current.setGeometry = (payload) => {
+        rtDispatch({ type: "SET_GEOMETRY", payload });
+      };
+      window.controlRef.current.addAnnotation = (payload) => {
+        rtDispatch({ type: "ADD_ANNOTATION", payload });
+      };
+      window.controlRef.current.deleteAnnotation = (id) => {
+        rtDispatch({ type: "DELETE_ANNOTATION", id });
+      };
+      window.controlRef.current.updateAnnotation = (id, payload) => {
+        rtDispatch({ type: "UPDATE_ANNOTATION_BY_ID", id, payload });
+      };
+      // show state
+      window.controlRef.current.showState = () => {
+        console.log("Damper data", rtState);
+      };
+    }
+  }, [rtState]);
 
   // console.log("Damper data", damperData);
   const designPosition = damperData ? damperData?.designPosition : 500.0;
@@ -173,7 +197,7 @@ export default function DamperModelPreviewWindow({
 
   return (
     <>
-      <button onClick={handleRT}>{rtState.OD}</button>
+      {/* <button onClick={handleRT}>Bardzo długi baton!</button> */}
       {openModal && render_enhanced_window()}
       {openModal === false && (
         <Damper2DVisualization

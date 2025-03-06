@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Rect, Text, Circle, Line, Shape } from "react-konva";
 
 import DimensionLines from "./DimensionLines";
-import "./Damper2DVisualization.css";
+import "./DamperModelBuilder.css";
 import { Button } from "primereact/Button";
 
-export default function Damper2DVisualization({
+export default function DamperModelBuilder({
   calcType,
   userDefinedPosition,
   damperType,

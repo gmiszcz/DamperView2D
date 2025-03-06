@@ -1,46 +1,23 @@
 import React, { createContext, useReducer, useContext } from "react";
+import { getInitialState, genericReducer, createAnnotation } from "./genericReducer";
 
-// Initial state
-const initialState = {
-  geometry: {
-    OD: 25,
-    ID: 20,
-  },
-  properties: {
-    display: true,
-    active: true,
-    color: "grey",
-  },
-  dimensions: {
-    active: true,
-    scale: 1.0,
-    dim_1: {
-      active: true,
-      color: "black",
-      label: "",
-      value: 100,
-      position: {
-        x1: 0,
-        y1: 0,
-        x2: 10,
-        y2: 0,
-      },
-    },
-  },
+// set reserve tube geometry
+const geometryRT = {
+  OD: 25,
+  ID: 20,
+  L: 400,
+  TH: 3,
 };
 
-// Reducer
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "setDimensions":
-      return { ...state, geometry: action.payload };
-    case "setVisibility":
-      return { ...state, properties: { ...state.properties, display: action.payload } };
-    case "setOD":
-      return { ...state, geometry: { ...state.geometry, OD: action.payload } };
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
+// Initial state
+let initialState = getInitialState(geometryRT);
+
+initialState = {
+  ...initialState,
+  annotations: [
+    createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Reserve tube length: " }),
+    createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
+  ],
 };
 
 // Create Context
@@ -48,7 +25,7 @@ const ContextRT = createContext();
 
 // Provider
 export const ProviderRT = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(genericReducer, initialState);
 
   return <ContextRT.Provider value={{ state, dispatch }}>{children}</ContextRT.Provider>;
 };
