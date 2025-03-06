@@ -1,0 +1,7 @@
+/* File: src/components/DamperVisualizationWindow.css */
+
+.damper-visualization-window {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+}
