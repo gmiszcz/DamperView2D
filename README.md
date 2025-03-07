@@ -40,15 +40,32 @@ npm start
 
 ```
 /src
- ├── /components
- │    ├── DamperModelWindow.js  # Main component managing logic and visualization
- │    ├── DamperModelBuilder.js # Module responsible for drawing in Konva
+ ├── /components                    # Main UI components
+ │    ├── /parts                    # Components representing individual damper parts
+ │    │    ├── ReserveTube.jsx      # Component for the reserve tube
+ │    │    ├── ... (other parts)
+ │    │
+ │    ├── DamperModelBuilder.jsx     # Handles drawing logic using Konva
+ │    ├── DamperVisualizationWindow.jsx # Manages damper visualization UI
+ │    ├── DamperVisualizationWindow.css # Manages damper visualization UI
+ │    ├── Annotations.jsx           # Handles annotations in visualization
  │
- ├── /reducers
- │    ├── genericReducer.js  # Generic reducer for components
- │    ├── RT.js              # Reducer and context for the reserve tube
+ ├── /utils                         # Utility functions
+ │    ├── utils.js                   # General utility functions
  │
- ├── App.js                  # Main React application
+ ├── /reducers                       # Redux reducers for managing state
+ │    ├── genericReducer.js          # Generic reducer for handling state updates
+ │    ├── RT.js                      # Reducer handling state for the reserve tube
+ │    ├── BP.js, PP.js, TT.js, etc.  # Reducers for other damper components
+ │
+ ├── App.js                          # Main React application component
+ ├── App.css                         # Global styles for the application
+ ├── index.js                        # Entry point for the React application
+ ├── index.css                       # Global stylesheet
+ ├── package.json                     # Project dependencies and scripts
+ ├── vite.config.js                    # Vite configuration for bundling
+ ├── .gitignore                        # Git ignore file
+ ├── README.md                         # Project documentation
 ```
 
 ### State Management
