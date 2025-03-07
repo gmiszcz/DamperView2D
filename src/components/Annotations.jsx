@@ -1,40 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Group, Arrow, Line, Text } from "react-konva";
-import { useRT } from "../reducers/RT";
-import { useRod } from "../reducers/Rod";
-import { useTT } from "../reducers/TT";
-import { useSS } from "../reducers/SS";
-import { useBearing } from "../reducers/Bearing";
-import { useBP } from "../reducers/BP";
-import { useRG } from "../reducers/RG";
-import { useCVSAe } from "../reducers/CVSAe";
-import { useKnuckle } from "../reducers/Knuckle";
-import { usePositions } from "../reducers/Positions";
-import { useFB } from "../reducers/FB";
-import { usePT } from "../reducers/PT";
-import { usePP } from "../reducers/PP";
+import { useGlobalContext } from "../context/GlobalContext";
 
-// Helper function to merge annotations from all contexts
-const gatherAnnotations = (...states) => states.flatMap(({ annotations }) => annotations);
+// Helper function to gather and filter annotations from all states
+const gatherAnnotations = (globalContext) =>
+  Object.values(globalContext)
+    .flatMap(({ state }) => state?.annotations || [])
+    .filter((ann) => ann.display);
 
 export default function Annotations() {
-  const states = [
-    useRT().state,
-    useRod().state,
-    useTT().state,
-    useSS().state,
-    useBearing().state,
-    useBP().state,
-    useRG().state,
-    useCVSAe().state,
-    useKnuckle().state,
-    usePositions().state,
-    useFB().state,
-    usePT().state,
-    usePP().state,
-  ];
+  const globalContext = useGlobalContext();
+  const [annotations, setAnnotations] = useState([]);
 
-  const annotations = gatherAnnotations(...states).filter((ann) => ann.display);
+  useEffect(() => {
+    const newAnnotations = gatherAnnotations(globalContext);
+    setAnnotations(newAnnotations);
+
+    console.log("🔄 Annotations updated:", newAnnotations);
+  }, [globalContext]);
 
   return (
     <Group>
@@ -55,13 +38,13 @@ function SingleDimensionLine({ position, label, value, color, scale }) {
   const smallArrowSize = 3 * scale;
   const arrowWidth = 4 * scale;
 
-  const { x1, y1, x2, y2 } = position;
+  const { x1 = 0, y1 = 0, x2 = 0, y2 = 0 } = position || {};
 
-  const midX = ((x1 + x2) / 2) * scale;
-  const midY = ((y1 + y2) / 2) * scale;
+  const midX = ((x1 + x2) / 2) * scale || 0;
+  const midY = ((y1 + y2) / 2) * scale || 0;
 
   // Calculate displayed value and label
-  const displayedText = `${label ? `${label}: ` : ""}${value !== null ? value : ""}`;
+  const displayedText = `${label ? `${label}: ` : ""}${value !== null && value !== undefined ? value : ""}`;
 
   useEffect(() => {
     if (textRef.current) {

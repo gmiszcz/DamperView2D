@@ -1,18 +1,13 @@
+/* =============================
+   General Styles
+   ============================= */
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
+/* =============================
+   Header Styling
+   ============================= */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -24,8 +19,17 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* =============================
+   Logo Animation
+   ============================= */
+.App-logo {
+  height: 40vmin;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
 @keyframes App-logo-spin {
@@ -37,9 +41,34 @@
   }
 }
 
+/* =============================
+   Links
+   ============================= */
+.App-link {
+  color: #61dafb;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.App-link:hover {
+  color: #ffffff;
+}
+
+/* =============================
+   Fonts
+   ============================= */
 @font-face {
   font-family: "Poppins";
-  src: url("Poppins-webfont.woff2") format("woff2"), url("Poppins-webfont.woff") format("woff");
+  src: url("/assets/fonts/Poppins-Regular.woff2") format("woff2"), url("/assets/fonts/Poppins-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/assets/fonts/Poppins-Bold.woff2") format("woff2"), url("/assets/fonts/Poppins-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }

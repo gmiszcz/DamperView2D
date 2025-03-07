@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { getInitialState, genericReducer, createAnnotation } from "./genericReducer";
+import { getInitialState, genericReducer, createAnnotation } from "../reducers/genericReducer";
 
 // Initial state for Foot Bracket
 let geometryFB = getInitialState({

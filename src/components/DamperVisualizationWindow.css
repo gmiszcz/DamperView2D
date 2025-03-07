@@ -5,3 +5,8 @@
   padding: 16px;
   margin: 16px;
 }
+
+.damper-2d-vis-container {
+  height: 100%;
+  width: 100%;
+}
