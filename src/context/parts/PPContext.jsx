@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { getInitialState, genericReducer, createAnnotation } from "../reducers/genericReducer";
+import { genericReducer } from "../../reducers/genericReducer";
+import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Piston Post
 let geometryPP = getInitialState({
@@ -18,8 +19,8 @@ let geometryPP = getInitialState({
 
 // Initial state with annotations
 let initialState = getInitialState(geometryPP, [
-  createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Piston post length: " }),
-  createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
+  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Piston post length: " }),
+  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
 ]);
 
 // Create Context

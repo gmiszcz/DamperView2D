@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { getInitialState, genericReducer, createAnnotation } from "../reducers/genericReducer";
+import { genericReducer } from "../../reducers/genericReducer";
+import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state with nested ReserveTube fields
 let geometryRT = getInitialState({
@@ -17,9 +18,9 @@ let geometryRT = getInitialState({
 });
 
 // Initial state
-let initialState = getInitialState(geometryRT, [
-  createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Reserve tube length: " }),
-  createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
+const initialState = getInitialState(geometryRT, [
+  createAnnotation("RT1", 0, 50, "horizontal", 300, { label: "Reserve tube length", color: "darkred", scale: 1.5, weight: "bold" }),
+  createAnnotation("RT2", 330, 150, "horizontal", 300, { label: "RT normal dim" }),
 ]);
 
 // Create Context

@@ -1,31 +1,50 @@
-import { useRT } from "./RTContext";
-import { usePT } from "./PTContext";
-import { useRod } from "./RodContext";
-import { useRG } from "./RGContext";
-import { usePP } from "./PPContext";
-import { useBP } from "./BPContext";
-import { useSS } from "./SSContext";
-import { useFB } from "./FBContext";
-import { useKnuckle } from "./KnuckleContext";
-import { useBearing } from "./BearingContext";
-import { useCVSAe } from "./CVSAeContext";
-import { useTT } from "./TTContext";
-import { usePositions } from "./PositionsContext";
+import { useMemo } from "react";
+
+import { useRT } from "./parts/RTContext";
+import { usePT } from "./parts/PTContext";
+import { useRod } from "./parts/RodContext";
+import { useRG } from "./parts/RGContext";
+import { usePP } from "./parts/PPContext";
+import { useBP } from "./parts/BPContext";
+import { useSS } from "./parts/SSContext";
+import { useFB } from "./parts/FBContext";
+import { useKnuckle } from "./parts/KnuckleContext";
+import { useBearing } from "./parts/BearingContext";
+import { useCVSAe } from "./parts/CVSAeContext";
+import { useTT } from "./parts/TTContext";
+import { usePositions } from "./parts/PositionsContext";
 
 export const useGlobalContext = () => {
-  return {
-    RT: useRT(),
-    PT: usePT(),
-    Rod: useRod(),
-    RG: useRG(),
-    PP: usePP(),
-    BP: useBP(),
-    SS: useSS(),
-    FB: useFB(),
-    Knuckle: useKnuckle(),
-    Bearing: useBearing(),
-    CVSAe: useCVSAe(),
-    TT: useTT(),
-    Positions: usePositions(),
-  };
+  const RT = useRT();
+  const PT = usePT();
+  const Rod = useRod();
+  const RG = useRG();
+  const PP = usePP();
+  const BP = useBP();
+  const SS = useSS();
+  const FB = useFB();
+  const Knuckle = useKnuckle();
+  const Bearing = useBearing();
+  const CVSAe = useCVSAe();
+  const TT = useTT();
+  const Positions = usePositions();
+
+  return useMemo(
+    () => ({ RT, PT, Rod, RG, PP, BP, SS, FB, Knuckle, Bearing, CVSAe, TT, Positions }),
+    [
+      RT.state,
+      PT.state,
+      Rod.state,
+      RG.state,
+      PP.state,
+      BP.state,
+      SS.state,
+      FB.state,
+      Knuckle.state,
+      Bearing.state,
+      CVSAe.state,
+      TT.state,
+      Positions.state,
+    ]
+  );
 };

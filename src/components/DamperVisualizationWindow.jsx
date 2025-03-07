@@ -41,7 +41,7 @@ export default function DamperVisualizationWindow() {
   return (
     <div className="damper-visualization-window">
       <h3>Damper Visualization Window</h3>
-      {/* <DamperModelBuilder /> */}
+      <DamperModelBuilder />
     </div>
   );
 }

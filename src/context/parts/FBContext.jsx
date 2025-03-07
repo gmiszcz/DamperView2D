@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { getInitialState, genericReducer, createAnnotation } from "../reducers/genericReducer";
+import { genericReducer } from "../../reducers/genericReducer";
+import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Foot Bracket
 let geometryFB = getInitialState({
@@ -22,8 +23,8 @@ let geometryFB = getInitialState({
 
 // Initial state with annotations
 let initialState = getInitialState(geometryFB, [
-  createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Foot bracket length: " }),
-  createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
+  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Foot bracket length: " }),
+  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
 ]);
 
 // Create Context

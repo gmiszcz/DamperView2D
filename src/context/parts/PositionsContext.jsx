@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { getInitialState, genericReducer, createAnnotation } from "../reducers/genericReducer";
+import { genericReducer } from "../../reducers/genericReducer";
+import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Positions
 let geometryPositions = getInitialState({

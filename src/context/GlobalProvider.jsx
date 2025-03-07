@@ -1,17 +1,17 @@
 import React from "react";
-import { ProviderBearing } from "./BearingContext";
-import { ProviderBP } from "./BPContext";
-import { ProviderCVSAe } from "./CVSAeContext";
-import { ProviderFB } from "./FBContext";
-import { ProviderKnuckle } from "./KnuckleContext";
-import { ProviderPositions } from "./PositionsContext";
-import { ProviderPP } from "./PPContext";
-import { ProviderPT } from "./PTContext";
-import { ProviderRG } from "./RGContext";
-import { ProviderRod } from "./RodContext";
-import { ProviderRT } from "./RTContext";
-import { ProviderSS } from "./SSContext";
-import { ProviderTT } from "./TTContext";
+import { ProviderBearing } from "./parts/BearingContext";
+import { ProviderBP } from "./parts/BPContext";
+import { ProviderCVSAe } from "./parts/CVSAeContext";
+import { ProviderFB } from "./parts/FBContext";
+import { ProviderKnuckle } from "./parts/KnuckleContext";
+import { ProviderPositions } from "./parts/PositionsContext";
+import { ProviderPP } from "./parts/PPContext";
+import { ProviderPT } from "./parts/PTContext";
+import { ProviderRG } from "./parts/RGContext";
+import { ProviderRod } from "./parts/RodContext";
+import { ProviderRT } from "./parts/RTContext";
+import { ProviderSS } from "./parts/SSContext";
+import { ProviderTT } from "./parts/TTContext";
 
 const GlobalProvider = ({ children }) => {
   return (

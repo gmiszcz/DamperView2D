@@ -1,12 +1,34 @@
 /* File: src/components/DamperVisualizationWindow.css */
 
+.DamperPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .damper-visualization-window {
-  border: 1px solid #ccc;
-  padding: 16px;
-  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
 }
 
 .damper-2d-vis-container {
-  height: 100%;
+  display: flex;
   width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
