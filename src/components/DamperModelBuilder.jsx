@@ -45,6 +45,13 @@ export default function DamperModelBuilder() {
     stage.position(DEFAULT_POSITION);
   };
 
+  const handleRightClick = (e) => {
+    e.evt.preventDefault(); // Prevent context menu from appearing
+    const stage = e.target.getStage();
+    const pointerPosition = stage.getPointerPosition();
+    console.log("Right-clicked at: ", pointerPosition);
+  };
+
   return (
     <Stage
       ref={stageRef}
@@ -52,7 +59,8 @@ export default function DamperModelBuilder() {
       height={size.height}
       onWheel={handleWheel}
       onDblClick={handleDoubleClick}
-      onContextMenu={(e) => e.evt.preventDefault()} // Disable right-click
+      //   onContextMenu={(e) => e.evt.preventDefault()} // Disable right-click
+      onContextMenu={handleRightClick}
     >
       <Layer>
         <Group
