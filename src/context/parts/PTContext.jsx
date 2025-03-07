@@ -3,14 +3,14 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Pressure Tube
-let geometryPT = getInitialState({
+let geometryPT = {
   PT_Customized: false,
   PT_PartNo: "",
   PT_ShowInReport: true,
   PT_Length: 0,
   PT_ID: 0,
   PT_TH: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryPT, [

@@ -12,34 +12,37 @@ import { ProviderRod } from "./parts/RodContext";
 import { ProviderRT } from "./parts/RTContext";
 import { ProviderSS } from "./parts/SSContext";
 import { ProviderTT } from "./parts/TTContext";
+import { SizeProvider } from "./SizeContext";
 
 const GlobalProvider = ({ children }) => {
   return (
-    <ProviderRT>
-      <ProviderPT>
-        <ProviderRod>
-          <ProviderRG>
-            <ProviderPP>
-              <ProviderBP>
-                <ProviderSS>
-                  <ProviderFB>
-                    <ProviderKnuckle>
-                      <ProviderBearing>
-                        <ProviderCVSAe>
-                          <ProviderTT>
-                            <ProviderPositions>{children}</ProviderPositions>
-                          </ProviderTT>
-                        </ProviderCVSAe>
-                      </ProviderBearing>
-                    </ProviderKnuckle>
-                  </ProviderFB>
-                </ProviderSS>
-              </ProviderBP>
-            </ProviderPP>
-          </ProviderRG>
-        </ProviderRod>
-      </ProviderPT>
-    </ProviderRT>
+    <SizeProvider>
+      <ProviderRT>
+        <ProviderPT>
+          <ProviderRod>
+            <ProviderRG>
+              <ProviderPP>
+                <ProviderBP>
+                  <ProviderSS>
+                    <ProviderFB>
+                      <ProviderKnuckle>
+                        <ProviderBearing>
+                          <ProviderCVSAe>
+                            <ProviderTT>
+                              <ProviderPositions>{children}</ProviderPositions>
+                            </ProviderTT>
+                          </ProviderCVSAe>
+                        </ProviderBearing>
+                      </ProviderKnuckle>
+                    </ProviderFB>
+                  </ProviderSS>
+                </ProviderBP>
+              </ProviderPP>
+            </ProviderRG>
+          </ProviderRod>
+        </ProviderPT>
+      </ProviderRT>
+    </SizeProvider>
   );
 };
 

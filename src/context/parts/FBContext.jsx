@@ -3,7 +3,7 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Foot Bracket
-let geometryFB = getInitialState({
+let geometryFB = {
   FB_Customized: false,
   FB_PartNo: "",
   FB_ShowInReport: true,
@@ -19,7 +19,7 @@ let geometryFB = getInitialState({
   FB_ThreadPitch: 0,
   FB_BoltsHeadDiam: 0,
   FB_KnuckleTH_Gap: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryFB, [

@@ -1,9 +1,14 @@
 // src/utils/constants.js
+
 // ******************************* GLOBAL OFFSET ******************************** //
 export const GLOBAL_OFFSET = {
-  x: 1000, // Default width (right corner)
-  y: 350, // Default height (bottom corner)
+  x: 150, // Default width (right corner)
+  y: 150, // Default height (bottom corner)
 };
+
+// ************************** DEFAULT SCALE & POSITION ************************** //
+export const DEFAULT_SCALE = 1;
+export const DEFAULT_POSITION = { x: 0, y: 0 };
 
 // *********************** ANNOTATIONS RELATED CONSTANTS ************************ //
 export const ANNOTATION_DEFAULTS = {

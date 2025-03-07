@@ -3,7 +3,7 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Rod Guide
-let geometryRG = getInitialState({
+let geometryRG = {
   RG_Customized: false,
   RG_PartNo: "",
   RG_Height: 0,
@@ -14,7 +14,7 @@ let geometryRG = getInitialState({
   RG_topShelfClearance: 0,
   RG_topShelfPosition: 0,
   RG_topShelfLength: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryRG, [

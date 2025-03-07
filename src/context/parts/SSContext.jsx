@@ -3,14 +3,14 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Spring Seat
-let geometrySS = getInitialState({
+let geometrySS = {
   SS_Customized: false,
   SpringSeat: "",
   SS_PartNo: "",
   SS_LoadZpos: 0,
   SS_LoadYpos: 0,
   SS_Angle: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometrySS, [

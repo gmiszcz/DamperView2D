@@ -1,8 +1,7 @@
 // src/utils/helpers.js
-import { genericAnnotation } from "./constants";
+import { genericAnnotation, DEFAULT_SCALE, DEFAULT_POSITION } from "./constants";
 
 // ********************** HELPER FUNCTIONS FOR ANNOTATIONS ********************** //
-
 /**
  * Creates an annotation relative to the global offset.
  * @param {string} id - Unique identifier
@@ -35,3 +34,32 @@ export const getInitialState = (geometry, annotations = []) => ({
   geometry,
   annotations,
 });
+
+// ******************************* ZOOM HANDLING ******************************** //
+/**
+ * Calculates the new scale and position for zooming.
+ * @param {Event} e - The wheel event from Konva
+ * @param {Object} stage - The Konva stage reference
+ * @param {number} scaleBy - The zoom factor
+ * @returns {object} - New scale and position
+ */
+export const calculateNewScale = (e, stage, scaleBy) => {
+  e.evt.preventDefault();
+  const oldScale = stage.scaleX();
+  const pointer = stage.getPointerPosition();
+
+  const mousePointTo = {
+    x: (pointer.x - stage.x()) / oldScale,
+    y: (pointer.y - stage.y()) / oldScale,
+  };
+
+  const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
+  return {
+    scale: newScale,
+    newPosition: {
+      x: pointer.x - mousePointTo.x * newScale,
+      y: pointer.y - mousePointTo.y * newScale,
+    },
+  };
+};

@@ -3,7 +3,7 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for CVSAe
-let geometryCVSAe = getInitialState({
+let geometryCVSAe = {
   CVSAe_ValvePosition: 0,
   CVSAe_ValveOrient: "",
   CVSAe_WeldSize: 0,
@@ -15,7 +15,7 @@ let geometryCVSAe = getInitialState({
   CVSAe_HoleCutDist: 0,
   CVSAe_StepTH: 0,
   CVSAe_StepHeight: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryCVSAe, [

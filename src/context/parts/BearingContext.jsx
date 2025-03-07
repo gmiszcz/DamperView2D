@@ -3,11 +3,11 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Bearing
-let geometryBearing = getInitialState({
+let geometryBearing = {
   Bearing_PartNo: "",
   Bearing_TH: 0,
   Bearing_H: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryBearing, [

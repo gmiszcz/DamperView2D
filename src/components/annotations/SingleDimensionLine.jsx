@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Group, Arrow, Line, Text } from "react-konva";
 import { ANNOTATION_DEFAULTS, GLOBAL_OFFSET } from "../../utils/constants";
+import { useSize } from "../../context/SizeContext";
 
 function SingleDimensionLine({ startX, startY, direction, value, label, color, scale = 1.0, weight = "normal" }) {
   const [textWidth, setTextWidth] = useState(0);
   const textRef = useRef(null);
+  const { state: size, segmentRef } = useSize();
 
   // Scale values that only affect text size and label spacing
   const scaledFontSize = ANNOTATION_DEFAULTS.FONT_SIZE * scale;
   const scaledTextOffset = scaledFontSize * ANNOTATION_DEFAULTS.TEXT_VERTICAL_OFFSET;
 
   // Apply the global offset
-  const x1 = GLOBAL_OFFSET.x - startX;
-  const y1 = GLOBAL_OFFSET.y - startY;
+  const x1 = size.width - GLOBAL_OFFSET.x - startX;
+  const y1 = size.height - GLOBAL_OFFSET.y - startY;
 
   // Determine end point based on direction
   const x2 = direction === "horizontal" ? x1 - value : x1;
@@ -67,7 +69,7 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
         ref={textRef}
         x={midX}
         y={midY - scaledTextOffset}
-        text={`${label}: ${value}`}
+        text={label ? `${label}: ${value}` : value}
         fontSize={scaledFontSize}
         fontFamily="Poppins"
         fontStyle={fontStyle}

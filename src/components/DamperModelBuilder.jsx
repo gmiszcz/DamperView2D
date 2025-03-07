@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Stage, Layer, Circle, Group } from "react-konva";
+import React, { useState, useRef } from "react";
+import { Stage, Layer, Group, Circle } from "react-konva";
 import Annotations from "./annotations/Annotations";
 import { useGlobalContext } from "../context/GlobalContext";
-import { GLOBAL_OFFSET } from "../utils/constants";
+import { useSize } from "../context/SizeContext"; // Importing size context
 // import ReserveTube from "./parts/ReserveTube";
 // import PistonPost from "./parts/PistonPost";
 // import BasePlate from "./parts/BasePlate";
@@ -15,61 +15,70 @@ import { GLOBAL_OFFSET } from "../utils/constants";
 // import Bearing from "./parts/Bearing";
 // import CVSAe from "./parts/CVSAe";
 // import Positions from "./parts/Positions";
+import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../utils/constants";
+import { calculateNewScale } from "../utils/helpers";
 import "./DamperVisualizationWindow.css";
 
 export default function DamperModelBuilder() {
-  const segmentRef = useRef(null);
+  const { state: size, segmentRef } = useSize();
+  const stageRef = useRef(null);
   const globalContext = useGlobalContext();
-  const [size, setSize] = useState({ width: GLOBAL_OFFSET.x, height: GLOBAL_OFFSET.y });
-  const [groupPosition, setGroupPosition] = useState({ x: 0, y: 0 });
+  const [groupPosition, setGroupPosition] = useState(DEFAULT_POSITION);
+  const [scale, setScale] = useState(DEFAULT_SCALE);
 
-  // Handle dynamic resizing
-  useEffect(() => {
-    window.testPosition = setGroupPosition;
-    const updateSize = () => {
-      if (segmentRef.current) {
-        setSize({
-          width: segmentRef.current.offsetWidth || GLOBAL_OFFSET.x,
-          height: segmentRef.current.offsetHeight || GLOBAL_OFFSET.y,
-        });
-      }
-    };
+  const handleWheel = (e) => {
+    const stage = stageRef.current;
+    const scaleBy = 1.05;
+    const { scale: newScale, newPosition } = calculateNewScale(e, stage, scaleBy);
 
-    updateSize(); // Set initial size
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+    setScale(newScale);
+    stage.scale({ x: newScale, y: newScale });
+    stage.position(newPosition);
+  };
+
+  const handleDoubleClick = () => {
+    const stage = stageRef.current;
+    setScale(DEFAULT_SCALE);
+    setGroupPosition(DEFAULT_POSITION);
+    stage.scale({ x: DEFAULT_SCALE, y: DEFAULT_SCALE });
+    stage.position(DEFAULT_POSITION);
+  };
 
   return (
-    <div ref={segmentRef} className="damper-2d-vis-container">
-      <Stage width={size.width} height={size.height}>
-        <Layer>
-          <Group
-            draggable
-            x={groupPosition.x}
-            y={groupPosition.y}
-            onDragMove={(e) => {
-              setGroupPosition({ x: e.target.x(), y: e.target.y() });
-            }}
-          >
-            <Circle x={size.width / 2} y={size.height / 2} radius={5} fill="blue" />
-            <Circle x={GLOBAL_OFFSET.x} y={GLOBAL_OFFSET.y} radius={10} fill="red" />
-            {/* <ReserveTube /> */}
-            {/* <PistonPost /> */}
-            {/* <BasePlate /> */}
-            {/* <PressureTube /> */}
-            {/* <FootBracket /> */}
-            {/* <ThirdTube /> */}
-            {/* <SpringSeat /> */}
-            {/* <RodGuide /> */}
-            {/* <Knuckle /> */}
-            {/* <Bearing /> */}
-            {/* <CVSAe /> */}
-            {/* <Positions /> */}
-            <Annotations />
-          </Group>
-        </Layer>
-      </Stage>
-    </div>
+    <Stage
+      ref={stageRef}
+      width={size.width}
+      height={size.height}
+      onWheel={handleWheel}
+      onDblClick={handleDoubleClick}
+      onContextMenu={(e) => e.evt.preventDefault()} // Disable right-click
+    >
+      <Layer>
+        <Group
+          draggable
+          x={groupPosition.x}
+          y={groupPosition.y}
+          onDragMove={(e) => {
+            setGroupPosition({ x: e.target.x(), y: e.target.y() });
+          }}
+        >
+          <Circle x={size.width / 2} y={size.height / 2} radius={5} fill="blue" />
+          <Circle x={size.width - GLOBAL_OFFSET.x} y={size.height - GLOBAL_OFFSET.y} radius={10} fill="red" />
+          {/* <ReserveTube /> */}
+          {/* <PistonPost /> */}
+          {/* <BasePlate /> */}
+          {/* <PressureTube /> */}
+          {/* <FootBracket /> */}
+          {/* <ThirdTube /> */}
+          {/* <SpringSeat /> */}
+          {/* <RodGuide /> */}
+          {/* <Knuckle /> */}
+          {/* <Bearing /> */}
+          {/* <CVSAe /> */}
+          {/* <Positions /> */}
+          <Annotations />
+        </Group>
+      </Layer>
+    </Stage>
   );
 }

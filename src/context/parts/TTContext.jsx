@@ -3,14 +3,14 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Third Tube
-let geometryTT = getInitialState({
+let geometryTT = {
   TT_Customized: false,
   TT_PartNo: "",
   TT_Length: 0,
   TT_OuterDiam: 0,
   TT_TH: 0,
   TT_HolePosition: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryTT, [

@@ -3,7 +3,7 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Knuckle
-let geometryKnuckle = getInitialState({
+let geometryKnuckle = {
   Knuckle_Customized: false,
   Knuckle_Length: 0,
   Knuckle_ThreadDiam: 0,
@@ -13,7 +13,7 @@ let geometryKnuckle = getInitialState({
   Knuckle_R: 0,
   Knuckle_Spread: 0,
   Knuckle_BoltHeight: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryKnuckle, [

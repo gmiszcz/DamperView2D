@@ -3,7 +3,7 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Piston Post
-let geometryPP = getInitialState({
+let geometryPP = {
   PP_Customized: false,
   PistonPost: "",
   P_Length: 0,
@@ -15,7 +15,7 @@ let geometryPP = getInitialState({
   PP_ThreadDiam: 0,
   PP_ThreadPitch: 0,
   PP_InnerDiameter: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryPP, [

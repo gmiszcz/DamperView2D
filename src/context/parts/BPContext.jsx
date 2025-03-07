@@ -3,13 +3,13 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Base Plate
-let geometryBP = getInitialState({
+let geometryBP = {
   BP_Customized: false,
   BP_PartNo: "",
   BP_TH: 0,
   BP_H: 0,
   BP_PD: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryBP, [

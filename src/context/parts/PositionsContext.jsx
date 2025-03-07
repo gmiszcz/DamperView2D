@@ -3,14 +3,14 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Positions
-let geometryPositions = getInitialState({
+let geometryPositions = {
   PT_Position: 0,
   P_Position: 0,
   FB_Position: 0,
   BP_Position: 0,
   Bearing_Position: 0,
   Knuckle_Position: 0,
-});
+};
 
 // Initial state with annotations
 let initialState = getInitialState(geometryPositions);

@@ -3,7 +3,7 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state with nested ReserveTube fields
-let geometryRT = getInitialState({
+let geometryRT = {
   RT_Customized: false,
   RT_PartNo: "",
   RT_ShowInReport: true,
@@ -15,7 +15,7 @@ let geometryRT = getInitialState({
   RT_Swage_List: [],
   ReserveTube_swages: [],
   ReserveTube_VWT: [],
-});
+};
 
 // Initial state
 const initialState = getInitialState(geometryRT, [
