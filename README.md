@@ -39,33 +39,75 @@ npm start
 ## Project Structure
 
 ```
-/src
- ├── /components                          # Main UI components
- │    ├── /parts                          # Components representing individual damper parts
- │    │    ├── ReserveTube.jsx            # Component for the reserve tube
- │    │    ├── ... (other parts)
- │    │
- │    ├── DamperModelBuilder.jsx          # Handles drawing logic using Konva
- │    ├── DamperVisualizationWindow.jsx   # Manages damper visualization UI
- │    ├── DamperVisualizationWindow.css   # Manages damper visualization UI
- │    ├── Annotations.jsx                 # Handles annotations in visualization
- │
- ├── /utils                               # Utility functions
- │    ├── utils.js                        # General utility functions
- │
- ├── /reducers                            # Redux reducers for managing state
- │    ├── genericReducer.js               # Generic reducer for handling state updates
- │    ├── RT.js                           # Reducer handling state for the reserve tube
- │    ├── BP.js, PP.js, TT.js, etc.       # Reducers for other damper components
- │
- ├── App.js                               # Main React application component
- ├── App.css                              # Global styles for the application
- ├── index.js                             # Entry point for the React application
- ├── index.css                            # Global stylesheet
- ├── package.json                         # Project dependencies and scripts
- ├── vite.config.js                       # Vite configuration for bundling
- ├── .gitignore                           # Git ignore file
- ├── README.md                            # Project documentation
+/DamperView2D
+├── /src
+│   ├── /assets
+│   │   ├── /fonts
+│   │   │   ├── Poppins-Bold.woff
+│   │   │   ├── Poppins-Bold.woff2
+│   │   │   ├── Poppins-Regular.woff
+│   │   │   └── Poppins-Regular.woff2
+│   │   └── /images
+│   │       └── logo.svg
+│   │
+│   ├── /components
+│   │   ├── /DamperVisualization
+│   │   │   ├── DamperVisualizationWindow.jsx   # Main component managing visualization & API exposure
+│   │   │   ├── DamperVisualizationWindow.css   # Styles for main visualization window
+│   │   │   ├── DamperModelBuilder.jsx          # Handles drawing logic using Konva
+│   │   │   ├── Annotations.jsx                 # Manages annotations
+│   │   │
+│   │   └── /parts
+│   │       ├── ReserveTube.jsx
+│   │       ├── PressureTube.jsx
+│   │       ├── Rod.jsx
+│   │       ├── RodGuide.jsx
+│   │       ├── Bearing.jsx
+│   │       ├── BaseEnd.jsx
+│   │       ├── Piston.jsx
+│   │       ├── PistonPost.jsx
+│   │       ├── FootBracket.jsx
+│   │       ├── Knuckle.jsx
+│   │       ├── CesValve.jsx
+│   │       ├── ThirdTube.jsx
+│   │       └── SpringSeat.jsx
+│   │
+│   ├── /context
+│   │   ├── GlobalContext.jsx
+│   │   ├── GlobalProvider.jsx
+│   │   ├── RTContext.jsx
+│   │   ├── RodContext.jsx
+│   │   ├── TTContext.jsx
+│   │   ├── SSContext.jsx
+│   │   ├── BearingContext.jsx
+│   │   ├── RGContext.jsx
+│   │   ├── BPContext.jsx
+│   │   ├── PTContext.jsx
+│   │   ├── PPContext.jsx
+│   │   ├── FBContext.jsx
+│   │   ├── PositionsContext.jsx
+│   │   ├── KnuckleContext.jsx
+│   │   └── CVSAeContext.jsx
+│   │
+│   ├── /reducers
+│   │   ├── genericReducer.js
+│   │   └── (inne reducery, jeśli masz lub będziesz mieć specyficzne dla komponentów)
+│   │
+│   ├── /utils
+│   │   ├── utils.js
+│   │   └── constants.js
+│   │
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.jsx
+│   ├── index.css
+│
+├── index.html
+├── package.json
+├── package-lock.json
+├── vite.config.js
+├── README.md
+└── .gitignore
 ```
 
 ### State Management
@@ -85,50 +127,57 @@ This project allows **external JavaScript control** through the global `window.c
 
 ```jsx
 useEffect(() => {
-  if (window.controlRef?.current) {
-    window.controlRef.current.setProperty = (payload) => {
-      rtDispatch({ type: "SET_PROPERTY", payload });
+  if (!window.controlRef) window.controlRef = controlRef;
+  if (!window.controlRef.current) window.controlRef.current = {};
+
+  Object.keys(globalContext).forEach((key) => {
+    if (!window.controlRef.current[key]) window.controlRef.current[key] = {};
+
+    window.controlRef.current[key].setProperty = (payload) => {
+      globalContext[key].dispatch({ type: "SET_PROPERTY", payload });
     };
-    window.controlRef.current.setGeometry = (payload) => {
-      rtDispatch({ type: "SET_GEOMETRY", payload });
+    window.controlRef.current[key].setGeometry = (payload) => {
+      globalContext[key].dispatch({ type: "SET_GEOMETRY", payload });
     };
-    window.controlRef.current.addAnnotation = (payload) => {
-      rtDispatch({ type: "ADD_ANNOTATION", payload });
+    window.controlRef.current[key].addAnnotation = (payload) => {
+      globalContext[key].dispatch({ type: "ADD_ANNOTATION", payload });
     };
-    window.controlRef.current.deleteAnnotation = (id) => {
-      rtDispatch({ type: "DELETE_ANNOTATION", id });
+    window.controlRef.current[key].deleteAnnotation = (id) => {
+      globalContext[key].dispatch({ type: "DELETE_ANNOTATION", id });
     };
-    window.controlRef.current.updateAnnotation = (id, payload) => {
-      rtDispatch({ type: "UPDATE_ANNOTATION_BY_ID", id, payload });
+    window.controlRef.current[key].updateAnnotation = (id, payload) => {
+      globalContext[key].dispatch({ type: "UPDATE_ANNOTATION_BY_ID", id, payload });
     };
-    // Show current state
-    window.controlRef.current.showState = () => {
-      console.log("Damper data", rtState);
+    window.controlRef.current[key].showState = () => {
+      console.log(`${key} data`, globalContext[key].state);
     };
-  }
-}, [rtState]);
+  });
+
+  // Show global context after update
+  console.log("🔄 GlobalContext updated:", globalContext);
+}, [globalContext]);
 ```
 
 ### Example Usage in Vanilla JavaScript
 
 ```js
 // Set damper property
-window.controlRef.setProperty({ color: "blue", opacity: 0.8 });
+window.controlRef.current.RT.setProperty({ color: "blue", opacity: 0.8 });
 
 // Set new geometry
-window.controlRef.setGeometry({ OD: 30, ID: 22, L: 450, TH: 4 });
+window.controlRef.current.RT.setGeometry({ OD: 30, ID: 22, L: 450, TH: 4 });
 
 // Add an annotation
-window.controlRef.addAnnotation({ id: "an3", position: { x1: 50, y1: 10, x2: 250, y2: 10 }, label: "New annotation" });
+window.controlRef.current.RT.addAnnotation({ id: "an3", position: { x1: 50, y1: 10, x2: 250, y2: 10 }, label: "New annotation" });
 
 // Delete an annotation
-window.controlRef.deleteAnnotation("an3");
+window.controlRef.current.RT.deleteAnnotation("an3");
 
 // Update an annotation
-window.controlRef.updateAnnotation("an1", { label: "Updated label" });
+window.controlRef.current.RT.updateAnnotation("an1", { label: "Updated label" });
 
 // Log current state
-window.controlRef.showState();
+window.controlRef.current.RT.showState();
 ```
 
 ---
