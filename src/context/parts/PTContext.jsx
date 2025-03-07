@@ -7,9 +7,9 @@ let geometryPT = {
   PT_Customized: false,
   PT_PartNo: "",
   PT_ShowInReport: true,
-  PT_Length: 0,
-  PT_ID: 0,
-  PT_TH: 0,
+  PT_Length: 250,
+  PT_ID: 32,
+  PT_TH: 1.13,
 };
 
 // Initial state with annotations
@@ -17,6 +17,14 @@ let initialState = getInitialState(geometryPT, [
   // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Pressure tube length: " }),
   // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
 ]);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: "#d08309",
+  },
+};
 
 // Create Context
 const ContextPT = createContext();

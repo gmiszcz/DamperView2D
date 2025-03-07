@@ -28,7 +28,7 @@ export const getInitialState = (geometry, annotations = []) => ({
     display: true,
     active: true,
     locked: false,
-    color: "grey",
+    color: "#5a5a5a",
     opacity: 1.0,
   },
   geometry,

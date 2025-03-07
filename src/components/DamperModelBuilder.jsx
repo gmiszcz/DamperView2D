@@ -2,11 +2,12 @@ import React, { useState, useRef } from "react";
 import { Stage, Layer, Group, Circle } from "react-konva";
 import Annotations from "./annotations/Annotations";
 import { useGlobalContext } from "../context/GlobalContext";
-import { useSize } from "../context/SizeContext"; // Importing size context
-// import ReserveTube from "./parts/ReserveTube";
+import { useSize } from "../context/SizeContext";
+import ReserveTube from "./parts/ReserveTube";
+import PressureTube from "./parts/PressureTube";
+import Rod from "./parts/Rod";
+import BasePlate from "./parts/BasePlate";
 // import PistonPost from "./parts/PistonPost";
-// import BasePlate from "./parts/BasePlate";
-// import PressureTube from "./parts/PressureTube";
 // import FootBracket from "./parts/FootBracket";
 // import ThirdTube from "./parts/ThirdTube";
 // import SpringSeat from "./parts/SpringSeat";
@@ -62,12 +63,13 @@ export default function DamperModelBuilder() {
             setGroupPosition({ x: e.target.x(), y: e.target.y() });
           }}
         >
-          <Circle x={size.width / 2} y={size.height / 2} radius={5} fill="blue" />
-          <Circle x={size.width - GLOBAL_OFFSET.x} y={size.height - GLOBAL_OFFSET.y} radius={10} fill="red" />
-          {/* <ReserveTube /> */}
+          {/* <Circle x={size.width / 2} y={size.height / 2} radius={5} fill="blue" /> */}
+          {/* <Circle x={size.width - GLOBAL_OFFSET.x} y={size.height - GLOBAL_OFFSET.y} radius={10} fill="red" /> */}
+          <ReserveTube />
+          <PressureTube />
+          <Rod />
+          <BasePlate />
           {/* <PistonPost /> */}
-          {/* <BasePlate /> */}
-          {/* <PressureTube /> */}
           {/* <FootBracket /> */}
           {/* <ThirdTube /> */}
           {/* <SpringSeat /> */}

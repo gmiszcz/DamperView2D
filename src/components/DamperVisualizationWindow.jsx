@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./DamperVisualizationWindow.css";
 import DamperModelBuilder from "./DamperModelBuilder";
 import { useGlobalContext } from "../context/GlobalContext";
+import { SizeProvider } from "../context/SizeContext";
 
 export default function DamperVisualizationWindow() {
   const globalContext = useGlobalContext();
@@ -41,7 +42,9 @@ export default function DamperVisualizationWindow() {
   return (
     <div className="damper-visualization-window">
       <h3>Damper Visualization Window</h3>
-      <DamperModelBuilder />
+      <SizeProvider>
+        <DamperModelBuilder />
+      </SizeProvider>
     </div>
   );
 }

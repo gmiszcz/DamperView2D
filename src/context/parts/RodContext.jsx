@@ -8,9 +8,9 @@ let geometryRod = {
   Rod_PartNo: "",
   Rod_ShowInReport: true,
   Rod_SolidHollow: "",
-  Rod_OD: 0,
-  Rod_Length: 0,
-  Rod_HD: 0,
+  Rod_OD: 22,
+  Rod_Length: 300,
+  Rod_HD: 2,
   Rod_HDLength: 0,
   Rod_Hollow_TH: 0,
   Rod_isGroove: false,
@@ -26,6 +26,14 @@ let initialState = getInitialState(geometryRod, [
   // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Rod length: " }),
   // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
 ]);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: "#e03535",
+  },
+};
 
 // Create Context
 const ContextRod = createContext();

@@ -4,10 +4,13 @@ import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Positions
 let geometryPositions = {
-  PT_Position: 0,
+  DL: 500,
+  CL: 450,
+  EL: 600,
+  PT_Position: 25,
   P_Position: 0,
   FB_Position: 0,
-  BP_Position: 0,
+  BP_Position: 3,
   Bearing_Position: 0,
   Knuckle_Position: 0,
 };

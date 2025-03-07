@@ -6,9 +6,9 @@ import { createAnnotation, getInitialState } from "../../utils/helpers";
 let geometryBP = {
   BP_Customized: false,
   BP_PartNo: "",
-  BP_TH: 0,
-  BP_H: 0,
-  BP_PD: 0,
+  BP_TH: 3,
+  BP_H: 5,
+  BP_PD: 5,
 };
 
 // Initial state with annotations

@@ -9,19 +9,30 @@ let geometryRT = {
   RT_ShowInReport: true,
   RT_VWT: false,
   RT_Length: 400,
-  RT_TH: 3,
-  RT_OD1: 25,
-  RT_NumberOfSwages: 0,
-  RT_Swage_List: [],
-  ReserveTube_swages: [],
+  RT_TH: 2,
+  RT_OD1: 55,
+  RT_NumberOfSwages: 1,
+  RT_Swage_List: [
+    [150, 50, 15],
+    [350, 40, 10],
+  ], // [RT_Position, RT_OD, RT_Distance]
+  // ReserveTube_swages: [],
   ReserveTube_VWT: [],
 };
 
 // Initial state
-const initialState = getInitialState(geometryRT, [
+let initialState = getInitialState(geometryRT, [
   createAnnotation("RT1", 0, 50, "horizontal", 300, { label: "Reserve tube length", color: "darkred", scale: 1.5, weight: "bold" }),
   createAnnotation("RT2", 330, 150, "horizontal", 300, { label: "RT normal dim" }),
 ]);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: "#3063b7",
+  },
+};
 
 // Create Context
 const ContextRT = createContext();
