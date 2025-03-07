@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state with nested ReserveTube fields
@@ -28,7 +28,7 @@ const ContextRT = createContext();
 
 // Provider
 export const ProviderRT = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextRT.Provider value={{ state, dispatch }}>{children}</ContextRT.Provider>;
 };

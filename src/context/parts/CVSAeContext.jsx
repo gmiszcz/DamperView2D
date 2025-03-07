@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for CVSAe
@@ -28,7 +28,7 @@ const ContextCVSAe = createContext();
 
 // Provider
 export const ProviderCVSAe = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextCVSAe.Provider value={{ state, dispatch }}>{children}</ContextCVSAe.Provider>;
 };

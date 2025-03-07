@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Pressure Tube
@@ -23,7 +23,7 @@ const ContextPT = createContext();
 
 // Provider
 export const ProviderPT = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextPT.Provider value={{ state, dispatch }}>{children}</ContextPT.Provider>;
 };

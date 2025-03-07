@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Piston Post
@@ -28,7 +28,7 @@ const ContextPP = createContext();
 
 // Provider
 export const ProviderPP = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextPP.Provider value={{ state, dispatch }}>{children}</ContextPP.Provider>;
 };

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Rod Guide
@@ -27,7 +27,7 @@ const ContextRG = createContext();
 
 // Provider
 export const ProviderRG = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextRG.Provider value={{ state, dispatch }}>{children}</ContextRG.Provider>;
 };

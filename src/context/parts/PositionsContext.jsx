@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Positions
@@ -20,7 +20,7 @@ const ContextPositions = createContext();
 
 // Provider
 export const ProviderPositions = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextPositions.Provider value={{ state, dispatch }}>{children}</ContextPositions.Provider>;
 };

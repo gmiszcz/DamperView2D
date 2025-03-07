@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Spring Seat
@@ -23,7 +23,7 @@ const ContextSS = createContext();
 
 // Provider
 export const ProviderSS = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextSS.Provider value={{ state, dispatch }}>{children}</ContextSS.Provider>;
 };

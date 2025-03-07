@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { genericReducer } from "../../reducers/genericReducer";
+import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 
 // Initial state for Bearing
@@ -20,7 +20,7 @@ const ContextBearing = createContext();
 
 // Provider
 export const ProviderBearing = ({ children }) => {
-  const [state, dispatch] = useReducer(genericReducer, initialState);
+  const [state, dispatch] = useReducer(partsReducer, initialState);
 
   return <ContextBearing.Provider value={{ state, dispatch }}>{children}</ContextBearing.Provider>;
 };

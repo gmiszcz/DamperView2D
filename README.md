@@ -65,7 +65,7 @@ npm start
 │   │   ├── RTContext.jsx
 │   │   └── (... other part contexts)
 │   ├── /reducers
-│   │   ├── genericReducer.js
+│   │   ├── partsReducer.js
 │   ├── /utils
 │   │   ├── utils.js
 │   │   └── constants.js
@@ -86,7 +86,7 @@ npm start
 
 DamperView2D uses the **Context API and Reducers** for efficient state handling.
 
-- **genericReducer.js** – General reducer for common actions.
+- **partsReducer.js** – General reducer for common actions.
 - Specific context files (e.g., `RTContext.jsx`, `RodContext.jsx`) manage states of individual damper components.
 
 ---

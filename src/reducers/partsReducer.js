@@ -1,5 +1,5 @@
 // Generic Reducer
-export const genericReducer = (state, action) => {
+export const partsReducer = (state, action) => {
   switch (action.type) {
     case "SET_PROPERTY":
       return { ...state, properties: { ...state.properties, ...action.payload } };
