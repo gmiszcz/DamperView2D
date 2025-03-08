@@ -1,20 +1,10 @@
 import React, { createContext, useReducer, useContext, useEffect, useRef } from "react";
 import { GLOBAL_OFFSET } from "../utils/constants";
-
+import { sizeReducer } from "../../reducers/sizeReducer";
 // Initial state for size
 const initialState = {
   width: GLOBAL_OFFSET.x,
   height: GLOBAL_OFFSET.y,
-};
-
-// Reducer function
-const sizeReducer = (state, action) => {
-  switch (action.type) {
-    case "SET_SIZE":
-      return { ...state, ...action.payload};
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
 };
 
 // Context creation
