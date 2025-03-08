@@ -11,7 +11,7 @@ const initialState = {
 const sizeReducer = (state, action) => {
   switch (action.type) {
     case "SET_SIZE":
-      return { ...state, width: action.payload.width, height: action.payload.height };
+      return { ...state, ...action.payload};
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
