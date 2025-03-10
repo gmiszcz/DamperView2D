@@ -30,6 +30,7 @@ export const getInitialState = (geometry, annotations = []) => ({
     locked: false,
     color: "#5a5a5a",
     opacity: 1.0,
+    annotationsVisible: true,
   },
   geometry,
   annotations,
@@ -62,4 +63,11 @@ export const calculateNewScale = (e, stage, scaleBy) => {
       y: pointer.y - mousePointTo.y * newScale,
     },
   };
+};
+
+// ************************** TOGGLE ANNOTATION HANDLING ************************* //
+export const handleToggleAnnotations = (part) => {
+  part.dispatch({
+    type: "TOGGLE_ANNOTATIONS",
+  });
 };

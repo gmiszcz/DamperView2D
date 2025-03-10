@@ -4,13 +4,14 @@ import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const ReserveTube = ({ positionOffset, scaleFactor }) => {
   const { RT } = useGlobalContext();
   const { state: size, segmentRef } = useSize();
 
   const { RT_Length, RT_OD1, RT_TH, RT_NumberOfSwages, RT_Swage_List } = RT.state.geometry;
-  const { color, opacity, display } = RT.state.properties;
+  const { color, opacity, display, annotationsVisible } = RT.state.properties;
 
   const outerRadius = RT_OD1 / 2;
   const innerRadius = outerRadius - RT_TH;
@@ -115,7 +116,7 @@ const ReserveTube = ({ positionOffset, scaleFactor }) => {
   };
 
   return (
-    <Group x={positionXOffset} y={positionYOffset}>
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(RT)}>
       {RT_NumberOfSwages > 0 ? (
         <>
           {/* Outer swaged shape */}

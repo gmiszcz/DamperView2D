@@ -14,7 +14,7 @@ let geometryPT = {
 
 // Initial state with annotations
 let initialState = getInitialState(geometryPT, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Pressure tube length: " }),
+  createAnnotation("PT1", 0, -70, "horizontal", 250, { label: "Pressure tube length" }),
   // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
 ]);
 

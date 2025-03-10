@@ -4,6 +4,7 @@ import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const PressureTube = ({ positionOffset, scaleFactor }) => {
   const { PT, Positions } = useGlobalContext();
@@ -11,7 +12,7 @@ const PressureTube = ({ positionOffset, scaleFactor }) => {
 
   const { PT_Length, PT_ID, PT_TH } = PT.state.geometry;
   const { PT_Position } = Positions.state.geometry;
-  const { color, opacity, display } = PT.state.properties;
+  const { color, opacity, display, annotationsVisible } = PT.state.properties;
 
   const outerRadius = PT_ID / 2 + PT_TH;
   const innerRadius = PT_ID / 2;
@@ -38,7 +39,7 @@ const PressureTube = ({ positionOffset, scaleFactor }) => {
   };
 
   return (
-    <Group x={positionXOffset} y={positionYOffset}>
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(PT)}>
       {/* Outer shape */}
       <Line points={generateOuterShapePoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
       {/* Inner shape (cross-section) */}

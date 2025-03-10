@@ -14,6 +14,18 @@ export const partsReducer = (state, action) => {
         ...state,
         annotations: state.annotations.map((ann) => (ann.id === action.id ? { ...ann, ...action.payload } : ann)),
       };
+    case "TOGGLE_ANNOTATIONS":
+      return {
+        ...state,
+        properties: {
+          ...state.properties,
+          annotationsVisible: !state.properties.annotationsVisible,
+        },
+        annotations: state.annotations.map((ann) => ({
+          ...ann,
+          display: !state.properties.annotationsVisible,
+        })),
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

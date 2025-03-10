@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useContext, useEffect, useRef } from "react";
 import { GLOBAL_OFFSET } from "../utils/constants";
-import { sizeReducer } from "../../reducers/sizeReducer";
+import { sizeReducer } from "../reducers/sizeReducer";
 // Initial state for size
 const initialState = {
   width: GLOBAL_OFFSET.x,
