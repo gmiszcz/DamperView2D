@@ -26,6 +26,22 @@ export const partsReducer = (state, action) => {
           display: !state.properties.annotationsVisible,
         })),
       };
+    case "UPDATE_OR_CREATE_ANNOTATION":
+      const existingIndex = state.annotations.findIndex((ann) => ann.id === action.payload.id);
+
+      if (existingIndex !== -1) {
+        // If exists → update
+        return {
+          ...state,
+          annotations: state.annotations.map((ann, index) => (index === existingIndex ? { ...ann, ...action.payload } : ann)),
+        };
+      } else {
+        // If does not exists → create new
+        return {
+          ...state,
+          annotations: [...state.annotations, action.payload],
+        };
+      }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

@@ -1,21 +1,27 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
+import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state for Base Plate
 let geometryBP = {
   BP_Customized: false,
   BP_PartNo: "",
   BP_TH: 3,
-  BP_H: 5,
-  BP_PD: 5,
+  BP_H: 3,
+  BP_PD: 20,
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryBP, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Base plate thickness: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryBP, []);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.BP,
+  },
+};
 
 // Create Context
 const ContextBP = createContext();

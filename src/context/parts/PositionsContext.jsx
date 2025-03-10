@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
+import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state for Positions
 let geometryPositions = {
@@ -10,7 +11,7 @@ let geometryPositions = {
   PT_Position: 25,
   P_Position: 0,
   FB_Position: 0,
-  BP_Position: 3,
+  BP_Position: 0,
   Bearing_Position: 0,
   Knuckle_Position: 0,
 };

@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
+import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state with nested ReserveTube fields
 let geometryRT = {
@@ -21,16 +22,13 @@ let geometryRT = {
 };
 
 // Initial state
-let initialState = getInitialState(geometryRT, [
-  createAnnotation("RT1", 0, 50, "horizontal", 300, { label: "Reserve tube length", color: "darkred", scale: 1.5, weight: "bold" }),
-  createAnnotation("RT2", 330, 150, "horizontal", 300, { label: "RT normal dim" }),
-]);
+let initialState = getInitialState(geometryRT, []);
 
 initialState = {
   ...initialState,
   properties: {
     ...initialState.properties,
-    color: "#3063b7",
+    color: PARTS_COLORS.RT,
   },
 };
 

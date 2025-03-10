@@ -1,0 +1,21 @@
+/* HoverMenu.css */
+.hover-menu-container {
+  position: absolute;
+  top: 0;
+  left: 120;
+  /* transform: translateX(-50%); */
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  padding-top: 10px;
+}
+
+.hover-menu {
+  background: white;
+  padding: 8px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}

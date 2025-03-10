@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./DamperVisualizationWindow.css";
 import DamperModelBuilder from "./DamperModelBuilder";
 import { useGlobalContext } from "../context/GlobalContext";
 import { SizeProvider } from "../context/SizeContext";
+import HoverMenu from "./HoverMenu";
 
 export default function DamperVisualizationWindow() {
   const globalContext = useGlobalContext();
-  const controlRef = useRef({}); // Ensures `current` always exists
+  const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
     if (!window.controlRef) window.controlRef = controlRef;
@@ -36,13 +37,14 @@ export default function DamperVisualizationWindow() {
     });
 
     // Show global context after update
-    console.log("🔄 GlobalContext updated:", globalContext);
+    // console.log("🔄 GlobalContext updated:", globalContext);
   }, [globalContext]);
 
   return (
-    <div className="damper-visualization-window">
+    <div className="damper-visualization-window" onMouseEnter={() => setMenuVisible(true)} onMouseLeave={() => setMenuVisible(false)}>
       <h3>Damper Visualization Window</h3>
       <SizeProvider>
+        <HoverMenu visible={menuVisible} />
         <DamperModelBuilder />
       </SizeProvider>
     </div>

@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
+import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state for Rod
 let geometryRod = {
@@ -31,7 +32,7 @@ initialState = {
   ...initialState,
   properties: {
     ...initialState.properties,
-    color: "#e03535",
+    color: PARTS_COLORS.ROD,
   },
 };
 

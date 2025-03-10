@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
+import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state for Pressure Tube
 let geometryPT = {
@@ -13,16 +14,13 @@ let geometryPT = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryPT, [
-  createAnnotation("PT1", 0, -70, "horizontal", 250, { label: "Pressure tube length" }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryPT, []);
 
 initialState = {
   ...initialState,
   properties: {
     ...initialState.properties,
-    color: "#d08309",
+    color: PARTS_COLORS.PT,
   },
 };
 

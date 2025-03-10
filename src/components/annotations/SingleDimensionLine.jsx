@@ -9,7 +9,7 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
   const { state: size, segmentRef } = useSize();
 
   // Scale values that only affect text size and label spacing
-  const scaledFontSize = ANNOTATION_DEFAULTS.FONT_SIZE * scale;
+  const scaledFontSize = ANNOTATION_DEFAULTS.FONT_SIZE;
   const scaledTextOffset = scaledFontSize * ANNOTATION_DEFAULTS.TEXT_VERTICAL_OFFSET;
 
   // Apply the global offset
@@ -22,7 +22,7 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
 
   // Midpoint for text positioning
   const midX = (x1 + x2) / 2;
-  const midY = (y1 + y2) / 2;
+  const midY = (y1 + y2) / 2 - ((y2 - y1) / 2) * scale;
 
   // Calculate dimension length and determine arrow size
   const dimensionLength = Math.abs(value);
@@ -50,7 +50,8 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
         y={y1}
         points={[0, ANNOTATION_DEFAULTS.LINE_LENGTH_START, 0, ANNOTATION_DEFAULTS.LINE_LENGTH_END]}
         stroke={color || ANNOTATION_DEFAULTS.DEFAULT_COLOR}
-        strokeWidth={1}
+        strokeWidth={ANNOTATION_DEFAULTS.STROKE_WIDTH}
+        rotation={direction === "horizontal" ? 0 : -90}
       />
 
       {/* Dimension arrow */}
@@ -68,17 +69,19 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
       <Text
         ref={textRef}
         x={midX}
-        y={midY - scaledTextOffset}
+        y={midY}
         text={label ? `${label}: ${value}` : value}
-        fontSize={scaledFontSize}
+        fontSize={ANNOTATION_DEFAULTS.FONT_SIZE * scale}
         fontFamily="Poppins"
         fontStyle={fontStyle}
         fill={color || ANNOTATION_DEFAULTS.DEFAULT_COLOR}
         align="center"
         verticalAlign="middle"
-        offsetX={textWidth / 2}
+        offsetX={direction === "vertical" ? textWidth / 4 : textWidth / 2}
+        offsetY={direction === "horizontal" ? textWidth / 4 : 7}
         shadowColor="white"
-        shadowBlur={1}
+        shadowBlur={0.5}
+        rotation={direction === "horizontal" ? 0 : -90}
       />
 
       {/* End vertical line */}
@@ -87,7 +90,8 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
         y={y2}
         points={[0, ANNOTATION_DEFAULTS.LINE_LENGTH_START, 0, ANNOTATION_DEFAULTS.LINE_LENGTH_END]}
         stroke={color || ANNOTATION_DEFAULTS.DEFAULT_COLOR}
-        strokeWidth={1}
+        strokeWidth={ANNOTATION_DEFAULTS.STROKE_WIDTH}
+        rotation={direction === "horizontal" ? 0 : -90}
       />
     </Group>
   );
