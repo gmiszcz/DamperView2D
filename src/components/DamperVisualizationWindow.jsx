@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./DamperVisualizationWindow.css";
 import DamperModelBuilder from "./DamperModelBuilder";
 import { useGlobalContext } from "../context/GlobalContext";
@@ -8,6 +8,7 @@ import HoverMenu from "./HoverMenu";
 export default function DamperVisualizationWindow() {
   const globalContext = useGlobalContext();
   const [menuVisible, setMenuVisible] = useState(false);
+  const controlRef = useRef({});
 
   useEffect(() => {
     if (!window.controlRef) window.controlRef = controlRef;
