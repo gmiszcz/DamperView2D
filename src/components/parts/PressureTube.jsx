@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Line, Rect, Group, Circle } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
@@ -15,13 +15,19 @@ const PressureTube = () => {
   const { PT_Position } = Positions.state.geometry;
   const { color, opacity, display, annotationsVisible } = PT.state.properties;
 
-  const outerRadius = PT_ID / 2 + PT_TH;
-  const innerRadius = PT_ID / 2;
+  const [outerRadius, setOuterRadius] = useState(PT_ID / 2 + PT_TH);
+  const [innerRadius, setInnerRadius] = useState(PT_ID / 2);
+  const [PT_LengthWithPosition, setPT_LengthWithPosition] = useState(PT_Length + PT_Position);
+  const [positionXOffset, setPositionXOffset] = useState(size.width - GLOBAL_OFFSET.x);
+  const [positionYOffset, setPositionYOffset] = useState(size.height - GLOBAL_OFFSET.y);
 
-  const PT_LengthWithPosition = PT_Length + PT_Position;
-
-  const positionXOffset = size.width - GLOBAL_OFFSET.x;
-  const positionYOffset = size.height - GLOBAL_OFFSET.y;
+  useEffect(() => {
+    setOuterRadius(PT_ID / 2 + PT_TH);
+    setInnerRadius(PT_ID / 2);
+    setPT_LengthWithPosition(PT_Length + PT_Position);
+    setPositionXOffset(size.width - GLOBAL_OFFSET.x);
+    setPositionYOffset(size.height - GLOBAL_OFFSET.y);
+  }, [PT_Length, PT_ID, PT_TH, PT_Position, size.width, size.height]);
 
   // Update or create annotation for Pressure Tube
   useEffect(() => {
@@ -45,10 +51,10 @@ const PressureTube = () => {
       payload: {
         id: "PT_ID_Annotation",
         startX: PT_Position + 10,
-        startY: -outerRadius,
+        startY: -innerRadius,
         direction: "vertical",
         scale: 0.5,
-        value: outerRadius * 2,
+        value: PT_ID,
         label: "PT ID",
         display: annotationsVisible,
       },
@@ -69,7 +75,7 @@ const PressureTube = () => {
         // color: PARTS_COLORS.PT,
       },
     });
-  }, [PT_Length, annotationsVisible]);
+  }, [PT_Length, annotationsVisible, outerRadius, PT_Position, RT_OD1, innerRadius, PT_ID]);
 
   const generateOuterShapePoints = () => {
     return [
