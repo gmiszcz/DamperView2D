@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Line, Rect, Group, Circle } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
@@ -10,31 +10,42 @@ const Rod = ({ positionOffset, scaleFactor }) => {
   const { state: size } = useSize();
 
   const { Rod_Length, Rod_OD, Rod_HD } = Rod.state.geometry;
-  const { DL } = Positions.state.geometry;
+  const { DL, CL, EL } = Positions.state.geometry;
+  const [rodPosition, setRodPosition] = useState(DL - Rod_Length);
   const { color, opacity, display } = Rod.state.properties;
 
   const outerRadius = Rod_OD / 2;
   const innerRadius = outerRadius - Rod_HD;
-  const leftOffset = DL - Rod_Length;
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
+  useEffect(() => {
+    const position = Rod.state.geometry.Rod_CurrentPosition;
+    if (position === "DL") {
+      setRodPosition(DL - Rod_Length);
+    } else if (position === "CL") {
+      setRodPosition(CL - Rod_Length);
+    } else if (position === "EL") {
+      setRodPosition(EL - Rod_Length);
+    }
+  }, [Rod.state.geometry.Rod_CurrentPosition]);
+
   const generateRodShapePoints = () => {
     return [
-      [-leftOffset, outerRadius],
-      [-leftOffset - Rod_Length, outerRadius],
-      [-leftOffset - Rod_Length, -outerRadius],
-      [-leftOffset, -outerRadius],
+      [-rodPosition, outerRadius],
+      [-rodPosition - Rod_Length, outerRadius],
+      [-rodPosition - Rod_Length, -outerRadius],
+      [-rodPosition, -outerRadius],
     ].flat();
   };
 
   const generateRodHardenedShapePoints = () => {
     return [
-      [-leftOffset, innerRadius],
-      [-leftOffset - Rod_Length, innerRadius],
-      [-leftOffset - Rod_Length, -innerRadius],
-      [-leftOffset, -innerRadius],
+      [-rodPosition, innerRadius],
+      [-rodPosition - Rod_Length, innerRadius],
+      [-rodPosition - Rod_Length, -innerRadius],
+      [-rodPosition, -innerRadius],
     ].flat();
   };
 

@@ -20,13 +20,11 @@ let geometryRod = {
   Rod_grooveMidDiameter: 0,
   Rod_groovePosition: 0,
   Rod_grooveWidth: 0,
+  Rod_CurrentPosition: "DL",
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryRod, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Rod length: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryRod, []);
 
 initialState = {
   ...initialState,

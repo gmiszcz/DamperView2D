@@ -46,6 +46,7 @@ export const genericAnnotation = {
   id: "",
   type: "dimension",
   display: true,
+  important: true,
   label: "",
   color: "black",
   value: null,
