@@ -6,7 +6,7 @@ import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../../utils/cons
 import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
-const ReserveTube = ({ positionOffset, scaleFactor }) => {
+const ReserveTube = () => {
   const { RT } = useGlobalContext();
   const { state: size, segmentRef } = useSize();
 

@@ -18,10 +18,15 @@ let geometryRG = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryRG, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Rod guide height: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryRG, []);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.RG,
+  },
+};
 
 // Create Context
 const ContextRG = createContext();

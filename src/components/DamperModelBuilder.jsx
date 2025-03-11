@@ -7,13 +7,13 @@ import ReserveTube from "./parts/ReserveTube";
 import PressureTube from "./parts/PressureTube";
 import Rod from "./parts/Rod";
 import BasePlate from "./parts/BasePlate";
+import Bearing from "./parts/Bearing";
+import RodGuide from "./parts/RodGuide";
 // import PistonPost from "./parts/PistonPost";
 // import FootBracket from "./parts/FootBracket";
 // import ThirdTube from "./parts/ThirdTube";
 // import SpringSeat from "./parts/SpringSeat";
-// import RodGuide from "./parts/RodGuide";
 // import Knuckle from "./parts/Knuckle";
-// import Bearing from "./parts/Bearing";
 // import CVSAe from "./parts/CVSAe";
 // import Positions from "./parts/Positions";
 import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../utils/constants";
@@ -77,13 +77,13 @@ export default function DamperModelBuilder() {
           <PressureTube />
           <Rod />
           <BasePlate />
+          {/* <RodGuide /> */}
+          {/* <Bearing /> */}
           {/* <PistonPost /> */}
           {/* <FootBracket /> */}
           {/* <ThirdTube /> */}
           {/* <SpringSeat /> */}
-          {/* <RodGuide /> */}
           {/* <Knuckle /> */}
-          {/* <Bearing /> */}
           {/* <CVSAe /> */}
           {/* <Positions /> */}
           <Annotations />

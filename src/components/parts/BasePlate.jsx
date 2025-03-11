@@ -6,7 +6,7 @@ import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { PARTS_COLORS } from "../../utils/constants";
 
-const BasePlate = ({ positionOffset, scaleFactor }) => {
+const BasePlate = () => {
   const { BP, RT, Positions } = useGlobalContext();
   const { state: size } = useSize();
 

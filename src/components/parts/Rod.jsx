@@ -5,7 +5,7 @@ import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
-const Rod = ({ positionOffset, scaleFactor }) => {
+const Rod = () => {
   const { Rod, Positions } = useGlobalContext();
   const { state: size } = useSize();
 

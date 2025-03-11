@@ -6,7 +6,7 @@ import { GLOBAL_OFFSET, PARTS_COLORS } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
-const PressureTube = ({ positionOffset, scaleFactor }) => {
+const PressureTube = () => {
   const { PT, RT, Positions } = useGlobalContext();
   const { state: size } = useSize();
 
