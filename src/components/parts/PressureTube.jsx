@@ -37,7 +37,7 @@ const PressureTube = () => {
       payload: {
         id: "PT_Length_Annotation",
         startX: PT_Position,
-        startY: outerRadius - 70,
+        startY: -RT_OD1,
         direction: "horizontal",
         value: PT_Length,
         label: "PT Length",
