@@ -13,7 +13,7 @@ let geometryBP = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryBP, []);
+let initialState = getInitialState(geometryBP);
 
 initialState = {
   ...initialState,

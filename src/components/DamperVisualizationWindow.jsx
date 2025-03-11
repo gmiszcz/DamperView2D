@@ -9,6 +9,7 @@ export default function DamperVisualizationWindow() {
   const globalContext = useGlobalContext();
   const [menuVisible, setMenuVisible] = useState(false);
   const controlRef = useRef({});
+  const modelRef = useRef({});
 
   useEffect(() => {
     if (!window.controlRef) window.controlRef = controlRef;
@@ -45,8 +46,8 @@ export default function DamperVisualizationWindow() {
     <div className="damper-visualization-window" onMouseEnter={() => setMenuVisible(true)} onMouseLeave={() => setMenuVisible(false)}>
       <h3>Damper Visualization Window</h3>
       <SizeProvider>
-        <HoverMenu visible={menuVisible} />
-        <DamperModelBuilder />
+        <HoverMenu visible={menuVisible} onFitView={() => modelRef.current?.resetView()} />
+        <DamperModelBuilder ref={modelRef} />
       </SizeProvider>
     </div>
   );

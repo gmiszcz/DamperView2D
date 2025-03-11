@@ -19,10 +19,7 @@ let geometryPP = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryPP, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Piston post length: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryPP)
 
 // Create Context
 const ContextPP = createContext();

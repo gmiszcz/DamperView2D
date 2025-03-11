@@ -17,10 +17,7 @@ let geometryKnuckle = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryKnuckle, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Knuckle length: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryKnuckle)
 
 // Create Context
 const ContextKnuckle = createContext();

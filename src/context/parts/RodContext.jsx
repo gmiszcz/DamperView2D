@@ -24,7 +24,7 @@ let geometryRod = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryRod, []);
+let initialState = getInitialState(geometryRod);
 
 initialState = {
   ...initialState,

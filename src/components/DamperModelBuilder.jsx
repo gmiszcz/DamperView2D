@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { Stage, Layer, Group, Circle } from "react-konva";
+import React, { useState, useRef, useImperativeHandle, forwardRef } from "react";
+import { Stage, Layer, Group } from "react-konva";
 import Annotations from "./annotations/Annotations";
 import { useGlobalContext } from "../context/GlobalContext";
 import { useSize } from "../context/SizeContext";
@@ -20,8 +20,8 @@ import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../utils/constan
 import { calculateNewScale } from "../utils/helpers";
 import "./DamperVisualizationWindow.css";
 
-export default function DamperModelBuilder() {
-  const { state: size, segmentRef } = useSize();
+const DamperModelBuilder = forwardRef((props, ref) => {
+  const { state: size } = useSize();
   const stageRef = useRef(null);
   const globalContext = useGlobalContext();
   const [groupPosition, setGroupPosition] = useState(DEFAULT_POSITION);
@@ -37,7 +37,7 @@ export default function DamperModelBuilder() {
     stage.position(newPosition);
   };
 
-  const handleDoubleClick = () => {
+  const resetView = () => {
     const stage = stageRef.current;
     setScale(DEFAULT_SCALE);
     setGroupPosition(DEFAULT_POSITION);
@@ -52,13 +52,15 @@ export default function DamperModelBuilder() {
     console.log("Right-clicked at: ", pointerPosition);
   };
 
+  useImperativeHandle(ref, () => ({ resetView }));
+
   return (
     <Stage
       ref={stageRef}
       width={size.width}
       height={size.height}
       onWheel={handleWheel}
-      onDblClick={handleDoubleClick}
+      onDblClick={resetView}
       //   onContextMenu={(e) => e.evt.preventDefault()} // Disable right-click
       onContextMenu={handleRightClick}
     >
@@ -91,4 +93,6 @@ export default function DamperModelBuilder() {
       </Layer>
     </Stage>
   );
-}
+});
+
+export default DamperModelBuilder;

@@ -5,6 +5,8 @@ export const partsReducer = (state, action) => {
       return { ...state, properties: { ...state.properties, ...action.payload } };
     case "SET_GEOMETRY":
       return { ...state, geometry: { ...state.geometry, ...action.payload } };
+    case "SET_CENTER_POSITION":
+      return { ...state, calculatedValues: { ...state.calculatedValues, centerPosition: action.payload } };
     case "ADD_ANNOTATION":
       return { ...state, annotations: [action.payload, ...state.annotations] };
     case "DELETE_ANNOTATION":

@@ -33,6 +33,9 @@ export const getInitialState = (geometry, annotations = []) => ({
     annotationsVisible: true,
   },
   geometry,
+  calculatedValues: {
+    centerPosition: { x: 0, y: 0 },
+  },
   annotations,
 });
 
@@ -71,3 +74,19 @@ export const handleToggleAnnotations = (part) => {
     type: "TOGGLE_ANNOTATIONS",
   });
 };
+
+// ************************** CALCULATE CENTER POSITION  ************************* //
+export const calculateAndSetCenterPosition = (part, groupRef) => {
+  setTimeout(() => {
+    if (groupRef.current) {
+      const bounds = groupRef.current.getClientRect();
+      const centerPosition = {
+        x: bounds.x + bounds.width / 2,
+        y: bounds.y + bounds.height / 2,
+      };
+
+      // Update the center position in the state
+      part.state.calculatedValues.centerPosition = centerPosition;
+    }
+  }, 0);
+}

@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Line, Rect, Group, Circle } from "react-konva";
+import React, { useEffect, useState, useRef } from "react";
+import { Line, Group } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { calculateAndSetCenterPosition } from "../../utils/helpers";
 
 const Rod = () => {
   const { Rod, Positions } = useGlobalContext();
   const { state: size } = useSize();
+  const groupRef = useRef();
+  window.rodRef = groupRef;
 
   const { Rod_Length, Rod_OD, Rod_HD } = Rod.state.geometry;
   const { DL, CL, EL } = Positions.state.geometry;
@@ -29,7 +32,11 @@ const Rod = () => {
     } else if (position === "EL") {
       setRodPosition(EL - Rod_Length);
     }
-  }, [Rod.state.geometry.Rod_CurrentPosition]);
+
+    //calculate rod center position
+    calculateAndSetCenterPosition(Rod, groupRef); // it will set the center position of the rod to the global context and use it for scaling
+
+  }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length, groupRef]);
 
   const generateRodShapePoints = () => {
     return [
@@ -50,8 +57,7 @@ const Rod = () => {
   };
 
   return (
-    <Group x={positionXOffset} y={positionYOffset}>
-      <Circle x={0} y={0} radius={5} fill="blue" />
+    <Group x={positionXOffset} y={positionYOffset} ref={groupRef}>
       {/* Rod shape */}
       <Line points={generateRodShapePoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
       {/* Hardened layer */}

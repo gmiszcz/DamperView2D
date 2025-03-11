@@ -22,7 +22,7 @@ let geometryRT = {
 };
 
 // Initial state
-let initialState = getInitialState(geometryRT, []);
+let initialState = getInitialState(geometryRT)
 
 initialState = {
   ...initialState,

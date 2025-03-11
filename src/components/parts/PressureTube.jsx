@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Line, Rect, Group, Circle } from "react-konva";
+import { Line, Group } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET, PARTS_COLORS } from "../../utils/constants";

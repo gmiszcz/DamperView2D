@@ -19,10 +19,7 @@ let geometryCVSAe = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryCVSAe, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "CVSAe valve position: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryCVSAe)
 
 // Create Context
 const ContextCVSAe = createContext();

@@ -23,10 +23,7 @@ let geometryFB = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryFB, [
-  // createAnnotation("an1", { x1: 0, y1: 0, x2: 200, y2: 0 }, { label: "Foot bracket length: " }),
-  // createAnnotation("an2", { x1: 100, y1: 0, x2: 200, y2: 0 }),
-]);
+let initialState = getInitialState(geometryFB)
 
 // Create Context
 const ContextFB = createContext();
