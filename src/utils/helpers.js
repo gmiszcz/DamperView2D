@@ -34,9 +34,10 @@ export const getInitialState = (geometry, annotations = []) => ({
   },
   geometry,
   calculatedValues: {
-    centerPosition: { x: 0, y: 0 },
+    positionData: {},
   },
   annotations,
+  ref: null,
 });
 
 // ******************************* ZOOM HANDLING ******************************** //
@@ -80,13 +81,26 @@ export const calculateAndSetCenterPosition = (part, groupRef) => {
   setTimeout(() => {
     if (groupRef.current) {
       const bounds = groupRef.current.getClientRect();
+
       const centerPosition = {
         x: bounds.x + bounds.width / 2,
         y: bounds.y + bounds.height / 2,
       };
 
-      // Update the center position in the state
-      part.state.calculatedValues.centerPosition = centerPosition;
+      const positionData = {
+        center: centerPosition,
+        topLeft: { x: bounds.x, y: bounds.y },
+        topRight: { x: bounds.x + bounds.width, y: bounds.y },
+        bottomLeft: { x: bounds.x, y: bounds.y + bounds.height },
+        bottomRight: { x: bounds.x + bounds.width, y: bounds.y + bounds.height },
+        left: { x: bounds.x, y: centerPosition.y },
+        right: { x: bounds.x + bounds.width, y: centerPosition.y },
+        top: { x: centerPosition.x, y: bounds.y },
+        bottom: { x: centerPosition.x, y: bounds.y + bounds.height },
+      };
+
+      // Update the calculated positions in the state
+      part.state.calculatedValues.positionData = positionData;
     }
   }, 0);
-}
+};

@@ -24,10 +24,10 @@ export const ProviderBearing = ({ children }) => {
 };
 
 // Custom hook to use context
-export const useBearing = () => {
+export const useBRG = () => {
   const context = useContext(ContextBearing);
   if (!context) {
-    throw new Error("useBearing must be used within a ProviderBearing");
+    throw new Error("useBRG must be used within a ProviderBearing");
   }
   return context;
 };

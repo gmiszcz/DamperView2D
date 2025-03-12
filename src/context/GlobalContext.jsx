@@ -8,11 +8,11 @@ import { usePP } from "./parts/PPContext";
 import { useBP } from "./parts/BPContext";
 import { useSS } from "./parts/SSContext";
 import { useFB } from "./parts/FBContext";
-import { useKnuckle } from "./parts/KnuckleContext";
-import { useBearing } from "./parts/BearingContext";
+import { useKNC } from "./parts/KNCContext";
+import { useBRG } from "./parts/BRGContext";
 import { useCVSAe } from "./parts/CVSAeContext";
 import { useTT } from "./parts/TTContext";
-import { usePositions } from "./parts/PositionsContext";
+import { usePOS } from "./parts/POSContext";
 
 export const useGlobalContext = () => {
   const RT = useRT();
@@ -23,28 +23,14 @@ export const useGlobalContext = () => {
   const BP = useBP();
   const SS = useSS();
   const FB = useFB();
-  const Knuckle = useKnuckle();
-  const Bearing = useBearing();
+  const KNC = useKNC();
+  const BRG = useBRG();
   const CVSAe = useCVSAe();
   const TT = useTT();
-  const Positions = usePositions();
+  const Positions = usePOS();
 
   return useMemo(
-    () => ({ RT, PT, Rod, RG, PP, BP, SS, FB, Knuckle, Bearing, CVSAe, TT, Positions }),
-    [
-      RT.state,
-      PT.state,
-      Rod.state,
-      RG.state,
-      PP.state,
-      BP.state,
-      SS.state,
-      FB.state,
-      Knuckle.state,
-      Bearing.state,
-      CVSAe.state,
-      TT.state,
-      Positions.state,
-    ]
+    () => ({ RT, PT, Rod, RG, PP, BP, SS, FB, KNC, BRG, CVSAe, TT, Positions }),
+    [RT.state, PT.state, Rod.state, RG.state, PP.state, BP.state, SS.state, FB.state, KNC.state, BRG.state, CVSAe.state, TT.state, Positions.state]
   );
 };

@@ -30,10 +30,10 @@ export const ProviderPositions = ({ children }) => {
 };
 
 // Custom hook to use context
-export const usePositions = () => {
+export const usePOS = () => {
   const context = useContext(ContextPositions);
   if (!context) {
-    throw new Error("usePositions must be used within a ProviderPositions");
+    throw new Error("usePOS must be used within a ProviderPositions");
   }
   return context;
 };

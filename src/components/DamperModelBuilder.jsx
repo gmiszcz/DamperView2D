@@ -69,6 +69,7 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           draggable
           x={groupPosition.x}
           y={groupPosition.y}
+          // scale={{ x: 1.0, y: 1.0 }}
           onDragMove={(e) => {
             setGroupPosition({ x: e.target.x(), y: e.target.y() });
           }}

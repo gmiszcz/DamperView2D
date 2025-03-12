@@ -1,6 +1,8 @@
 import React, { createContext, useReducer, useContext, useEffect, useRef } from "react";
 import { GLOBAL_OFFSET } from "../utils/constants";
 import { sizeReducer } from "../reducers/sizeReducer";
+import { useGlobalContext } from "./GlobalContext";
+import { calculateAndSetCenterPosition } from "../utils/helpers";
 // Initial state for size
 const initialState = {
   width: GLOBAL_OFFSET.x,
@@ -14,6 +16,7 @@ const SizeContext = createContext();
 export const SizeProvider = ({ children }) => {
   const segmentRef = useRef(null); // Reference to the container
   const [state, dispatch] = useReducer(sizeReducer, initialState);
+  const partContext = useGlobalContext();
 
   useEffect(() => {
     const updateSize = () => {
@@ -26,9 +29,17 @@ export const SizeProvider = ({ children }) => {
           },
         });
       }
+      // Update the positions of the parts
+      const partsToUpdate = ["Rod", "PT", "RT"];
+      partsToUpdate.forEach((part) => {
+        if (partContext[part]?.state?.ref?.current) {
+          calculateAndSetCenterPosition(partContext[part], partContext[part].state.ref);
+        }
+      });
     };
 
     updateSize(); // Set initial size
+
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
   }, []);

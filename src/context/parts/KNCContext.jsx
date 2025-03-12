@@ -17,7 +17,7 @@ let geometryKnuckle = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryKnuckle)
+let initialState = getInitialState(geometryKnuckle);
 
 // Create Context
 const ContextKnuckle = createContext();
@@ -30,10 +30,10 @@ export const ProviderKnuckle = ({ children }) => {
 };
 
 // Custom hook to use context
-export const useKnuckle = () => {
+export const useKNC = () => {
   const context = useContext(ContextKnuckle);
   if (!context) {
-    throw new Error("useKnuckle must be used within a ProviderKnuckle");
+    throw new Error("useKNC must be used within a ProviderKnuckle");
   }
   return context;
 };

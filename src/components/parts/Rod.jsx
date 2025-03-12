@@ -35,7 +35,7 @@ const Rod = () => {
 
     //calculate rod center position
     calculateAndSetCenterPosition(Rod, groupRef); // it will set the center position of the rod to the global context and use it for scaling
-
+    Rod.state.ref = groupRef;
   }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length, groupRef]);
 
   const generateRodShapePoints = () => {

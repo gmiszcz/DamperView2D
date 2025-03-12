@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Line, Rect, Group, Circle } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
@@ -9,6 +9,7 @@ import { handleToggleAnnotations } from "../../utils/helpers";
 const ReserveTube = () => {
   const { RT } = useGlobalContext();
   const { state: size, segmentRef } = useSize();
+  const groupRef = useRef(null);
 
   const { RT_Length, RT_OD1, RT_TH, RT_NumberOfSwages, RT_Swage_List } = RT.state.geometry;
   const { color, opacity, display, annotationsVisible } = RT.state.properties;
@@ -18,6 +19,8 @@ const ReserveTube = () => {
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
+
+  RT.state.ref = groupRef;
 
   // Generates the outer swaged shape points using previous swage's final radius as the starting point for the next swage.
   const generateSwagedOuterShapePoints = () => {
@@ -116,7 +119,7 @@ const ReserveTube = () => {
   };
 
   return (
-    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(RT)}>
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(RT)} ref={groupRef}>
       {RT_NumberOfSwages > 0 ? (
         <>
           {/* Outer swaged shape */}

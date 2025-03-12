@@ -1,10 +1,10 @@
 import React from "react";
-import { ProviderBearing } from "./parts/BearingContext";
+import { ProviderBearing } from "./parts/BRGContext";
 import { ProviderBP } from "./parts/BPContext";
 import { ProviderCVSAe } from "./parts/CVSAeContext";
 import { ProviderFB } from "./parts/FBContext";
-import { ProviderKnuckle } from "./parts/KnuckleContext";
-import { ProviderPositions } from "./parts/PositionsContext";
+import { ProviderKnuckle } from "./parts/KNCContext";
+import { ProviderPositions } from "./parts/POSContext";
 import { ProviderPP } from "./parts/PPContext";
 import { ProviderPT } from "./parts/PTContext";
 import { ProviderRG } from "./parts/RGContext";
