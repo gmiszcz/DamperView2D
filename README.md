@@ -60,7 +60,7 @@ npm start
 │   │       ├── Rod.jsx
 │   │       └── (... other parts)
 │   ├── /context
-│   │   ├── GlobalContext.jsx
+│   │   ├── PartsContext.jsx
 │   │   ├── GlobalProvider.jsx
 │   │   ├── RTContext.jsx
 │   │   └── (... other part contexts)

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useImperativeHandle, forwardRef, useEffect } from "react";
 import { Stage, Layer, Group } from "react-konva";
 import Annotations from "./annotations/Annotations";
-import { useGlobalContext } from "../context/GlobalContext";
+import { usePartsContext } from "../context/PartsContext";
 import { useSize } from "../context/SizeContext";
 import ReserveTube from "./parts/ReserveTube";
 import PressureTube from "./parts/PressureTube";

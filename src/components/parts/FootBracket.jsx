@@ -1,12 +1,12 @@
 import React from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const FootBracket = () => {
-  const { FootBracket, Positions } = useGlobalContext();
+  const { FootBracket, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { FB_OD, FB_ID, FB_Height } = FootBracket.state.geometry;

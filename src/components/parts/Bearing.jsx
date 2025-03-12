@@ -1,12 +1,12 @@
 import React from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const Bearing = () => {
-  const { Bearing, Positions } = useGlobalContext();
+  const { Bearing, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { Bearing_OD, Bearing_ID, Bearing_Height } = Bearing.state.geometry;

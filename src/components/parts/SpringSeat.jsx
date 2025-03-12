@@ -1,12 +1,12 @@
 import React from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const SpringSeat = ({ positionOffset, scaleFactor }) => {
-  const { SpringSeat, Positions } = useGlobalContext();
+  const { SpringSeat, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { SS_OD, SS_ID, SS_Height } = SpringSeat.state.geometry;

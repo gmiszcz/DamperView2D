@@ -2,33 +2,36 @@ import React, { useState } from "react";
 import { Button } from "primereact/button";
 import { SelectButton } from "primereact/selectbutton";
 import { MultiStateCheckbox } from "primereact/multistatecheckbox";
-import { useGlobalContext } from "../context/GlobalContext";
+import { usePartsContext } from "../context/PartsContext";
 import "./HoverMenu.css";
 
 const HoverMenu = ({ visible, onFitView, openModal }) => {
-  const { PT } = useGlobalContext();
+  const parts = usePartsContext();
 
   const options = ["CL", "DL", "EL"];
   const [value, setValue] = useState(options[1]);
 
   const annotationOptions = [
     { value: "all", icon: "pi pi-eye" },
-    { value: "important", icon: "pi pi-star" },
+    { value: "important", icon: "pi pi-exclamation-circle" },
     { value: "none", icon: "pi pi-eye-slash" }
   ];
   const [annotationVisibility, setAnnotationVisibility] = useState("all");
 
   const handleChangePosition = (position) => {
-    PT.dispatch({
+    parts.Rod.dispatch({
       type: "SET_GEOMETRY",
-      payload: { PT_CurrentPosition: position },
+      payload: { Rod_CurrentPosition: position },
     });
+
     setValue(position);
   };
 
+
   const handleToggleAnnotations = (visibility) => {
     setAnnotationVisibility(visibility);
-    PT.dispatch({ type: "SET_ANNOTATIONS_VISIBILITY", payload: visibility });
+
+    Object.values(parts).forEach(part => part.dispatch({ type: "SET_ANNOTATIONS_VISIBILITY", payload: visibility }));
   };
 
   return (
@@ -45,7 +48,9 @@ const HoverMenu = ({ visible, onFitView, openModal }) => {
             onChange={(e) => handleToggleAnnotations(e.value)}
             options={annotationOptions}
             optionValue="value"
+            empty={false}
           />
+          <span>{annotationVisibility || 'no value'}</span>
 
           <Button icon="pi pi-external-link" className="right-button icon-only" onClick={openModal} />
         </div>

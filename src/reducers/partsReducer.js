@@ -53,8 +53,7 @@ export const partsReducer = (state, action) => {
           ...ann,
           display:
             visibilityMode === "all" ||
-            (visibilityMode === "important" && ann.important) ||
-            (visibilityMode === "onlyImportant" && ann.important),
+            (visibilityMode === "important" && ann.important)
         })),
       };
 

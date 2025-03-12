@@ -1,12 +1,12 @@
 import React from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const CylinderEnd = () => {
-  const { CylinderEnd, Positions } = useGlobalContext();
+  const { CylinderEnd, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { BE_OD, BE_ID, BE_Height } = CylinderEnd.state.geometry;

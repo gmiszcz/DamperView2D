@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
 const PressureTube = () => {
-  const { PT, RT, Positions } = useGlobalContext();
+  const { PT, RT, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { PT_Length, PT_ID, PT_TH } = PT.state.geometry;
@@ -31,6 +31,7 @@ const PressureTube = () => {
 
   // Update or create annotation for Pressure Tube
   useEffect(() => {
+    const isVisible = PT.state.properties.annotationsVisible;
     // Pressure tube LENGTH annotation
     PT.dispatch({
       type: "UPDATE_OR_CREATE_ANNOTATION",
@@ -41,7 +42,7 @@ const PressureTube = () => {
         direction: "horizontal",
         value: PT_Length,
         label: "PT Length",
-        display: annotationsVisible,
+        display: isVisible,
         important: true,
       },
     });
@@ -57,7 +58,7 @@ const PressureTube = () => {
         scale: 0.5,
         value: PT_ID,
         label: "PT ID",
-        display: annotationsVisible,
+        display: isVisible,
         important: false,
       },
     });
@@ -73,12 +74,12 @@ const PressureTube = () => {
         scale: 0.4,
         value: PT_Position,
         label: "PT pos",
-        display: annotationsVisible,
+        display: isVisible,
         important: false,
         // color: PARTS_COLORS.PT,
       },
     });
-  }, [PT_Length, annotationsVisible, outerRadius, PT_Position, RT_OD1, innerRadius, PT_ID]);
+  }, [PT_Length, PT_Position, annotationsVisible, outerRadius, RT_OD1, innerRadius, PT_ID]);
 
   const generateOuterShapePoints = () => {
     return [

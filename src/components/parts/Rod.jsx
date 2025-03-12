@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const Rod = () => {
-  const { Rod, Positions } = useGlobalContext();
+  const { Rod, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { Rod_Length, Rod_OD, Rod_HD } = Rod.state.geometry;

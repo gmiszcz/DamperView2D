@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import SingleDimensionLine from "./SingleDimensionLine";
 
 /**
  * Helper function to extract and filter visible annotations from global context.
  */
-const gatherAnnotations = (globalContext) => {
-  return Object.values(globalContext)
+const gatherAnnotations = (partsContext) => {
+  return Object.values(partsContext)
     .flatMap(({ state }) => state?.annotations || [])
     .filter((ann) => ann.display);
 };
 
 export default function Annotations() {
-  const globalContext = useGlobalContext();
+  const partsContext = usePartsContext();
 
   // Memoize annotations to avoid unnecessary renders
-  const annotations = useMemo(() => gatherAnnotations(globalContext), [globalContext]);
+  const annotations = useMemo(() => gatherAnnotations(partsContext), [partsContext]);
 
   return (
     <Group>

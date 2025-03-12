@@ -1,12 +1,12 @@
 import React from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const Loop = ({ positionOffset, scaleFactor }) => {
-  const { Loop, Positions } = useGlobalContext();
+  const { Loop, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { Loop_OD, Loop_ID, Loop_Height } = Loop.state.geometry;

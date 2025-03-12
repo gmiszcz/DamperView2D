@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { Line, Rect, Group, Circle } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
 const ReserveTube = () => {
-  const { RT } = useGlobalContext();
+  const { RT } = usePartsContext();
   const { state: size } = useSize();
 
   const { RT_Length, RT_OD1, RT_TH, RT_NumberOfSwages, RT_Swage_List } = RT.state.geometry;

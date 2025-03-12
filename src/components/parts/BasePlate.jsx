@@ -1,13 +1,13 @@
 import React from "react";
 import { Line, Group } from "react-konva";
-import { useGlobalContext } from "../../context/GlobalContext";
+import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { PARTS_COLORS } from "../../utils/constants";
 
 const BasePlate = () => {
-  const { BP, RT, Positions } = useGlobalContext();
+  const { BP, RT, Positions } = usePartsContext();
   const { state: size } = useSize();
 
   const { BP_TH, BP_H, BP_PD } = BP.state.geometry;

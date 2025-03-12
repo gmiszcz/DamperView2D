@@ -14,7 +14,7 @@ import { useCVSAe } from "./parts/CVSAeContext";
 import { useTT } from "./parts/TTContext";
 import { usePOS } from "./parts/POSContext";
 
-export const useGlobalContext = () => {
+export const usePartsContext = () => {
   const RT = useRT();
   const PT = usePT();
   const Rod = useRod();
