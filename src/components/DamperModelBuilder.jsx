@@ -44,8 +44,7 @@ const DamperModelBuilder = forwardRef((props, ref) => {
 
     const stage = stageRef.current;
     const group = groupRef.current;
-    stage.scale({ x: 1, y: 1 });
-    stage.position(DEFAULT_POSITION);
+
     fitViewToCenter(stage, group)
   };
 
@@ -71,16 +70,14 @@ const DamperModelBuilder = forwardRef((props, ref) => {
       <Layer>
         <Group
           draggable
-          x={groupPosition.x}
-          y={groupPosition.y}
+          // x={groupPosition.x}
+          // y={groupPosition.y}
           // scale={{ x: 1.0, y: 1.0 }}
           onDragMove={(e) => {
             setGroupPosition({ x: e.target.x(), y: e.target.y() });
           }}
           ref={groupRef}
         >
-          {/* <Circle x={size.width / 2} y={size.height / 2} radius={5} fill="blue" /> */}
-          {/* <Circle x={size.width - GLOBAL_OFFSET.x} y={size.height - GLOBAL_OFFSET.y} radius={10} fill="red" /> */}
           <ReserveTube />
           <PressureTube />
           <Rod />

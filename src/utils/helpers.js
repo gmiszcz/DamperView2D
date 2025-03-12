@@ -1,5 +1,5 @@
 // src/utils/helpers.js
-import { genericAnnotation } from "./constants";
+import { genericAnnotation, DEFAULT_POSITION, DEFAULT_SCALE } from "./constants";
 
 // ********************** HELPER FUNCTIONS FOR ANNOTATIONS ********************** //
 /**
@@ -91,16 +91,44 @@ export const getStageCenter = (stage) => {
 }
 
 export const fitViewToCenter = (stage, group) => {
-  const stageCenter = getStageCenter(stage);
-  const groupBounds = group.getClientRect();
-  const groupCenter = {
-    x: groupBounds.x + groupBounds.width / 2,
-    y: groupBounds.y + groupBounds.height / 2,
+  // 1) Save the current scale so we can restore it
+  const oldScale = { x: group.scaleX(), y: group.scaleY() };
+
+  // 2) Temporarily reset scale to (1, 1) for accurate original bounding box
+  group.scale({ x: 1, y: 1 });
+  const originalBounds = group.getClientRect({ relativeTo: stage });
+  const originalWidth = originalBounds.width;
+  const originalHeight = originalBounds.height;
+
+  // 3) Restore the old scale before we do final calculations
+  group.scale(oldScale);
+
+  // 4) Compute how big the stage is in its own coordinate space
+  const stageW = stage.width() / stage.scaleX();
+  const stageH = stage.height() / stage.scaleY();
+
+  // 5) Calculate a uniform scale factor so the group fits inside the stage
+  const newScale = (Math.min(stageW / originalWidth, stageH / originalHeight) * DEFAULT_SCALE);
+  group.scale({ x: newScale, y: newScale });
+
+  // 6) Recompute the group’s bounding box after scaling
+  const scaledBounds = group.getClientRect({ relativeTo: stage });
+
+  // 7) Find the stage center in stage coordinates
+  const stageCenter = {
+    x: (stage.width() / 2 - stage.x()) / stage.scaleX(),
+    y: (stage.height() / 2 - stage.y()) / stage.scaleY(),
   };
 
+  // 8) Calculate group center
+  const groupCenter = {
+    x: scaledBounds.x + scaledBounds.width / 2,
+    y: scaledBounds.y + scaledBounds.height / 2,
+  };
+
+  // 9) Move the group so centers align
   const dx = stageCenter.x - groupCenter.x;
   const dy = stageCenter.y - groupCenter.y;
-
   group.position({
     x: group.x() + dx,
     y: group.y() + dy,

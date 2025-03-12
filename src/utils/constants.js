@@ -2,12 +2,12 @@
 
 // ******************************* GLOBAL OFFSET ******************************** //
 export const GLOBAL_OFFSET = {
-  x: 150, // Default width (right corner)
-  y: 150, // Default height (bottom corner)
+  x: 0, // Default width (right corner)
+  y: 0, // Default height (bottom corner)
 };
 
 // ************************** DEFAULT SCALE & POSITION ************************** //
-export const DEFAULT_SCALE = 1;
+export const DEFAULT_SCALE = 0.8;
 export const DEFAULT_POSITION = { x: 0, y: 0 };
 
 export const PARTS_COLORS = {
