@@ -44,6 +44,20 @@ export const partsReducer = (state, action) => {
           annotations: [...state.annotations, action.payload],
         };
       }
+    case "SET_ANNOTATIONS_VISIBILITY":
+      const visibilityMode = action.payload;
+      return {
+        ...state,
+        properties: { ...state.properties, annotationsVisible: visibilityMode !== "none" },
+        annotations: state.annotations.map((ann) => ({
+          ...ann,
+          display:
+            visibilityMode === "all" ||
+            (visibilityMode === "important" && ann.important) ||
+            (visibilityMode === "onlyImportant" && ann.important),
+        })),
+      };
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

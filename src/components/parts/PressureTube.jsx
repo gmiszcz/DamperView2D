@@ -42,6 +42,7 @@ const PressureTube = () => {
         value: PT_Length,
         label: "PT Length",
         display: annotationsVisible,
+        important: true,
       },
     });
 
@@ -57,6 +58,7 @@ const PressureTube = () => {
         value: PT_ID,
         label: "PT ID",
         display: annotationsVisible,
+        important: false,
       },
     });
 
@@ -72,6 +74,7 @@ const PressureTube = () => {
         value: PT_Position,
         label: "PT pos",
         display: annotationsVisible,
+        important: false,
         // color: PARTS_COLORS.PT,
       },
     });
