@@ -28,6 +28,10 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   const [groupPosition, setGroupPosition] = useState(DEFAULT_POSITION);
   const [scale, setScale] = useState(DEFAULT_SCALE);
 
+  useEffect(() => {
+    resetView()
+  }, [size])
+
   const handleWheel = (e) => {
     const stage = stageRef.current;
     const scaleBy = 1.05;
