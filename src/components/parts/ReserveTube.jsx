@@ -2,25 +2,22 @@ import React, { useRef } from "react";
 import { Line, Rect, Group, Circle } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../../utils/constants";
+import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
 const ReserveTube = () => {
   const { RT } = useGlobalContext();
-  const { state: size, segmentRef } = useSize();
-  const groupRef = useRef(null);
+  const { state: size } = useSize();
 
   const { RT_Length, RT_OD1, RT_TH, RT_NumberOfSwages, RT_Swage_List } = RT.state.geometry;
-  const { color, opacity, display, annotationsVisible } = RT.state.properties;
+  const { color, opacity, display } = RT.state.properties;
 
   const outerRadius = RT_OD1 / 2;
   const innerRadius = outerRadius - RT_TH;
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
-
-  RT.state.ref = groupRef;
 
   // Generates the outer swaged shape points using previous swage's final radius as the starting point for the next swage.
   const generateSwagedOuterShapePoints = () => {
@@ -119,7 +116,7 @@ const ReserveTube = () => {
   };
 
   return (
-    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(RT)} ref={groupRef}>
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(RT)}>
       {RT_NumberOfSwages > 0 ? (
         <>
           {/* Outer swaged shape */}

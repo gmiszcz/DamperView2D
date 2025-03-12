@@ -23,9 +23,11 @@ import "./DamperVisualizationWindow.css";
 const DamperModelBuilder = forwardRef((props, ref) => {
   const { state: size } = useSize();
   const stageRef = useRef(null);
-  const globalContext = useGlobalContext();
+  const groupRef = useRef({}); // Reference to the MASTER GROUP for setting positions
   const [groupPosition, setGroupPosition] = useState(DEFAULT_POSITION);
   const [scale, setScale] = useState(DEFAULT_SCALE);
+
+  size.ref = stageRef; // Save the reference to the stage for use in other components It will allow to set positions of the MASTER GROUP
 
   const handleWheel = (e) => {
     const stage = stageRef.current;
@@ -73,6 +75,7 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           onDragMove={(e) => {
             setGroupPosition({ x: e.target.x(), y: e.target.y() });
           }}
+          ref={groupRef}
         >
           {/* <Circle x={size.width / 2} y={size.height / 2} radius={5} fill="blue" /> */}
           {/* <Circle x={size.width - GLOBAL_OFFSET.x} y={size.height - GLOBAL_OFFSET.y} radius={10} fill="red" /> */}

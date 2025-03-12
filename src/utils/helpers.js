@@ -77,10 +77,10 @@ export const handleToggleAnnotations = (part) => {
 };
 
 // ************************** CALCULATE CENTER POSITION  ************************* //
-export const calculateAndSetCenterPosition = (part, groupRef) => {
+export const calculateAndSetCenterPosition = (state) => {
   setTimeout(() => {
-    if (groupRef.current) {
-      const bounds = groupRef.current.getClientRect();
+    if (state.ref.current) {
+      const bounds = state.ref.current.getClientRect();
 
       const centerPosition = {
         x: bounds.x + bounds.width / 2,
@@ -100,7 +100,7 @@ export const calculateAndSetCenterPosition = (part, groupRef) => {
       };
 
       // Update the calculated positions in the state
-      part.state.calculatedValues.positionData = positionData;
+      state.calculatedValues.positionData = positionData;
     }
   }, 0);
 };

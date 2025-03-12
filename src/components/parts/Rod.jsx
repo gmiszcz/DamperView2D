@@ -9,8 +9,6 @@ import { calculateAndSetCenterPosition } from "../../utils/helpers";
 const Rod = () => {
   const { Rod, Positions } = useGlobalContext();
   const { state: size } = useSize();
-  const groupRef = useRef();
-  window.rodRef = groupRef;
 
   const { Rod_Length, Rod_OD, Rod_HD } = Rod.state.geometry;
   const { DL, CL, EL } = Positions.state.geometry;
@@ -32,11 +30,7 @@ const Rod = () => {
     } else if (position === "EL") {
       setRodPosition(EL - Rod_Length);
     }
-
-    //calculate rod center position
-    calculateAndSetCenterPosition(Rod, groupRef); // it will set the center position of the rod to the global context and use it for scaling
-    Rod.state.ref = groupRef;
-  }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length, groupRef]);
+  }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length]);
 
   const generateRodShapePoints = () => {
     return [
@@ -57,7 +51,7 @@ const Rod = () => {
   };
 
   return (
-    <Group x={positionXOffset} y={positionYOffset} ref={groupRef}>
+    <Group x={positionXOffset} y={positionYOffset}>
       {/* Rod shape */}
       <Line points={generateRodShapePoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
       {/* Hardened layer */}
