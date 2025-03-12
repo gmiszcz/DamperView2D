@@ -1,4 +1,4 @@
-import React, { useState, useRef, useImperativeHandle, forwardRef } from "react";
+import React, { useState, useRef, useImperativeHandle, forwardRef, useEffect } from "react";
 import { Stage, Layer, Group } from "react-konva";
 import Annotations from "./annotations/Annotations";
 import { useGlobalContext } from "../context/GlobalContext";
@@ -18,16 +18,15 @@ import RodGuide from "./parts/RodGuide";
 // import Positions from "./parts/Positions";
 import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../utils/constants";
 import { calculateNewScale } from "../utils/helpers";
+import { fitViewToCenter } from "../utils/helpers";
 import "./DamperVisualizationWindow.css";
 
 const DamperModelBuilder = forwardRef((props, ref) => {
   const { state: size } = useSize();
-  const stageRef = useRef(null);
+  const stageRef = useRef({});
   const groupRef = useRef({}); // Reference to the MASTER GROUP for setting positions
   const [groupPosition, setGroupPosition] = useState(DEFAULT_POSITION);
   const [scale, setScale] = useState(DEFAULT_SCALE);
-
-  size.ref = stageRef; // Save the reference to the stage for use in other components It will allow to set positions of the MASTER GROUP
 
   const handleWheel = (e) => {
     const stage = stageRef.current;
@@ -40,11 +39,14 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   };
 
   const resetView = () => {
+    if (!stageRef.current) return;
+    if (!groupRef.current) return;
+
     const stage = stageRef.current;
-    setScale(DEFAULT_SCALE);
-    setGroupPosition(DEFAULT_POSITION);
-    stage.scale({ x: DEFAULT_SCALE, y: DEFAULT_SCALE });
+    const group = groupRef.current;
+    stage.scale({ x: 1, y: 1 });
     stage.position(DEFAULT_POSITION);
+    fitViewToCenter(stage, group)
   };
 
   const handleRightClick = (e) => {
@@ -59,8 +61,8 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   return (
     <Stage
       ref={stageRef}
-      width={size.width}
-      height={size.height}
+      width={window.innerWidth ? window.innerWidth : size.width}
+      height={window.innerHeight ? window.innerHeight : size.height}
       onWheel={handleWheel}
       onDblClick={resetView}
       //   onContextMenu={(e) => e.evt.preventDefault()} // Disable right-click

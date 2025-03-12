@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Line, Group } from "react-konva";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
-import { calculateAndSetCenterPosition } from "../../utils/helpers";
 
 const Rod = () => {
   const { Rod, Positions } = useGlobalContext();

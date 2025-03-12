@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useContext, useEffect, useRef } from "react";
 import { GLOBAL_OFFSET } from "../utils/constants";
 import { sizeReducer } from "../reducers/sizeReducer";
-import { calculateAndSetCenterPosition } from "../utils/helpers";
 // Initial state for size
 const initialState = {
   width: GLOBAL_OFFSET.x,
@@ -29,10 +28,7 @@ export const SizeProvider = ({ children }) => {
           },
         });
       }
-      // Update the positions of the parts
-      if (state.ref?.current) {
-        calculateAndSetCenterPosition(state);
-      }
+
     };
 
     updateSize(); // Set initial size

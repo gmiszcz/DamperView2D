@@ -1,5 +1,5 @@
 // src/utils/helpers.js
-import { genericAnnotation, DEFAULT_SCALE, DEFAULT_POSITION } from "./constants";
+import { genericAnnotation } from "./constants";
 
 // ********************** HELPER FUNCTIONS FOR ANNOTATIONS ********************** //
 /**
@@ -77,30 +77,32 @@ export const handleToggleAnnotations = (part) => {
 };
 
 // ************************** CALCULATE CENTER POSITION  ************************* //
-export const calculateAndSetCenterPosition = (state) => {
-  setTimeout(() => {
-    if (state.ref.current) {
-      const bounds = state.ref.current.getClientRect();
+export const getStageCenter = (stage) => {
+  const width = stage.width();
+  const height = stage.height();
+  const scaleX = stage.scaleX();
+  const scaleY = stage.scaleY();
+  const position = stage.position();
 
-      const centerPosition = {
-        x: bounds.x + bounds.width / 2,
-        y: bounds.y + bounds.height / 2,
-      };
+  return {
+    x: width / 2 - position.x / scaleX,
+    y: height / 2 - position.y / scaleY,
+  }
+}
 
-      const positionData = {
-        center: centerPosition,
-        topLeft: { x: bounds.x, y: bounds.y },
-        topRight: { x: bounds.x + bounds.width, y: bounds.y },
-        bottomLeft: { x: bounds.x, y: bounds.y + bounds.height },
-        bottomRight: { x: bounds.x + bounds.width, y: bounds.y + bounds.height },
-        left: { x: bounds.x, y: centerPosition.y },
-        right: { x: bounds.x + bounds.width, y: centerPosition.y },
-        top: { x: centerPosition.x, y: bounds.y },
-        bottom: { x: centerPosition.x, y: bounds.y + bounds.height },
-      };
+export const fitViewToCenter = (stage, group) => {
+  const stageCenter = getStageCenter(stage);
+  const groupBounds = group.getClientRect();
+  const groupCenter = {
+    x: groupBounds.x + groupBounds.width / 2,
+    y: groupBounds.y + groupBounds.height / 2,
+  };
 
-      // Update the calculated positions in the state
-      state.calculatedValues.positionData = positionData;
-    }
-  }, 0);
-};
+  const dx = stageCenter.x - groupCenter.x;
+  const dy = stageCenter.y - groupCenter.y;
+
+  group.position({
+    x: group.x() + dx,
+    y: group.y() + dy,
+  });
+}
