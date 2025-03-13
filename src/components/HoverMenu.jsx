@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "primereact/button";
 import { SelectButton } from "primereact/selectbutton";
-import { MultiStateCheckbox } from "primereact/multistatecheckbox";
 import { usePartsContext } from "../context/PartsContext";
+import { Tooltip } from "primereact/tooltip";
 import "./HoverMenu.css";
 
 const HoverMenu = ({ visible, onFitView, openModal }) => {
@@ -12,11 +12,11 @@ const HoverMenu = ({ visible, onFitView, openModal }) => {
   const [value, setValue] = useState(options[1]);
 
   const annotationOptions = [
-    { value: "all", icon: "pi pi-eye" },
-    { value: "important", icon: "pi pi-exclamation-circle" },
-    { value: "none", icon: "pi pi-eye-slash" }
+    { value: "all", icon: "pi pi-eye", label: "Show All" },
+    { value: "important", icon: "pi pi-exclamation-circle", label: "Important Only" },
+    { value: "none", icon: "pi pi-eye-slash", label: "Hide" },
   ];
-  const [annotationVisibility, setAnnotationVisibility] = useState("all");
+  const [annotationIndex, setAnnotationIndex] = useState(0);
 
   const handleChangePosition = (position) => {
     parts.Rod.dispatch({
@@ -27,11 +27,13 @@ const HoverMenu = ({ visible, onFitView, openModal }) => {
     setValue(position);
   };
 
+  // Set the annotation visibility for all parts depending on the current index
+  const handleToggleAnnotations = () => {
+    const nextIndex = (annotationIndex + 1) % annotationOptions.length;
+    setAnnotationIndex(nextIndex);
+    const nextVisibility = annotationOptions[nextIndex].value;
 
-  const handleToggleAnnotations = (visibility) => {
-    setAnnotationVisibility(visibility);
-
-    Object.values(parts).forEach(part => part.dispatch({ type: "SET_ANNOTATIONS_VISIBILITY", payload: visibility }));
+    Object.values(parts).forEach((part) => part.dispatch({ type: "SET_ANNOTATIONS_VISIBILITY", payload: nextVisibility }));
   };
 
   return (
@@ -42,15 +44,13 @@ const HoverMenu = ({ visible, onFitView, openModal }) => {
 
           <Button label="Fit View" icon="pi pi-arrows-alt" onClick={onFitView} />
 
-          {/* MultiStateCheckbox for Annotations Visibility */}
-          <MultiStateCheckbox
-            value={annotationVisibility}
-            onChange={(e) => handleToggleAnnotations(e.value)}
-            options={annotationOptions}
-            optionValue="value"
-            empty={false}
+          {/* Toggle button for annotation visibility */}
+          <Button
+            icon={annotationOptions[annotationIndex].icon}
+            aria-label={annotationOptions[annotationIndex].label}
+            onClick={handleToggleAnnotations}
+            className="icon-only"
           />
-          <span>{annotationVisibility || 'no value'}</span>
 
           <Button icon="pi pi-external-link" className="right-button icon-only" onClick={openModal} />
         </div>
