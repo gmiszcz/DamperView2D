@@ -9,27 +9,9 @@
 
 .button-container {
   display: flex;
-  /* align-items: center; */
   gap: 10px;
 }
 
-.hover-menu .p-button {
-  padding: 10px;
-  padding-right: 17px;
-  padding-left: 17px;
-  gap: 10px;
-}
-
-/*define right button*/
 .hover-menu .right-button {
-  margin-left: auto;
-}
-
-.hover-menu .icon-only {
-  padding-right: 10px;
-  padding-left: 20px;
-}
-
-.expand-button {
   margin-left: auto;
 }

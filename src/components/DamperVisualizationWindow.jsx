@@ -4,6 +4,7 @@ import DamperModelBuilder from "./DamperModelBuilder";
 import { usePartsContext } from "../context/PartsContext";
 import { SizeProvider } from "../context/SizeContext";
 import HoverMenu from "./HoverMenu";
+import { Dialog } from "primereact/dialog";
 
 export default function DamperVisualizationWindow() {
   const partsContext = usePartsContext();
@@ -44,10 +45,11 @@ export default function DamperVisualizationWindow() {
 
   return (
     <div className="damper-visualization-window" onMouseEnter={() => setMenuVisible(true)} onMouseLeave={() => setMenuVisible(false)}>
-      <h3>Damper Visualization Window</h3>
       <SizeProvider>
-        <HoverMenu visible={menuVisible} onFitView={() => modelRef.current?.resetView()} />
-        <DamperModelBuilder ref={modelRef} />
+        <div style={{ display: "contents" }}>
+          <HoverMenu visible={menuVisible} onFitView={() => modelRef.current?.resetView()} />
+          <DamperModelBuilder ref={modelRef} />
+        </div>
       </SizeProvider>
     </div>
   );
