@@ -5,7 +5,7 @@ import { usePartsContext } from "../context/PartsContext";
 import { Tooltip } from "primereact/tooltip";
 import "./HoverMenu.css";
 
-const HoverMenu = ({ visible, onFitView, openModal }) => {
+const HoverMenu = ({ visible, onFitView, openModal, isMaximized }) => {
   const parts = usePartsContext();
 
   const options = ["CL", "DL", "EL"];
@@ -52,7 +52,7 @@ const HoverMenu = ({ visible, onFitView, openModal }) => {
             className="icon-only"
           />
 
-          <Button icon="pi pi-external-link" className="right-button icon-only" onClick={openModal} />
+          {!isMaximized && <Button icon="pi pi-external-link" className="right-button icon-only" onClick={openModal} />}
         </div>
       </div>
     )

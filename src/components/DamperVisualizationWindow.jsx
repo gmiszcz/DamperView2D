@@ -5,10 +5,12 @@ import { usePartsContext } from "../context/PartsContext";
 import { SizeProvider } from "../context/SizeContext";
 import HoverMenu from "./HoverMenu";
 import { Dialog } from "primereact/dialog";
+import ReactDOM from "react-dom";
 
 export default function DamperVisualizationWindow() {
   const partsContext = usePartsContext();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const controlRef = useRef({});
   const modelRef = useRef({});
 
@@ -43,14 +45,44 @@ export default function DamperVisualizationWindow() {
     // console.log("🔄 partsContext updated:", partsContext);
   }, [partsContext]);
 
-  return (
+  const handleMaximize = (maximize) => {
+    setIsMaximized(maximize);
+    setTimeout(() => {
+      modelRef.current?.resetView();
+    }, 50);
+  };
+
+  const renderContent = () => (
     <div className="damper-visualization-window" onMouseEnter={() => setMenuVisible(true)} onMouseLeave={() => setMenuVisible(false)}>
       <SizeProvider>
         <div style={{ display: "contents" }}>
-          <HoverMenu visible={menuVisible} onFitView={() => modelRef.current?.resetView()} />
+          <HoverMenu
+            visible={menuVisible}
+            onFitView={() => modelRef.current?.resetView()}
+            openModal={() => {
+              handleMaximize(true);
+            }}
+            isMaximized={isMaximized}
+          />
           <DamperModelBuilder ref={modelRef} />
         </div>
       </SizeProvider>
     </div>
   );
+
+  return isMaximized
+    ? ReactDOM.createPortal(
+        <Dialog
+          visible={isMaximized}
+          style={{ width: "95vw", height: "50vh" }}
+          onHide={() => {
+            handleMaximize(false);
+          }}
+          modal
+        >
+          {renderContent()}
+        </Dialog>,
+        document.body
+      )
+    : renderContent();
 }

@@ -32,3 +32,13 @@
   position: relative;
   overflow: hidden;
 }
+
+.p-dialog .p-dialog-header {
+  position: absolute;
+  right: 0px;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+.p-dialog .p-dialog-content {
+  padding: 0.5rem;
+}
