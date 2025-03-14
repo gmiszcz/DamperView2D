@@ -87,8 +87,8 @@ export const getStageCenter = (stage) => {
   return {
     x: width / 2 - position.x / scaleX,
     y: height / 2 - position.y / scaleY,
-  }
-}
+  };
+};
 
 export const fitViewToCenter = (stage, group) => {
   // 1) Save the current scale so we can restore it
@@ -100,6 +100,11 @@ export const fitViewToCenter = (stage, group) => {
   const originalWidth = originalBounds.width;
   const originalHeight = originalBounds.height;
 
+  if (!originalWidth || !originalHeight || isNaN(originalWidth) || isNaN(originalHeight)) {
+    console.warn("Invalid bounding box dimensions:");
+    return;
+  }
+
   // 3) Restore the old scale before we do final calculations
   group.scale(oldScale);
 
@@ -108,7 +113,7 @@ export const fitViewToCenter = (stage, group) => {
   const stageH = stage.height() / stage.scaleY();
 
   // 5) Calculate a uniform scale factor so the group fits inside the stage
-  const newScale = (Math.min(stageW / originalWidth, stageH / originalHeight) * DEFAULT_SCALE);
+  const newScale = Math.min(stageW / originalWidth, stageH / originalHeight) * DEFAULT_SCALE;
   group.scale({ x: newScale, y: newScale });
 
   // 6) Recompute the group’s bounding box after scaling
@@ -133,4 +138,4 @@ export const fitViewToCenter = (stage, group) => {
     x: group.x() + dx,
     y: group.y() + dy,
   });
-}
+};
