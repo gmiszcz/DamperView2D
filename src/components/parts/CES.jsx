@@ -5,7 +5,7 @@ import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
-const CES = ({ positionOffset, scaleFactor }) => {
+const CES = ({}) => {
   const { CES, Positions } = usePartsContext();
   const { state: size } = useSize();
 
