@@ -18,7 +18,7 @@ export const PARTS_COLORS = {
   KN: "#FF00FF",
   PP: "#FFFF00",
   PT: "#d08309",
-  RG: "#FFFF00",
+  RG: "#9e9e9e",
   ROD: "#e03535",
   RT: "#3063b7",
   SS: "#FF00FF",

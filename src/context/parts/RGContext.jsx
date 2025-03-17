@@ -7,10 +7,10 @@ import { PARTS_COLORS } from "../../utils/constants";
 let geometryRG = {
   RG_Customized: false,
   RG_PartNo: "",
-  RG_Height: 0,
-  RG_RT_VDist: 0,
-  RG_RT_HDist: 0,
-  RG_bH: 0,
+  RG_Height: 25,
+  RG_RT_VDist: 5,
+  RG_RT_HDist: 3,
+  RG_bH: 3,
   RG_topShelf: false,
   RG_topShelfClearance: 0,
   RG_topShelfPosition: 0,
@@ -18,7 +18,7 @@ let geometryRG = {
 };
 
 // Initial state with annotations
-let initialState = getInitialState(geometryRG)
+let initialState = getInitialState(geometryRG);
 
 initialState = {
   ...initialState,

@@ -8,7 +8,7 @@ let geometryPT = {
   PT_Customized: false,
   PT_PartNo: "",
   PT_ShowInReport: true,
-  PT_Length: 250,
+  PT_Length: 350,
   PT_ID: 32,
   PT_TH: 1.13,
 };

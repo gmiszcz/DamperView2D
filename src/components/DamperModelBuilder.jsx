@@ -29,8 +29,8 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   const [scale, setScale] = useState(DEFAULT_SCALE);
 
   useEffect(() => {
-    resetView()
-  }, [size])
+    resetView();
+  }, [size]);
 
   const handleWheel = (e) => {
     const stage = stageRef.current;
@@ -49,7 +49,7 @@ const DamperModelBuilder = forwardRef((props, ref) => {
     const stage = stageRef.current;
     const group = groupRef.current;
 
-    fitViewToCenter(stage, group)
+    fitViewToCenter(stage, group);
   };
 
   const handleRightClick = (e) => {
@@ -84,9 +84,9 @@ const DamperModelBuilder = forwardRef((props, ref) => {
         >
           <ReserveTube />
           <PressureTube />
-          <Rod />
           <BasePlate />
-          {/* <RodGuide /> */}
+          <RodGuide />
+          <Rod />
           {/* <Bearing /> */}
           {/* <PistonPost /> */}
           {/* <FootBracket /> */}
