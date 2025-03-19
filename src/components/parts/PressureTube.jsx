@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Line, Group } from "react-konva";
+import { Line, Group, Rect } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
@@ -81,30 +81,12 @@ const PressureTube = () => {
     });
   }, [PT_Length, PT_Position, annotationsVisible, outerRadius, RT_OD1, innerRadius, PT_ID]);
 
-  const generateOuterShapePoints = () => {
-    return [
-      [-PT_Position, outerRadius],
-      [-PT_LengthWithPosition, outerRadius],
-      [-PT_LengthWithPosition, -outerRadius],
-      [-PT_Position, -outerRadius],
-    ].flat();
-  };
-
-  const generateInnerShapePoints = () => {
-    return [
-      [-PT_Position, innerRadius],
-      [-PT_LengthWithPosition, innerRadius],
-      [-PT_LengthWithPosition, -innerRadius],
-      [-PT_Position, -innerRadius],
-    ].flat();
-  };
-
   return (
     <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(PT)}>
-      {/* Outer shape */}
-      <Line points={generateOuterShapePoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
+      {/* Pressure Tube Outer Shape */}
+      <Rect x={-PT_Position - PT_Length} y = {-outerRadius} width={PT_Length} height={outerRadius * 2.0} fill ={color} opacity={display ? opacity : 0.1} shadowBlur={1}/>
       {/* Inner shape (cross-section) */}
-      <Line points={generateInnerShapePoints()} closed fill={changeBrightness(color, 0.5)} shadowBlur={0} />
+      <Rect x={-PT_Position - PT_Length} y = {-innerRadius} width={PT_Length} height={innerRadius * 2.0} fill ={changeBrightness(color, 0.5)} shadowBlur={0}/>
     </Group>
   );
 };
