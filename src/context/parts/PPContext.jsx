@@ -7,7 +7,7 @@ import { PARTS_COLORS } from "../../utils/constants";
 let geometryPP = {
   PP_Customized: false,
   PistonPost: "",
-  P_Length: 0,
+  P_Length: 10,
   PP_Type: "",
   PP_Diameter: 0,
   PP_Radius: 0,

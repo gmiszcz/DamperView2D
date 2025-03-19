@@ -16,6 +16,7 @@ import RodGuide from "./parts/RodGuide";
 // import Knuckle from "./parts/Knuckle";
 // import CVSAe from "./parts/CVSAe";
 // import Positions from "./parts/Positions";
+import Piston from "./parts/Piston";
 import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../utils/constants";
 import { calculateNewScale } from "../utils/helpers";
 import { fitViewToCenter } from "../utils/helpers";
@@ -85,10 +86,11 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           <ReserveTube />
           <PressureTube />
           <BasePlate />
+          <Bearing />
           <RodGuide />
           <Rod />
-          {/* <Bearing /> */}
           {/* <PistonPost /> */}
+          <Piston/>
           {/* <FootBracket /> */}
           {/* <ThirdTube /> */}
           {/* <SpringSeat /> */}

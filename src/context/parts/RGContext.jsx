@@ -10,7 +10,7 @@ let geometryRG = {
   RG_Height: 25,
   RG_RT_VDist: 5,
   RG_RT_HDist: 3,
-  RG_bH: 3,
+  RG_bH: 0,
   RG_topShelf: false,
   RG_topShelfClearance: 0,
   RG_topShelfPosition: 0,

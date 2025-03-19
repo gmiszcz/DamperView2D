@@ -6,12 +6,20 @@ import { PARTS_COLORS } from "../../utils/constants";
 // Initial state for Bearing
 let geometryBearing = {
   Bearing_PartNo: "",
-  Bearing_TH: 0,
-  Bearing_H: 0,
+  Bearing_TH: 2.5,
+  Bearing_H: 12,
 };
 
 // Initial state with annotations
 let initialState = getInitialState(geometryBearing);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.BRG,
+  },
+};
 
 // Create Context
 const ContextBearing = createContext();

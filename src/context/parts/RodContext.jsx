@@ -14,12 +14,12 @@ let geometryRod = {
   Rod_HD: 2,
   Rod_HDLength: 0,
   Rod_Hollow_TH: 0,
-  Rod_isGroove: false,
+  Rod_isGroove: true,
   Rod_collarType: "",
-  Rod_grooveRadius: 0,
-  Rod_grooveMidDiameter: 0,
-  Rod_groovePosition: 0,
-  Rod_grooveWidth: 0,
+  Rod_grooveRadius: 1.0,
+  Rod_grooveMidDiameter: 18.0,
+  Rod_groovePosition: 40,
+  Rod_grooveWidth: 2,
   Rod_CurrentPosition: "DL",
 };
 

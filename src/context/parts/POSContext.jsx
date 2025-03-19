@@ -9,10 +9,10 @@ let geometryPositions = {
   CL: 450,
   EL: 600,
   PT_Position: 25,
-  P_Position: 0,
+  P_Position: 5.4,
   FB_Position: 0,
   BP_Position: 0,
-  Bearing_Position: 0,
+  Bearing_Position: 0.75,
   Knuckle_Position: 0,
 };
 
