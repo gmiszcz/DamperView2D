@@ -114,26 +114,6 @@ const RodGuide = () => {
     return rodGuidePoints.flat();
   }
 
-  console.log("generate_rodGuide_points", generate_rodGuide_points(outerRadius))
-
-  const generateRodGuideShapePoints = () => {
-    return [
-      [-RG_Position, outerRadius],
-      [-RG_Position - RG_Height, outerRadius],
-      [-RG_Position - RG_Height, -outerRadius],
-      [-RG_Position, -outerRadius],
-    ].flat();
-  };
-
-  const generateRodGuideInnerShapePoints = () => {
-    return [
-      [-RG_Position, innerRadius],
-      [-RG_Position - RG_Height, innerRadius],
-      [-RG_Position - RG_Height, -innerRadius],
-      [-RG_Position, -innerRadius],
-    ].flat();
-  };
-
   return (
     <Group x={positionXOffset} y={positionYOffset}>
       {/* Outer shape */}

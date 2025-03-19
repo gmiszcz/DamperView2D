@@ -16,7 +16,6 @@ const Bearing = () => {
   const { Bearing_Position } = Positions.state.geometry;
   const { color, opacity, display } = BRG.state.properties;
 
-  console.log("RG_Height", RG_Height)
   const outerRadius = Rod_OD / 2  + Bearing_TH;
   // const innerRadius = Bearing_ID / 2;
 
