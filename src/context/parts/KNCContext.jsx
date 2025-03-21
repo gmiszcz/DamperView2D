@@ -6,11 +6,11 @@ import { PARTS_COLORS } from "../../utils/constants";
 // Initial state for Knuckle
 let geometryKnuckle = {
   Knuckle_Customized: false,
-  Knuckle_Length: 0,
-  Knuckle_ThreadDiam: 0,
+  Knuckle_Length: 90,
+  Knuckle_ThreadDiam: 14,
   Knuckle_ThreadDiam2: 0,
-  Knuckle_ThreadPitch: 0,
-  Knuckle_TH: 0,
+  Knuckle_ThreadPitch: 1.5,
+  Knuckle_TH: 10,
   Knuckle_R: 0,
   Knuckle_Spread: 0,
   Knuckle_BoltHeight: 0,
@@ -18,6 +18,14 @@ let geometryKnuckle = {
 
 // Initial state with annotations
 let initialState = getInitialState(geometryKnuckle);
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.KNC,
+  },
+};
 
 // Create Context
 const ContextKnuckle = createContext();
