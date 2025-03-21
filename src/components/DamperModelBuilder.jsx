@@ -22,6 +22,7 @@ import { calculateNewScale } from "../utils/helpers";
 import { fitViewToCenter } from "../utils/helpers";
 import "./DamperVisualizationWindow.css";
 import CylinderEnd from "./parts/CylinderEnd";
+import FootBracket from "./parts/FootBracket";
 
 const DamperModelBuilder = forwardRef((props, ref) => {
   const { state: size } = useSize();
@@ -84,16 +85,17 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           }}
           ref={groupRef}
         >
+          <FootBracket />
           <ReserveTube />
           <PressureTube />
           <BasePlate />
           <Bearing />
           <RodGuide />
           <Rod />
-          <CylinderEnd/>
+          <CylinderEnd />
+          <BasePlate outerOrInnerShape={"outer"}/>
           {/* <PistonPost /> */}
           <Piston/>
-          {/* <FootBracket /> */}
           {/* <ThirdTube /> */}
           {/* <SpringSeat /> */}
           {/* <Knuckle /> */}

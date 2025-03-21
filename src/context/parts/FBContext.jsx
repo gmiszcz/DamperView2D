@@ -8,22 +8,30 @@ let geometryFB = {
   FB_Customized: false,
   FB_PartNo: "",
   FB_ShowInReport: true,
-  FB_Length: 0,
-  FB_FrontHolePosition: 0,
-  FB_FrontHoleAxisOffset: 0,
-  FB_HoleSpan: 0,
+  FB_Length: 130,
+  FB_FrontHolePosition: 20,
+  FB_FrontHoleAxisOffset: 52,
+  FB_HoleSpan: 65,
   FB_RearHoleOffset: 0,
   FB_InnerWidth: 0,
-  FB_OB_TH: 0,
-  FB_IB_TH: 0,
-  FB_ThreadDiam: 0,
-  FB_ThreadPitch: 0,
-  FB_BoltsHeadDiam: 0,
+  FB_OB_TH: 3,
+  FB_IB_TH: 3,
+  FB_ThreadDiam: 12,
+  FB_ThreadPitch: 1.75,
+  FB_BoltsHeadDiam: 26.6,
   FB_KnuckleTH_Gap: 0,
 };
 
 // Initial state with annotations
 let initialState = getInitialState(geometryFB)
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.FB,
+  },
+};
 
 // Create Context
 const ContextFB = createContext();
