@@ -12,6 +12,7 @@ import { ProviderRod } from "./parts/RodContext";
 import { ProviderRT } from "./parts/RTContext";
 import { ProviderSS } from "./parts/SSContext";
 import { ProviderTT } from "./parts/TTContext";
+import { ProviderCylinderEnd } from "./parts/CENDContext";
 
 const GlobalProvider = ({ children }) => {
   return (
@@ -23,15 +24,17 @@ const GlobalProvider = ({ children }) => {
               <ProviderBP>
                 <ProviderSS>
                   <ProviderFB>
-                    <ProviderKnuckle>
-                      <ProviderBearing>
-                        <ProviderCVSAe>
-                          <ProviderTT>
-                            <ProviderPositions>{children}</ProviderPositions>
-                          </ProviderTT>
-                        </ProviderCVSAe>
-                      </ProviderBearing>
-                    </ProviderKnuckle>
+                    <ProviderCylinderEnd>
+                      <ProviderKnuckle>
+                        <ProviderBearing>
+                          <ProviderCVSAe>
+                            <ProviderTT>
+                              <ProviderPositions>{children}</ProviderPositions>
+                            </ProviderTT>
+                          </ProviderCVSAe>
+                        </ProviderBearing>
+                      </ProviderKnuckle>
+                    </ProviderCylinderEnd>
                   </ProviderFB>
                 </ProviderSS>
               </ProviderBP>

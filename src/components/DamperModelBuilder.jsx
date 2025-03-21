@@ -21,6 +21,7 @@ import { GLOBAL_OFFSET, DEFAULT_SCALE, DEFAULT_POSITION } from "../utils/constan
 import { calculateNewScale } from "../utils/helpers";
 import { fitViewToCenter } from "../utils/helpers";
 import "./DamperVisualizationWindow.css";
+import CylinderEnd from "./parts/CylinderEnd";
 
 const DamperModelBuilder = forwardRef((props, ref) => {
   const { state: size } = useSize();
@@ -89,6 +90,7 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           <Bearing />
           <RodGuide />
           <Rod />
+          <CylinderEnd/>
           {/* <PistonPost /> */}
           <Piston/>
           {/* <FootBracket /> */}

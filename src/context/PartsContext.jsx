@@ -13,6 +13,7 @@ import { useBRG } from "./parts/BRGContext";
 import { useCVSAe } from "./parts/CVSAeContext";
 import { useTT } from "./parts/TTContext";
 import { usePOS } from "./parts/POSContext";
+import { useCEND } from "./parts/CENDContext";
 
 export const usePartsContext = () => {
   const RT = useRT();
@@ -21,6 +22,7 @@ export const usePartsContext = () => {
   const RG = useRG();
   const PP = usePP();
   const BP = useBP();
+  const CEND = useCEND();
   const SS = useSS();
   const FB = useFB();
   const KNC = useKNC();
@@ -30,7 +32,7 @@ export const usePartsContext = () => {
   const Positions = usePOS();
 
   return useMemo(
-    () => ({ RT, PT, Rod, RG, PP, BP, SS, FB, KNC, BRG, CVSAe, TT, Positions }),
-    [RT.state, PT.state, Rod.state, RG.state, PP.state, BP.state, SS.state, FB.state, KNC.state, BRG.state, CVSAe.state, TT.state, Positions.state]
+    () => ({ RT, PT, Rod, RG, PP, BP, CEND, SS, FB, KNC, BRG, CVSAe, TT, Positions }),
+    [RT.state, PT.state, Rod.state, RG.state, PP.state, BP.state, CEND.state, SS.state, FB.state, KNC.state, BRG.state, CVSAe.state, TT.state, Positions.state]
   );
 };
