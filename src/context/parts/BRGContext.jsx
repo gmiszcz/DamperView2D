@@ -6,7 +6,7 @@ import { PARTS_COLORS } from "../../utils/constants";
 // Initial state for Bearing
 let geometryBearing = {
   Bearing_PartNo: "",
-  Bearing_TH: 2.5,
+  Bearing_TH: 1.5,
   Bearing_H: 12,
 };
 

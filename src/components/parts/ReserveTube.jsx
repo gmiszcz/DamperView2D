@@ -117,6 +117,7 @@ const ReserveTube = () => {
 
   return (
     <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(RT)}>
+      
       {RT_NumberOfSwages > 0 ? (
         <>
           {/* Outer swaged shape */}
@@ -130,8 +131,25 @@ const ReserveTube = () => {
           <Rect width={-RT_Length} height={RT_OD1 - 2 * RT_TH} y={-innerRadius} fill={changeBrightness(color, 0.5)} shadowBlur={1} />
         </>
       )}
+{/*Add Roll Closing by adding two rectangles at the Reserve Tube's Top*/}
+      <RollClosing topOrBottom="top" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List={RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
+      <RollClosing topOrBottom="bottom" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List = {RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
     </Group>
   );
 };
 
 export default ReserveTube;
+
+
+const RollClosing = ({ topOrBottom, RT_Length, RT_OD1, RT_TH, RT_Swage_List, color, display,  opacity }) => {
+
+  const getRTTopDiameter = (RT_Swage_List) => {
+    if (RT_Swage_List.length === 0) {
+      return RT_OD1;
+    }
+    return RT_Swage_List[RT_Swage_List.length - 1][1];
+
+  }
+  
+ return <Rect width={RT_TH} height={RT_TH} x={-RT_Length} y={topOrBottom === "top" ? -getRTTopDiameter(RT_Swage_List) / 2 + RT_TH : getRTTopDiameter(RT_Swage_List) / 2 - 2.0*RT_TH} fill={color} opacity={display ? opacity : 0.1} shadowBlur={0} /> 
+}

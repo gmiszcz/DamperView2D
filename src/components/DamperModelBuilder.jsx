@@ -23,6 +23,7 @@ import { fitViewToCenter } from "../utils/helpers";
 import "./DamperVisualizationWindow.css";
 import CylinderEnd from "./parts/CylinderEnd";
 import FootBracket from "./parts/FootBracket";
+import Knuckle from "./parts/Knuckle";
 
 const DamperModelBuilder = forwardRef((props, ref) => {
   const { state: size } = useSize();
@@ -85,7 +86,8 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           }}
           ref={groupRef}
         >
-          <FootBracket />
+          <Knuckle />
+          {/* <FootBracket /> */}
           <ReserveTube />
           <PressureTube />
           <BasePlate />
@@ -98,7 +100,6 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           <Piston/>
           {/* <ThirdTube /> */}
           {/* <SpringSeat /> */}
-          {/* <Knuckle /> */}
           {/* <CVSAe /> */}
           {/* <Positions /> */}
           <Annotations />

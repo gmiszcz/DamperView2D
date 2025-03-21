@@ -6,7 +6,8 @@ import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { PARTS_COLORS } from "../../utils/constants";
 
-const BasePlate = () => {
+const BasePlate = ({ outerOrInnerShape }) => {
+  // Due to the fact that Base Plate hides the Cylinder End Legs, we have to split Base Plate into two parts: inner and outer shapes.
   const { BP, RT, Positions } = usePartsContext();
   const { state: size } = useSize();
 
@@ -46,10 +47,11 @@ const BasePlate = () => {
 
   return (
     <Group x={positionXOffset} y={positionYOffset}>
-      {/* Base Plate Outer Shape */}
-      <Line points={generateBasePlateOuterPoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={0} />
-      {/* Base Plate Inner Shape (Concave effect) */}
-      <Line points={generateBasePlateInnerPoints()} closed fill={changeBrightness(color, 0.5)} shadowBlur={0} />
+      {/* Draw Base Plate outer or inner shape, based on the provided type */}
+      {outerOrInnerShape ==="outer" ? 
+        <Line points={generateBasePlateOuterPoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={0} />
+        :
+      <Line points={generateBasePlateInnerPoints()} closed fill={changeBrightness(color, 0.5)} shadowBlur={0} />}
     </Group>
   );
 };

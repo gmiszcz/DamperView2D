@@ -23,16 +23,16 @@ const Piston = () => {
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
-    useEffect(() => {
-      const position = Rod.state.geometry.Rod_CurrentPosition;
-      if (position === "DL") {
-        setPistonPosition(DL - Rod_Length - P_Position);
-      } else if (position === "CL") {
-        setPistonPosition(CL - Rod_Length - P_Position);
-      } else if (position === "EL") {
-        setPistonPosition(EL - Rod_Length - P_Position);
-      }
-  }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length]);
+  //   useEffect(() => {
+  //     const position = Rod.state.geometry.Rod_CurrentPosition;
+  //     if (position === "DL") {
+  //       setPistonPosition(DL - Rod_Length - P_Position);
+  //     } else if (position === "CL") {
+  //       setPistonPosition(CL - Rod_Length - P_Position);
+  //     } else if (position === "EL") {
+  //       setPistonPosition(EL - Rod_Length - P_Position);
+  //     }
+  // }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length]);
   
   return (
     <Group x={positionXOffset} y={positionYOffset}>

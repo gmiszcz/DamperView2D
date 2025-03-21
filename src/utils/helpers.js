@@ -1,5 +1,9 @@
 // src/utils/helpers.js
-import { genericAnnotation, DEFAULT_POSITION, DEFAULT_SCALE } from "./constants";
+import {
+  genericAnnotation,
+  DEFAULT_POSITION,
+  DEFAULT_SCALE,
+} from "./constants";
 
 // ********************** HELPER FUNCTIONS FOR ANNOTATIONS ********************** //
 /**
@@ -12,7 +16,14 @@ import { genericAnnotation, DEFAULT_POSITION, DEFAULT_SCALE } from "./constants"
  * @param {object} overrides - Additional properties
  * @returns {object} - New annotation object
  */
-export const createAnnotation = (id, startX, startY, direction, value, overrides = {}) => ({
+export const createAnnotation = (
+  id,
+  startX,
+  startY,
+  direction,
+  value,
+  overrides = {}
+) => ({
   ...genericAnnotation,
   id,
   startX: startX, // Adjust for right-to-left system
@@ -100,7 +111,12 @@ export const fitViewToCenter = (stage, group) => {
   const originalWidth = originalBounds.width;
   const originalHeight = originalBounds.height;
 
-  if (!originalWidth || !originalHeight || isNaN(originalWidth) || isNaN(originalHeight)) {
+  if (
+    !originalWidth ||
+    !originalHeight ||
+    isNaN(originalWidth) ||
+    isNaN(originalHeight)
+  ) {
     console.warn("Invalid bounding box dimensions:");
     return;
   }
@@ -113,7 +129,8 @@ export const fitViewToCenter = (stage, group) => {
   const stageH = stage.height() / stage.scaleY();
 
   // 5) Calculate a uniform scale factor so the group fits inside the stage
-  const newScale = Math.min(stageW / originalWidth, stageH / originalHeight) * DEFAULT_SCALE;
+  const newScale =
+    Math.min(stageW / originalWidth, stageH / originalHeight) * DEFAULT_SCALE;
   group.scale({ x: newScale, y: newScale });
 
   // 6) Recompute the group’s bounding box after scaling

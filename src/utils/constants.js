@@ -13,9 +13,9 @@ export const DEFAULT_POSITION = { x: 0, y: 0 };
 export const PARTS_COLORS = {
   BRG: "#8FAF8F",
   // grey color
-  BP: "#808080",
-  FB: "#00FF00",
-  KN: "#FF00FF",
+  BP: "#9b9b9b",
+  FB: "#825acf",
+  KNC: "#7f7f7f",
   PP: "#FFFF00",
   PT: "#d08309",
   RG: "#9e9e9e",
@@ -24,6 +24,7 @@ export const PARTS_COLORS = {
   SS: "#FF00FF",
   TT: "#FF0000",
   CV: "#000000",
+  CEND: "#c8c8f4",
   Piston: "#808080",
   default: "#000000",
 };

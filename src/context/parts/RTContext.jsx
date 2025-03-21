@@ -15,7 +15,7 @@ let geometryRT = {
   RT_NumberOfSwages: 1,
   RT_Swage_List: [
     [150, 50, 15],
-    [350, 40, 10],
+    [350, 45.9, 10],
   ], // [RT_Position, RT_OD, RT_Distance]
   // ReserveTube_swages: [],
   ReserveTube_VWT: [],
