@@ -22,7 +22,7 @@ export const PARTS_COLORS = {
   ROD: "#e03535",
   RT: "#3063b7",
   SS: "#FF00FF",
-  TT: "#FF0000",
+  TT: "#00fe40",
   CV: "#000000",
   CEND: "#c8c8f4",
   Piston: "#808080",
