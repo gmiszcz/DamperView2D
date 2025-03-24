@@ -1,5 +1,5 @@
 import React from "react";
-import { Line, Group } from "react-konva";
+import { Line, Group, Rect } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
@@ -20,6 +20,9 @@ const RodGuide = () => {
 
   // Rod guide dimensions
   const { RG_Height, RG_RT_VDist, RG_RT_HDist, RG_bH } = RG.state.geometry;
+
+  // Rod Guide Top Shelf dimensions
+  const {RG_topShelf, RG_topShelfClearance, RG_topShelfPosition,  RG_topShelfLength} = RG.state.geometry;
 
   // Bearing dimensions
   const { Bearing_TH } = BRG.state.geometry;
@@ -139,8 +142,20 @@ const RodGuide = () => {
               return point;
             })}
             closed
-            fill={color} opacity={display ? opacity : 0.1} shadowBlur={1}
-          />
+        fill={color} opacity={display ? opacity : 0.1} shadowBlur={1}
+      />
+      {/* Draw Top Rod Guide Bottom Shelf */}
+      {
+        RG_topShelf ? (
+        <>
+        {/* Draw Bottom Rod Guide Top Shelf */}
+        <Rect x={-RT_Length + RG_Height + RT_TH - RG_topShelfPosition - RG_topShelfLength} y={-Rod_OD / 2.0 - RG_topShelfClearance} width={RG_topShelfLength} height={-Bearing_TH + RG_topShelfClearance} fill={color} opacity={display ? opacity : 0.1} shadowBlur={0} />
+        {/* Draw Top Rod Guide Bottom Shelf */}
+        <Rect x={-RT_Length + RG_Height + RT_TH - RG_topShelfPosition - RG_topShelfLength} y={Rod_OD / 2.0 + Bearing_TH} width={RG_topShelfLength} height={-Bearing_TH + RG_topShelfClearance} fill={color} opacity={display ? opacity : 0.1} shadowBlur={0} />
+        </>
+    ) :""
+  }
+  
     </Group>
   );
 };

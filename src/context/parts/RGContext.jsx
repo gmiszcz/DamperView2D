@@ -12,9 +12,9 @@ let geometryRG = {
   RG_RT_HDist: 3,
   RG_bH: 0,
   RG_topShelf: false,
-  RG_topShelfClearance: 0,
-  RG_topShelfPosition: 0,
-  RG_topShelfLength: 0,
+  RG_topShelfClearance: 0.325,
+  RG_topShelfPosition: 15.2,
+  RG_topShelfLength: 2.35,
 };
 
 // Initial state with annotations
