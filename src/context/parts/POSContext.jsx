@@ -15,6 +15,8 @@ let geometryPositions = {
   BP_Position: 0,
   Bearing_Position: 0.75,
   Knuckle_Position: 90,
+  CVSAe_ValvePosition: 120,
+  TT_HolePosition: 100,
 };
 
 // Initial state with annotations

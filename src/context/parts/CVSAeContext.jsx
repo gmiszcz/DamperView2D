@@ -5,21 +5,27 @@ import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state for CVSAe
 let geometryCVSAe = {
-  CVSAe_ValvePosition: 0,
-  CVSAe_ValveOrient: "",
-  CVSAe_WeldSize: 0,
-  CVSAe_HousingTH: 0,
-  CVSAe_HousingDiam: 0,
-  CVSAe_HousingHeight: 0,
-  CVSAe_HoleMajorDiam: 0,
-  CVSAe_HoleMinorDiam: 0,
-  CVSAe_HoleCutDist: 0,
-  CVSAe_StepTH: 0,
-  CVSAe_StepHeight: 0,
+  CVSAe_ValveOrient: "-80",
+  CVSAe_WeldSize: 3,
+  CVSAe_HousingTH: 5.75,
+  CVSAe_HousingDiam: 40,
+  CVSAe_HousingHeight: 26.4,
+  CVSAe_HoleMajorDiam: 27.8,
+  CVSAe_HoleMinorDiam: 25.8,
+  CVSAe_HoleCutDist: 25.8,
+  CVSAe_StepTH: 1.5,
+  CVSAe_StepHeight: 2,
 };
 
 // Initial state with annotations
 let initialState = getInitialState(geometryCVSAe)
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.RT,
+  },
+};
 
 // Create Context
 const ContextCVSAe = createContext();
