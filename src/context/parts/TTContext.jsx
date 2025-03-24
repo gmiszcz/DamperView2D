@@ -1,19 +1,27 @@
 import React, { createContext, useReducer, useContext } from "react";
 import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
+import { PARTS_COLORS } from "../../utils/constants";
 
 // Initial state for Third Tube
 let geometryTT = {
   TT_Customized: false,
   TT_PartNo: "",
-  TT_Length: 0,
-  TT_OuterDiam: 0,
-  TT_TH: 0,
-  TT_HolePosition: 0,
+  TT_Length: 244,
+  TT_OuterDiam: 40,
+  TT_TH: 1.5,
 };
 
 // Initial state with annotations
 let initialState = getInitialState(geometryTT)
+
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.TT,
+  },
+};
 
 // Create Context
 const ContextTT = createContext();
