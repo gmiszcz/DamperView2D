@@ -9,9 +9,13 @@ const Piston = () => {
   const { PP, Rod, PT, Positions } = usePartsContext();
   const { state: size } = useSize();
 
-  const { P_Length,  } = PP.state.geometry;
+  // Piston Length
+  const { P_Length, } = PP.state.geometry;
+  // Pressure Tube Inner Diameter
   const { PT_ID } = PT.state.geometry;
+  // Rod Length and Current Position
   const { Rod_Length, Rod_CurrentPosition } = Rod.state.geometry
+  // Positions
   const { P_Position, DL, EL, CL } = Positions.state.geometry;
   const { color, opacity, display } = PP.state.properties;
 

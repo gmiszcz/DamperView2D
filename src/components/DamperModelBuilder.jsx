@@ -26,6 +26,7 @@ import FootBracket from "./parts/FootBracket";
 import Knuckle from "./parts/Knuckle";
 import CES from "./parts/CES";
 import ThirdTube from "./parts/ThirdTube";
+import PistonPost from "./parts/PistonPost";
 
 const DamperModelBuilder = forwardRef((props, ref) => {
   const { state: size } = useSize();
