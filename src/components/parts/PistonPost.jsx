@@ -13,8 +13,10 @@ const PistonPost = () => {
   // Piston geometry parameters
   const {P_Length} = PP.state.geometry;
   // Rod geometry parameters
-  const {Rod_OD} = Rod.state.geometry;
-  const { P_Position } = Positions.state.geometry;
+  const { Rod_OD } = Rod.state.geometry;
+  
+  // Get Rod and Piston Positions
+  const { Rod_CurrentPosition, P_Position } = Positions.state.geometry;
   const { color, opacity, display } = PP.state.properties;
 
   // const outerRadius = Rod_OD / 2;
@@ -24,11 +26,14 @@ const PistonPost = () => {
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
   //********* ADDITIONAL PISTON POST GEOMETRY PARAMETERS ******* */
+
+  const pistonPostConnectionLength = 5.0
+
   // Piston Post shaft length (also called as Piston Post Stick) is calculated based on the Piston Position, Piston High and fixed value of 7.0 (for estetique reasons)
   const PP_ShaftLength = P_Position + P_Length + 7.0;
 
   // Piston Post Length is calculated based on previously calculated Piston Post Shaft Length, by adding to the value fixed 5.0 mm (same as in the Strut Modeler)
-  const PP_Length = PP_ShaftLength + 5.0;
+  const PP_Length = PP_ShaftLength + pistonPostConnectionLength;
 
   function generate_pistonPost_points() {
     // Calculate piston post chamfer length
@@ -63,15 +68,16 @@ const PistonPost = () => {
       .slice()
       .reverse()
       .map((point) => [point[0], -point[1]]);
-
+    
+  
     // Create final list, based on the top and bottom points by merging Top and Bottom list
-    return [...pistonPostPoints_Top, ...pistonPostPoints_Bottom];
+    return [...pistonPostPoints_Top, ...pistonPostPoints_Bottom].flat();
   }
 
   return (
     <Group x={positionXOffset} y={positionYOffset}>
       {/* Outer shape */}
-      <Line points={generate_pistonPost_points()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
+      <Line x ={-Rod_CurrentPosition - pistonPostConnectionLength} points={generate_pistonPost_points()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
       {/* Inner shape (cross-section) */}
       {/* <Line points={generatePistonPostInnerShapePoints()} closed fill={changeBrightness(color, 0.5)} shadowBlur={0} /> */}
     </Group>
