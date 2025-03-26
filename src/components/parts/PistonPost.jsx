@@ -9,7 +9,7 @@ const PistonPost = () => {
   const { PP, Rod, Positions } = usePartsContext();
   const { state: size } = useSize();
   // Piston Post geometry parameters
-  const { PP_Customized, PP_Diameter, PP_Radius, PP_ChamferDiameter, PP_ChamferAngle, PP_ThreadDiam, PP_ThreadPitch, PP_InnerDiameter } = PP.state.geometry;
+  const { PP_Customized, PP_Diameter, PP_Radius, PP_ChamferDiameter, PP_ChamferAngle, PP_ThreadDiam, PP_ThreadPitch, PP_InnerDiameter, PistonPost } = PP.state.geometry;
   // Piston geometry parameters
   const {P_Length} = PP.state.geometry;
   // Rod geometry parameters
@@ -77,7 +77,8 @@ const PistonPost = () => {
   return (
     <Group x={positionXOffset} y={positionYOffset}>
       {/* Outer shape */}
-      <Line x ={-Rod_CurrentPosition - pistonPostConnectionLength} points={generate_pistonPost_points()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
+      {PistonPost.toLowerCase().includes("included") && <Line x ={-Rod_CurrentPosition - pistonPostConnectionLength} points={generate_pistonPost_points()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />}
+      
       {/* Inner shape (cross-section) */}
       {/* <Line points={generatePistonPostInnerShapePoints()} closed fill={changeBrightness(color, 0.5)} shadowBlur={0} /> */}
     </Group>
