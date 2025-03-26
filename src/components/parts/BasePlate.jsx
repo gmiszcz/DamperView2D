@@ -51,7 +51,7 @@ const BasePlate = ({ outerOrInnerShape }) => {
       {outerOrInnerShape ==="outer" ? 
         <Line points={generateBasePlateOuterPoints()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={0} />
         :
-      <Line points={generateBasePlateInnerPoints()} closed fill={changeBrightness(color, 0.5)} shadowBlur={0} />}
+      <Line points={generateBasePlateInnerPoints()} closed fill={changeBrightness(color, 0.3)} shadowBlur={0} />}
     </Group>
   );
 };
