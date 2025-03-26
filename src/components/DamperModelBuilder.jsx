@@ -29,6 +29,9 @@ import ThirdTube from "./parts/ThirdTube";
 import PistonPost from "./parts/PistonPost";
 
 const DamperModelBuilder = forwardRef((props, ref) => {
+
+  const parts = usePartsContext();
+
   const { state: size } = useSize();
   const stageRef = useRef({});
   const groupRef = useRef({}); // Reference to the MASTER GROUP for setting positions
@@ -38,6 +41,7 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   useEffect(() => {
     resetView();
   }, [size]);
+
 
   const handleWheel = (e) => {
     const stage = stageRef.current;
@@ -67,6 +71,14 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({ resetView }));
+
+    // Set rod to default position "DL"
+    useEffect(function () {
+      parts.Positions.dispatch({
+        type: "SET_ROD_POSITION_BY_BUTTON",
+        payload: { pressedButtonName: "DL", rodLength: parts.Rod.state.geometry.Rod_Length},
+      });
+    },[])
 
   return (
     <Stage
@@ -98,13 +110,12 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           <BasePlate />
           <Bearing />
           <RodGuide />
-          <Rod />
           <CylinderEnd />
           <BasePlate outerOrInnerShape={"outer"}/>
-          {/* <PistonPost /> */}
+          <Rod />
           <Piston/>
+          <PistonPost />
           {/* <SpringSeat /> */}
-          {/* <CVSAe /> */}
           {/* <Positions /> */}
           <Annotations />
         </Group>

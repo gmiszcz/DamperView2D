@@ -4,9 +4,15 @@ import { SelectButton } from "primereact/selectbutton";
 import { usePartsContext } from "../context/PartsContext";
 import { Tooltip } from "primereact/tooltip";
 import "./HoverMenu.css";
+import { useRod } from "../context/parts/RodContext";
 
 const HoverMenu = ({ visible, onFitView, openModal, isMaximized }) => {
   const parts = usePartsContext();
+  const {Rod } = usePartsContext()
+
+  // const { Rod } = usePartsContext();
+  
+  const {Rod_Length} = Rod.state.geometry
 
   const options = ["CL", "DL", "EL"];
   const [value, setValue] = useState(options[1]);
@@ -18,13 +24,33 @@ const HoverMenu = ({ visible, onFitView, openModal, isMaximized }) => {
   ];
   const [annotationIndex, setAnnotationIndex] = useState(0);
 
-  const handleChangePosition = (position) => {
-    parts.Rod.dispatch({
-      type: "SET_GEOMETRY",
-      payload: { Rod_CurrentPosition: position },
-    });
+  // const handleChangePosition = (position) => {
+  //   parts.Rod.dispatch({
+  //     type: "SET_GEOMETRY",
+  //     payload: { Rod_CurrentPosition: position },
+  //   });
 
-    setValue(position);
+  //   setValue(position);
+  // };
+
+  const handleChangePosition = (position) => {
+    
+    // console.log("PRessed position button", position)
+    // If user clicks two times the same button it takes null value. 
+    // To prevent function from moving rod at null (which make no sense) function ends when position is null
+    if (position === null) {
+      return; 
+    }
+    // In the other case, move rod 
+    else {
+      setValue(position);
+    
+    parts.Positions.dispatch({
+      type: "SET_ROD_POSITION_BY_BUTTON",
+      payload: { pressedButtonName: position, rodLength: Rod_Length},
+    });
+    }
+    
   };
 
   // Set the annotation visibility for all parts depending on the current index
@@ -33,7 +59,12 @@ const HoverMenu = ({ visible, onFitView, openModal, isMaximized }) => {
     setAnnotationIndex(nextIndex);
     const nextVisibility = annotationOptions[nextIndex].value;
 
-    Object.values(parts).forEach((part) => part.dispatch({ type: "SET_ANNOTATIONS_VISIBILITY", payload: nextVisibility }));
+    Object.entries(parts).forEach(([key, part]) => {
+      // Omit the "Positions", because it doesn't contain any annotation to show
+      if (key !== "Positions") {
+        part?.dispatch({ type: "SET_ANNOTATIONS_VISIBILITY", payload: nextVisibility });
+      }
+    });
   };
 
   return (

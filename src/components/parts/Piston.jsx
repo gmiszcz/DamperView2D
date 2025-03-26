@@ -14,12 +14,12 @@ const Piston = () => {
   // Pressure Tube Inner Diameter
   const { PT_ID } = PT.state.geometry;
   // Rod Length and Current Position
-  const { Rod_Length, Rod_CurrentPosition } = Rod.state.geometry
+  const { Rod_Length } = Rod.state.geometry
   // Positions
-  const { P_Position, DL, EL, CL } = Positions.state.geometry;
+  const { Rod_CurrentPosition, P_Position } = Positions.state.geometry;
   const { color, opacity, display } = PP.state.properties;
 
-  const [pistonPosition, setPistonPosition] = useState((DL -Rod_Length))
+  // const [pistonPosition, setPistonPosition] = useState((DL -Rod_Length))
 
   const outerRadius = PT_ID / 2;
   // const innerRadius = Piston_ID / 2;
@@ -41,7 +41,7 @@ const Piston = () => {
   return (
     <Group x={positionXOffset} y={positionYOffset}>
       {/* Outer shape */}
-      <Rect x={-pistonPosition} y = {-outerRadius} width={P_Length} height={PT_ID} fill={"#808080"} />
+      <Rect x={-Rod_CurrentPosition + P_Position} y = {-outerRadius} width={P_Length} height={PT_ID} fill={"#808080"} />
     </Group>
   );
 };

@@ -3,12 +3,14 @@ import { partsReducer } from "../../reducers/partsReducer";
 import { createAnnotation, getInitialState } from "../../utils/helpers";
 import { PARTS_COLORS } from "../../utils/constants";
 import { useRod } from "./RodContext";
+import { rodPositionReducer } from "../../reducers/positionsReducer";
 
 // Initial state for Positions
 let geometryPositions = {
   DL: 500,
   CL: 450,
   EL: 600,
+  Strut_Position_Offset:0.0,
   PT_Position: 9.2,
   P_Position: 5.4,
   FB_Position: 121,
@@ -17,6 +19,7 @@ let geometryPositions = {
   Knuckle_Position: 90,
   CVSAe_ValvePosition: 120,
   TT_HolePosition: 100,
+  Rod_CurrentPosition: 0.0
 };
 
 // Initial state with annotations
@@ -27,7 +30,7 @@ const ContextPositions = createContext();
 
 // Provider
 export const ProviderPositions = ({ children }) => {
-  const [state, dispatch] = useReducer(partsReducer, initialState);
+  const [state, dispatch] = useReducer(rodPositionReducer, initialState);
   
   return <ContextPositions.Provider value={{ state, dispatch }}>{children}</ContextPositions.Provider>;
 };

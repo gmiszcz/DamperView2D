@@ -6,7 +6,7 @@ import { PARTS_COLORS } from "../../utils/constants";
 // Initial state for Piston Post
 let geometryPP = {
   PP_Customized: false,
-  PistonPost: "",
+  PistonPost: "Included",
   P_Length: 10,
   PP_Type: "3/8",
   PP_Diameter: 9.43,
@@ -20,6 +20,15 @@ let geometryPP = {
 
 // Initial state with annotations
 let initialState = getInitialState(geometryPP)
+
+// Add color
+initialState = {
+  ...initialState,
+  properties: {
+    ...initialState.properties,
+    color: PARTS_COLORS.PP,
+  },
+};
 
 // Create Context
 const ContextPP = createContext();
