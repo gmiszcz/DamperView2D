@@ -4,6 +4,7 @@ import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const CES = ({}) => {
   const { CVSAe, RT, Positions } = usePartsContext();
@@ -21,14 +22,11 @@ const CES = ({}) => {
   // Weld size is 1.1 times the thickness of the RT, where 1.1 is a Tomek's factor
   const weldSize = 1.1 * RT_TH; 
 
-
-
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
   //**********  DIMENSION LINES *********/
-  
-  
+    
     // Update or create annotation for CES
       useEffect(() => {
         const isVisible = CVSAe.state.properties.annotationsVisible;
@@ -81,7 +79,7 @@ const CES = ({}) => {
 
 
   return (
-    <Group x={positionXOffset} y={positionYOffset} >
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(CVSAe)} >
       {/* CES Outer shape */}
       <Rect x = {-CVSAe_ValvePosition - CVSAe_HousingDiam/2.0} y = {-RT_OD1/2.0-CVSAe_HousingHeight} width={CVSAe_HousingDiam} height={CVSAe_HousingHeight} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1}/>
       

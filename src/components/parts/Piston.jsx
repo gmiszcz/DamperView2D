@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Line, Group, Rect } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET } from "../../utils/constants";
+import { annotationsVerticalPositions, GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const Piston = () => {
   const { PP, Rod, PT, Positions } = usePartsContext();
@@ -38,7 +39,7 @@ const Piston = () => {
           payload: {
             id: "P_Position_Annotation",
             startX: Rod_CurrentPosition - P_Position,
-            startY: 0.0,
+            startY: annotationsVerticalPositions.mid,
             direction: "horizontal",
             value: P_Position,
             label: "Piston Position",
@@ -60,7 +61,7 @@ const Piston = () => {
   // }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length]);
   
   return (
-    <Group x={positionXOffset} y={positionYOffset}>
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(PP)}>
       {/* Outer shape */}
       <Rect x={-Rod_CurrentPosition + P_Position} y = {-outerRadius} width={P_Length} height={PT_ID} fill={"#808080"} />
     </Group>

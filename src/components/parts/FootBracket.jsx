@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Line, Group, Circle } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET } from "../../utils/constants";
+import { annotationsVerticalPositions, GLOBAL_OFFSET } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const FootBracket = () => {
   const { FB, RT, Positions } = usePartsContext();
@@ -12,7 +13,7 @@ const FootBracket = () => {
   const { FB_Length, FB_FrontHolePosition, FB_FrontHoleAxisOffset, FB_HoleSpan, FB_RearHoleOffset, FB_ThreadDiam, FB_BoltsHeadDiam, FB_OB_TH, FB_IB_TH } = FB.state.geometry;
   const {RT_OD1} = RT.state.geometry;
   const { FB_Position } = Positions.state.geometry;
-  const { color, opacity, display } = FB.state.properties;
+  const { color, opacity, display, annotationsVisible } = FB.state.properties;
  
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
@@ -28,6 +29,60 @@ const FootBracket = () => {
     FB_RearHoleOffset;
   
   const footBracketThickness = FB_OB_TH + FB_IB_TH;
+
+
+
+    //**********  DIMENSION LINES *********/
+    
+    // Update or create annotation for Piston
+        useEffect(() => {
+          const isVisible = FB.state.properties.annotationsVisible;
+          // Foot Bracket LENGTH annotation
+          FB.dispatch({
+            type: "UPDATE_OR_CREATE_ANNOTATION",
+            payload: {
+              id: "FootBracket_Length_Annotation",
+              startX: FB_Position - FB_Length,
+              startY: annotationsVerticalPositions.topFirstRow,
+              direction: "horizontal",
+              value: FB_Length,
+              label: "FB Length",
+              display: isVisible,
+              important: true,
+            },
+          });
+          // Foot Bracket Hole Span annotation
+          FB.dispatch({
+            type: "UPDATE_OR_CREATE_ANNOTATION",
+            payload: {
+              id: "FootBracket_Hole_Span_Annotation",
+              startX: FB_Position - FB_FrontHolePosition - FB_HoleSpan,
+              startY: annotationsVerticalPositions.bottomSecondRow,
+              direction: "horizontal",
+              value: FB_HoleSpan,
+              label: "FB Hole Span",
+              display: isVisible,
+              important: true,
+            },
+          });
+          // Foot Bracket Front Hole Position annotation
+          FB.dispatch({
+            type: "UPDATE_OR_CREATE_ANNOTATION",
+            payload: {
+              id: "FootBracket_Front_Hole_Pos_Annotation",
+              startX: FB_Position - FB_FrontHolePosition,
+              startY: annotationsVerticalPositions.bottomSecondRow,
+              direction: "horizontal",
+              value: FB_FrontHolePosition,
+              label: "FB Front Hole Pos",
+              display: isVisible,
+              important: true,
+            },
+          });
+        }, [FB_Position, FB_Length, FB_FrontHolePosition, FB_HoleSpan, annotationsVisible])
+  
+  
+  //**********  GEOMETRY *********/
 
 function generate_footBracket_shape_points() {
   const footBracketPoints = [
@@ -45,7 +100,7 @@ function generate_footBracket_shape_points() {
 
 
   return (
-    <Group x={positionXOffset - FB_Position + FB_Length} y={positionYOffset - RT_OD1/2.0}>
+    <Group x={positionXOffset - FB_Position + FB_Length} y={positionYOffset - RT_OD1/2.0} onClick={() => handleToggleAnnotations(FB)}>
       {/* FootBracket shape */}
       <Line points={generate_footBracket_shape_points()}  closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
       {/* Draw Front Hole */}

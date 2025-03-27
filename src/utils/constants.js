@@ -70,4 +70,6 @@ export const annotationsVerticalPositions = {
   bottomFirstRow: -40.0,
   bottomSecondRow: -55.0,
   bottomThirdRow: -70.0,
+  bottomForthRow: -85.0,
+  bottomFifthRow: -100.0,
 };

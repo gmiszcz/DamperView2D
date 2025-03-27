@@ -4,9 +4,10 @@ import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
 import { GLOBAL_OFFSET, annotationsVerticalPositions } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const Rod = () => {
-  const { Rod, PP, Positions } = usePartsContext();
+  const { Rod, PP, Positions, KNC, FB, RT, Damper } = usePartsContext();
   const { state: size } = useSize();
 
   // Get Rod dimensions
@@ -18,7 +19,19 @@ const Rod = () => {
   // Check if Piston Post should be generated
   const { PistonPost } = PP.state.geometry;
 
-  const { DL, CL, EL } = Positions.state.geometry;
+  // Get RT used to generate dimension line
+  const { RT_Length } = RT.state.geometry;
+
+  // Get Knuckle data
+  const { Knuckle_Length } = KNC.state.geometry;
+
+  // Get FootBracket data
+  const { FB_Length } = FB.state.geometry;
+  
+  // Get information about mount type
+  const { StrutMountingMethod } = Damper.state.geometry;
+
+  const { DL, CL, EL, Knuckle_Position, FB_Position } = Positions.state.geometry;
   // Get Rod Position
   const { Rod_CurrentPosition, Strut_Position_Offset } = Positions.state.geometry;
   // const [rodPosition, setRodPosition] = useState(DL - Rod_Length);
@@ -34,7 +47,11 @@ const Rod = () => {
 
   const pistonPostConnectionLength = 5.0
 
+  const stemEndHeight = 20.0;
+  const stemEndOD = 10.0;
+
   const loadApplicationPointRadius = 2.0
+
 
     //  useEffect(() => {
     //   const position = Rod.state.geometry.Rod_CurrentPosition;
@@ -72,7 +89,9 @@ const Rod = () => {
             payload: {
               id: "Rod_Absolute_Position_Annotation",
               startX: Strut_Position_Offset,
-              startY: annotationsVerticalPositions.bottomThirdRow,
+              startY: StrutMountingMethod.toLowerCase().includes("knuckle") ?
+                annotationsVerticalPositions.bottomThirdRow 
+              : annotationsVerticalPositions.bottomForthRow,
               direction: "horizontal",
               value: Rod_CurrentPosition + Rod_Length,
               label: "Rod Position",
@@ -80,33 +99,81 @@ const Rod = () => {
               important: true,
             },
           });
-      }, [Rod_Length, Rod_CurrentPosition, Strut_Position_Offset, annotationsVisible])
+         // ROD FROM RT TOP POSITION annotation
+         Rod.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "Rod_RT_Top_Position_Annotation",
+            startX: RT_Length,
+            startY: StrutMountingMethod.toLowerCase().includes("knuckle") ?
+              annotationsVerticalPositions.bottomSecondRow
+            :annotationsVerticalPositions.bottomThirdRow,
+            direction: "horizontal",
+            value: (Rod_CurrentPosition + Rod_Length) - RT_Length ,
+            label: "Rod From RT Top Position",
+            display: isVisible,
+            important: true,
+          },
+        });
+        
+        // ROD FROM KNUCKLE POSITION annotation
+        StrutMountingMethod.toLowerCase().includes("knuckle") && Rod.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "Rod_From_Knuckle_Position_Annotation",
+            startX: Knuckle_Position,
+            startY: annotationsVerticalPositions.topSecondRow,
+            direction: "horizontal",
+            value: Rod_CurrentPosition + Rod_Length - Knuckle_Position,
+            label: "Rod From Knuckle Position",
+            display: isVisible,
+            important: true,
+          },
+        });
+         // ROD FROM FOOT Bracket POSITION annotation
+         StrutMountingMethod.toLowerCase().includes("foot") && Rod.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "Rod_From_FootBracket_Position_Annotation",
+            startX: FB_Position,
+            startY: annotationsVerticalPositions.topFirstRow,
+            direction: "horizontal",
+            value: Rod_CurrentPosition + Rod_Length - FB_Position,
+            label: "Rod From Foot Bracket Position",
+            display: isVisible,
+            important: true,
+          },
+        });
+      }, [Rod_Length, Rod_CurrentPosition, Knuckle_Position, Strut_Position_Offset, StrutMountingMethod, annotationsVisible])
   
   
   //**********  GEOMETRY *********/
   
 
   return (
-    <Group x={positionXOffset} y={positionYOffset}>
-      {/* Add Grove */}
-      {/* <Groove  positionXOffset={positionXOffset} positionYOffset={positionYOffset} rodPosition={rodPosition}/> */}
+    <Group x={positionXOffset} y={positionYOffset} onClick={() => handleToggleAnnotations(Rod)}>
+
+       {/* Add Stem End */}
+       <Rect x = {-Rod_CurrentPosition - Rod_Length - stemEndHeight} y={-stemEndOD/2.0} width = {stemEndHeight} height={stemEndOD} fill={color} shadowBlur={1} />
+     
       {/* Check if Piston Post should be generated. If it is, reduce Rod Length to 5 mm, which is Piston Post and Rod connection length  */}
       {PistonPost.toLowerCase().includes("included") ?
         <>
           {/* Rod shape */}
-          <Rect x={-Rod_CurrentPosition - Rod_Length} y={-outerRadius} width={Rod_Length-pistonPostConnectionLength} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
+          <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length-pistonPostConnectionLength} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
           {/* Hardened layer */}
-          <Rect x={-Rod_CurrentPosition - Rod_Length} y={-innerRadius} width={Rod_Length-pistonPostConnectionLength} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
+          <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-innerRadius} width={Rod_Length-pistonPostConnectionLength} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
         </>
         :
-    
         <>
           {/* Rod shape */}
-          <Rect x={-Rod_CurrentPosition - Rod_Length} y={-outerRadius} width={Rod_Length} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
+          <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
           {/* Hardened layer */}
-          <Rect x={-Rod_CurrentPosition - Rod_Length} y={-innerRadius} width={Rod_Length} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
+          <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-innerRadius} width={Rod_Length} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
         </>
       }
+       {/* Add Grove */}
+       <Groove  positionXOffset={positionXOffset} positionYOffset={positionYOffset} rodPosition={Rod_CurrentPosition}/>
       {/* Add Load Application Point */}
       <Circle x={-Rod_CurrentPosition - Rod_Length - Rod_LoadDistance} y = { 0.0} radius = {loadApplicationPointRadius} fill={"black"}/>
     </Group>
@@ -116,7 +183,7 @@ const Rod = () => {
 export default Rod;
 
 
-const Groove = ({positionXOffset, positionYOffset, rodPosition}) => {
+const Groove = ({rodPosition}) => {
 
   const { Rod, PT} = usePartsContext();
     
@@ -124,17 +191,43 @@ const Groove = ({positionXOffset, positionYOffset, rodPosition}) => {
 
   const {color} = PT.state.properties
   
-  const rodOuterRadius = Rod_OD/2.0
+  const rodOuterRadius = Rod_OD / 2.0
   
-  console.log("Groove x pos", rodPosition + Rod_Length)
+  // Additional Groove parameters
+
+  const rodGroove_distanceFromCenter = Rod_grooveMidDiameter/2.0
+  console.log("Groove x pos", rodPosition)
   console.log("Groove Y pos", rodOuterRadius)
-  return <Group x={positionXOffset} y={positionYOffset}>
+  return <>
     {/* Rod Groove */}
     {
-      Rod_isGroove ?
-    <Arc x={-rodPosition + Rod_groovePosition - Rod_Length} y={100} innerRadius={0.0} outerRadius={Rod_grooveWidth} color ={changeBrightness(color, 0.5)} shadowBlur={5}/> : ""
+      Rod_isGroove &&
+      <>
+        {/* TOP GROOVE */}
+      <Arc
+        x={-rodPosition - Rod_groovePosition}
+        y={-rodOuterRadius}
+        innerRadius={0}
+        outerRadius={Rod_grooveWidth}
+        angle={180}
+        rotation={0}
+        fill={changeBrightness(color, 0.5)}
+        shadowBlur={0}
+        />
+        {/* BOTTOM GROOVE */}
+      <Arc
+        x={-rodPosition - Rod_groovePosition}
+        y={rodOuterRadius}
+        innerRadius={0}
+        outerRadius={Rod_grooveWidth}
+        angle={180}
+        rotation={180}
+        fill={changeBrightness(color, 0.5)}
+        shadowBlur={0}
+      />
+    </>
     }
-  </Group>
+  </>
 
   
 }

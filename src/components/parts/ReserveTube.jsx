@@ -7,7 +7,7 @@ import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
 const ReserveTube = () => {
-  const { RT, CVSAe, Positions } = usePartsContext();
+  const { RT, CVSAe, Positions, Damper } = usePartsContext();
   const { state: size } = useSize();
 
   // Reserve Tube geometry details
@@ -18,7 +18,10 @@ const ReserveTube = () => {
   const { CVSAe_HoleCutDist, CVSAe_HousingHeight } = CVSAe.state.geometry;
 
   // Get CES position
-  const {CVSAe_ValvePosition} = Positions.state.geometry
+  const { CVSAe_ValvePosition } = Positions.state.geometry
+  
+  // Get Damper Details
+  const { StrutMountingMethod, StrutType } = Damper.state.geometry;
 
 
   const outerRadius = RT_OD1 / 2;
@@ -40,7 +43,9 @@ const ReserveTube = () => {
         payload: {
           id: "RT_Length_Annotation",
           startX: 0,
-          startY: annotationsVerticalPositions.bottomSecondRow,
+          startY: StrutMountingMethod.toLowerCase().includes("knuckle") ?
+            annotationsVerticalPositions.bottomSecondRow
+            :annotationsVerticalPositions.bottomThirdRow,
           direction: "horizontal",
           value: RT_Length,
           label: "RT Length",
@@ -48,7 +53,7 @@ const ReserveTube = () => {
           important: true,
         },
       });
-    }, [RT_Length, annotationsVisible])
+    }, [RT_Length, StrutMountingMethod, annotationsVisible])
 
 
 //**********  GEOMETRY *********/
@@ -169,7 +174,7 @@ const ReserveTube = () => {
       <RollClosing topOrBottom="top" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List={RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
       <RollClosing topOrBottom="bottom" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List={RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
       {/* Add Hole below the CES */}
-      <Rect width={CVSAe_HoleCutDist} height={CVSAe_HousingHeight} x = {-CVSAe_ValvePosition - CVSAe_HoleCutDist/2.0} y = {-RT_OD1/2.0 - CVSAe_HousingHeight/2.0} fill={changeBrightness(color, 0.5)}/>
+      {StrutType.toLowerCase().includes("active") && <Rect width={CVSAe_HoleCutDist} height={CVSAe_HousingHeight} x={-CVSAe_ValvePosition - CVSAe_HoleCutDist / 2.0} y={-RT_OD1 / 2.0 - CVSAe_HousingHeight / 2.0} fill={changeBrightness(color, 0.5)} />}
     </Group>
   );
 };

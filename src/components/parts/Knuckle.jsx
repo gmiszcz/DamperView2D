@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { Line, Group, Circle } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET } from "../../utils/constants";
+import { GLOBAL_OFFSET, annotationsVerticalPositions } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
+import { handleToggleAnnotations } from "../../utils/helpers";
 
 const Knuckle = () => {
   const { KNC, RT, Positions } = usePartsContext();
@@ -30,7 +31,7 @@ const Knuckle = () => {
           payload: {
             id: "KNC_Length_Annotation",
             startX: -Knuckle_Length + Knuckle_Position,
-            startY: RT_OD1 + 10,
+            startY: annotationsVerticalPositions.topSecondRow,
             direction: "horizontal",
             value: Knuckle_Length,
             label: "Knuckle Length",
@@ -65,7 +66,7 @@ const Knuckle = () => {
   }
 
   return (
-    <Group x={positionXOffset - Knuckle_Position + Knuckle_Length} y={positionYOffset - RT_OD1 / 2.0 - Knuckle_TH}>
+    <Group x={positionXOffset - Knuckle_Position + Knuckle_Length} y={positionYOffset - RT_OD1 / 2.0 - Knuckle_TH} onClick={() => handleToggleAnnotations(KNC)}>
       {/* Draw Knuckle main shape */}
       <Line points={generate_knuckle_points()} closed fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
       {/* Add Bolt */}
