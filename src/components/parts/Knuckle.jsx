@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Line, Group, Circle } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
@@ -12,12 +12,38 @@ const Knuckle = () => {
   const { Knuckle_Length, Knuckle_TH, Knuckle_ThreadDiam } = KNC.state.geometry;
   const {RT_OD1} = RT.state.geometry;
   const { Knuckle_Position } = Positions.state.geometry;
-  const { color, opacity, display } = KNC.state.properties;
+  const { color, opacity, display, annotationsVisible } = KNC.state.properties;
 
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
+
+    //**********  DIMENSION LINES *********/
+  
+    // Update or create annotation for Pressure Tube
+      useEffect(() => {
+        const isVisible = KNC.state.properties.annotationsVisible;
+        // Pressure tube LENGTH annotation
+        KNC.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "KNC_Length_Annotation",
+            startX: -Knuckle_Length + Knuckle_Position,
+            startY: RT_OD1 + 10,
+            direction: "horizontal",
+            value: Knuckle_Length,
+            label: "Knuckle Length",
+            display: isVisible,
+            important: true,
+          },
+        });
+      }, [Knuckle_Length, Knuckle_Position, annotationsVisible])
+
+
+  
+  //**********  GEOMETRY *********/
+  
   function generate_knuckle_points() {
     const knucklePoints = [
       [0.0, 0.0], //0

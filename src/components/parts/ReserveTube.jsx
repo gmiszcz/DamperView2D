@@ -1,17 +1,25 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Line, Rect, Group, Circle } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET } from "../../utils/constants";
+import { GLOBAL_OFFSET, annotationsVerticalPositions } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 import { handleToggleAnnotations } from "../../utils/helpers";
 
 const ReserveTube = () => {
-  const { RT } = usePartsContext();
+  const { RT, CVSAe, Positions } = usePartsContext();
   const { state: size } = useSize();
 
+  // Reserve Tube geometry details
   const { RT_Length, RT_OD1, RT_TH, RT_NumberOfSwages, RT_Swage_List } = RT.state.geometry;
-  const { color, opacity, display } = RT.state.properties;
+  const { color, opacity, display, annotationsVisible } = RT.state.properties;
+
+  // CES Hole geometry details
+  const { CVSAe_HoleCutDist, CVSAe_HousingHeight } = CVSAe.state.geometry;
+
+  // Get CES position
+  const {CVSAe_ValvePosition} = Positions.state.geometry
+
 
   const outerRadius = RT_OD1 / 2;
   const innerRadius = outerRadius - RT_TH;
@@ -19,6 +27,32 @@ const ReserveTube = () => {
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
+
+
+  //**********  DIMENSION LINES *********/
+
+  // Update or create annotation for Reserve Tube
+    useEffect(() => {
+      const isVisible = RT.state.properties.annotationsVisible;
+      // Pressure tube LENGTH annotation
+      RT.dispatch({
+        type: "UPDATE_OR_CREATE_ANNOTATION",
+        payload: {
+          id: "RT_Length_Annotation",
+          startX: 0,
+          startY: annotationsVerticalPositions.bottomSecondRow,
+          direction: "horizontal",
+          value: RT_Length,
+          label: "RT Length",
+          display: isVisible,
+          important: true,
+        },
+      });
+    }, [RT_Length, annotationsVisible])
+
+
+//**********  GEOMETRY *********/
+  
   // Generates the outer swaged shape points using previous swage's final radius as the starting point for the next swage.
   const generateSwagedOuterShapePoints = () => {
     let points = [];
@@ -133,7 +167,9 @@ const ReserveTube = () => {
       )}
 {/*Add Roll Closing by adding two rectangles at the Reserve Tube's Top*/}
       <RollClosing topOrBottom="top" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List={RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
-      <RollClosing topOrBottom="bottom" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List = {RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
+      <RollClosing topOrBottom="bottom" RT_Length={RT_Length} RT_OD1={RT_OD1} RT_Swage_List={RT_Swage_List} RT_TH={RT_TH} color={color} display={display} opacity={opacity} />
+      {/* Add Hole below the CES */}
+      <Rect width={CVSAe_HoleCutDist} height={CVSAe_HousingHeight} x = {-CVSAe_ValvePosition - CVSAe_HoleCutDist/2.0} y = {-RT_OD1/2.0 - CVSAe_HousingHeight/2.0} fill={changeBrightness(color, 0.5)}/>
     </Group>
   );
 };

@@ -17,7 +17,7 @@ const Piston = () => {
   const { Rod_Length } = Rod.state.geometry
   // Positions
   const { Rod_CurrentPosition, P_Position } = Positions.state.geometry;
-  const { color, opacity, display } = PP.state.properties;
+  const { color, opacity, display, annotationsVisible } = PP.state.properties;
 
   // const [pistonPosition, setPistonPosition] = useState((DL -Rod_Length))
 
@@ -26,6 +26,27 @@ const Piston = () => {
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
+
+  //**********  DIMENSION LINES *********/
+  
+  // Update or create annotation for Piston
+      useEffect(() => {
+        const isVisible = PP.state.properties.annotationsVisible;
+        // Pressure tube LENGTH annotation
+        PP.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "P_Position_Annotation",
+            startX: Rod_CurrentPosition - P_Position,
+            startY: 0.0,
+            direction: "horizontal",
+            value: P_Position,
+            label: "Piston Position",
+            display: isVisible,
+            important: true,
+          },
+        });
+      }, [P_Position, Rod_CurrentPosition, annotationsVisible])
 
   //   useEffect(() => {
   //     const position = Rod.state.geometry.Rod_CurrentPosition;

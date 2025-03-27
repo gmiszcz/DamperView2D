@@ -20,6 +20,7 @@ let geometryRod = {
   Rod_grooveMidDiameter: 18.0,
   Rod_groovePosition: 40,
   Rod_grooveWidth: 2,
+  Rod_LoadDistance: 2.0,
   Rod_CurrentPosition: "DL",
 };
 

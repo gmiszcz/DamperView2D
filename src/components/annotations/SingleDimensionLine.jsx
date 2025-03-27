@@ -13,7 +13,7 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
   const scaledTextOffset = scaledFontSize * ANNOTATION_DEFAULTS.TEXT_VERTICAL_OFFSET;
 
   // Apply the global offset
-  const x1 = size.width - GLOBAL_OFFSET.x - startX;
+  const x1 = size.width - GLOBAL_OFFSET.x - startX ;
   const y1 = size.height - GLOBAL_OFFSET.y - startY;
 
   // Determine end point based on direction
@@ -22,7 +22,7 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
 
   // Midpoint for text positioning
   const midX = (x1 + x2) / 2;
-  const midY = (y1 + y2) / 2 - ((y2 - y1) / 2) * scale;
+  const midY = (y1 + y2) / 2 ;
 
   // Calculate dimension length and determine arrow size
   const dimensionLength = Math.abs(value);
@@ -56,13 +56,14 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
 
       {/* Dimension arrow */}
       <Arrow
-        points={[x1, y1, x2, y2]}
+        points={direction === "horizontal" ? [x1 - pointerLength / 2.5, y1, x2 + pointerLength / 2.5, y2]
+                                           : [x1, y1 - pointerLength / 2.5, x2, y2 + pointerLength / 2.5]}
         pointerLength={pointerLength}
         pointerWidth={pointerWidth}
         fill={color || ANNOTATION_DEFAULTS.DEFAULT_COLOR}
         stroke={color || ANNOTATION_DEFAULTS.DEFAULT_COLOR}
         strokeWidth={1}
-        pointerAtBeginning
+        pointerAtBeginning 
       />
 
       {/* Dimension text */}
@@ -78,7 +79,7 @@ function SingleDimensionLine({ startX, startY, direction, value, label, color, s
         align="center"
         verticalAlign="middle"
         offsetX={direction === "vertical" ? textWidth / 4 : textWidth / 2}
-        offsetY={direction === "horizontal" ? textWidth / 4 : 7}
+        offsetY={direction === "horizontal" ? textWidth / 6.5 : 7}
         shadowColor="white"
         shadowBlur={0.5}
         rotation={direction === "horizontal" ? 0 : -90}

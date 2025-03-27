@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Line, Group, Rect, Arc } from "react-konva";
+import { Line, Group, Rect, Arc, Circle } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET } from "../../utils/constants";
+import { GLOBAL_OFFSET, annotationsVerticalPositions } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const Rod = () => {
@@ -12,14 +12,17 @@ const Rod = () => {
   // Get Rod dimensions
   const { Rod_Length, Rod_OD, Rod_HD, Rod_SolidHollow } = Rod.state.geometry;
 
+  // Rod Load Application Point
+  const { Rod_LoadDistance } = Rod.state.geometry;
+
   // Check if Piston Post should be generated
   const { PistonPost } = PP.state.geometry;
 
   const { DL, CL, EL } = Positions.state.geometry;
   // Get Rod Position
-  const { Rod_CurrentPosition } = Positions.state.geometry;
+  const { Rod_CurrentPosition, Strut_Position_Offset } = Positions.state.geometry;
   // const [rodPosition, setRodPosition] = useState(DL - Rod_Length);
-  const { color, opacity, display } = Rod.state.properties;
+  const { color, opacity, display, annotationsVisible } = Rod.state.properties;
 
   const outerRadius = Rod_OD / 2; 
   const innerRadius = outerRadius - Rod_HD;
@@ -30,6 +33,8 @@ const Rod = () => {
   //********  ADDITIONAL ROD GEOMETRY PARAMETERS */
 
   const pistonPostConnectionLength = 5.0
+
+  const loadApplicationPointRadius = 2.0
 
     //  useEffect(() => {
     //   const position = Rod.state.geometry.Rod_CurrentPosition;
@@ -42,7 +47,44 @@ const Rod = () => {
     //   }
     //  }, [Rod.state.geometry.Rod_CurrentPosition, DL, CL, EL, Rod_Length]);
   
-
+  //**********  DIMENSION LINES *********/
+  
+    // Update or create annotation for Reserve Tube
+      useEffect(() => {
+        const isVisible = Rod.state.properties.annotationsVisible;
+        // ROD LENGTH annotation
+        Rod.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "Rod_Length_Annotation",
+            startX: Rod_CurrentPosition,
+            startY: annotationsVerticalPositions.mid,
+            direction: "horizontal",
+            value: Rod_Length,
+            label: "Rod Length",
+            display: isVisible,
+            important: true,
+          },
+        });
+          // ROD ABSOLUTE POSITION annotation
+          Rod.dispatch({
+            type: "UPDATE_OR_CREATE_ANNOTATION",
+            payload: {
+              id: "Rod_Absolute_Position_Annotation",
+              startX: Strut_Position_Offset,
+              startY: annotationsVerticalPositions.bottomThirdRow,
+              direction: "horizontal",
+              value: Rod_CurrentPosition + Rod_Length,
+              label: "Rod Position",
+              display: isVisible,
+              important: true,
+            },
+          });
+      }, [Rod_Length, Rod_CurrentPosition, Strut_Position_Offset, annotationsVisible])
+  
+  
+  //**********  GEOMETRY *********/
+  
 
   return (
     <Group x={positionXOffset} y={positionYOffset}>
@@ -65,6 +107,8 @@ const Rod = () => {
           <Rect x={-Rod_CurrentPosition - Rod_Length} y={-innerRadius} width={Rod_Length} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
         </>
       }
+      {/* Add Load Application Point */}
+      <Circle x={-Rod_CurrentPosition - Rod_Length - Rod_LoadDistance} y = { 0.0} radius = {loadApplicationPointRadius} fill={"black"}/>
     </Group>
   );
 };

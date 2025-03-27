@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Line, Group, Rect } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
@@ -14,7 +14,8 @@ const CES = ({}) => {
 
   const {RT_OD1, RT_TH} = RT.state.geometry;
 
-  const { color, opacity, display } = CVSAe.state.properties;
+  const { color, opacity, display, annotationsVisible } = CVSAe.state.properties;
+
 
   // Calculate CES additional parameters
   // Weld size is 1.1 times the thickness of the RT, where 1.1 is a Tomek's factor
@@ -25,23 +26,29 @@ const CES = ({}) => {
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
-  // const generateCESShapePoints = () => {
-  //   return [
-  //     [-CES_Position, outerRadius],
-  //     [-CES_Position - CES_Height, outerRadius],
-  //     [-CES_Position - CES_Height, -outerRadius],
-  //     [-CES_Position, -outerRadius],
-  //   ].flat();
-  // };
+  //**********  DIMENSION LINES *********/
+  
+  
+    // Update or create annotation for CES
+      useEffect(() => {
+        const isVisible = CVSAe.state.properties.annotationsVisible;
+        // Pressure tube LENGTH annotation
+        CVSAe.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "CES_Position_Annotation",
+            startX: 0,
+            startY: RT_OD1 - 30,
+            direction: "horizontal",
+            value: CVSAe_ValvePosition,
+            label: "CES Position",
+            display: isVisible,
+            important: true,
+          },
+        });
+      }, [CVSAe_ValvePosition, annotationsVisible])
 
-  // const generateCESInnerShapePoints = () => {
-  //   return [
-  //     [-CES_Position, innerRadius],
-  //     [-CES_Position - CES_Height, innerRadius],
-  //     [-CES_Position - CES_Height, -innerRadius],
-  //     [-CES_Position, -innerRadius],
-  //   ].flat();
-  // };
+  //**********  GEOMETRY *********/
 
   const check_RT_OD_in_specified_position = (position) => {
 

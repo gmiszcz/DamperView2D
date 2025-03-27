@@ -58,3 +58,16 @@ export const genericAnnotation = {
   startY: 0,
   direction: "horizontal", // or "vertical"
 };
+
+// Annotations positions
+// This object contains information about annotations position
+
+export const annotationsVerticalPositions = {
+  mid: 0.0,
+  topFirstRow: 40.0,
+  topSecondRow: 55.0,
+  topThirdRow: 70.0,
+  bottomFirstRow: -40.0,
+  bottomSecondRow: -55.0,
+  bottomThirdRow: -70.0,
+};
