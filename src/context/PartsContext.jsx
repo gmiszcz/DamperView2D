@@ -14,6 +14,7 @@ import { useCVSAe } from "./parts/CVSAeContext";
 import { useTT } from "./parts/TTContext";
 import { usePOS } from "./parts/POSContext";
 import { useCEND } from "./parts/CENDContext";
+import { useDamper } from "./parts/DamperContext";
 
 export const usePartsContext = () => {
   const RT = useRT();
@@ -30,9 +31,10 @@ export const usePartsContext = () => {
   const CVSAe = useCVSAe();
   const TT = useTT();
   const Positions = usePOS();
+  const Damper = useDamper()
 
   return useMemo(
-    () => ({ RT, PT, Rod, RG, PP, BP, CEND, SS, FB, KNC, BRG, CVSAe, TT, Positions }),
-    [RT.state, PT.state, Rod.state, RG.state, PP.state, BP.state, CEND.state, SS.state, FB.state, KNC.state, BRG.state, CVSAe.state, TT.state, Positions.state]
+    () => ({ RT, PT, Rod, RG, PP, BP, CEND, SS, FB, KNC, BRG, CVSAe, TT, Positions, Damper }),
+    [RT.state, PT.state, Rod.state, RG.state, PP.state, BP.state, CEND.state, SS.state, FB.state, KNC.state, BRG.state, CVSAe.state, TT.state, Positions.state, Damper.state]
   );
 };

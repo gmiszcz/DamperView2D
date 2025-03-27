@@ -78,8 +78,8 @@ const DamperModelBuilder = forwardRef((props, ref) => {
         type: "SET_ROD_POSITION_BY_BUTTON",
         payload: { pressedButtonName: "DL", rodLength: parts.Rod.state.geometry.Rod_Length},
       });
-    },[])
-
+    }, [])
+  
   return (
     <Stage
       ref={stageRef}
@@ -101,9 +101,13 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           }}
           ref={groupRef}
         >
-          <Knuckle />
-          {/* <FootBracket /> */}
-          <CES/>
+          {/* Render Proper Mount based on the provided StrutMountingMethod */}
+          {parts.Damper.state.geometry.StrutMountingMethod.toLowerCase().includes("foot") ? <FootBracket />
+            : <Knuckle />}
+
+          {/* Render CES based on the selected StrutType */}
+          {parts.Damper.state.geometry.StrutType.toLowerCase().includes("active") &&
+            <CES />}
           <ReserveTube />
           <ThirdTube /> 
           <PressureTube />

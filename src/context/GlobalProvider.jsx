@@ -13,36 +13,39 @@ import { ProviderRT } from "./parts/RTContext";
 import { ProviderSS } from "./parts/SSContext";
 import { ProviderTT } from "./parts/TTContext";
 import { ProviderCylinderEnd } from "./parts/CENDContext";
+import { ProviderDamper } from "./parts/DamperContext";
 
 const GlobalProvider = ({ children }) => {
   return (
-    <ProviderRT>
-      <ProviderPT>
-        <ProviderRod>
-          <ProviderRG>
-            <ProviderPP>
-              <ProviderBP>
-                <ProviderSS>
-                  <ProviderFB>
-                    <ProviderCylinderEnd>
-                      <ProviderKnuckle>
-                        <ProviderBearing>
-                          <ProviderCVSAe>
-                            <ProviderTT>
-                              <ProviderPositions>{children}</ProviderPositions>
-                            </ProviderTT>
-                          </ProviderCVSAe>
-                        </ProviderBearing>
-                      </ProviderKnuckle>
-                    </ProviderCylinderEnd>
-                  </ProviderFB>
-                </ProviderSS>
-              </ProviderBP>
-            </ProviderPP>
-          </ProviderRG>
-        </ProviderRod>
-      </ProviderPT>
-    </ProviderRT>
+    <ProviderDamper>
+      <ProviderRT>
+        <ProviderPT>
+          <ProviderRod>
+            <ProviderRG>
+              <ProviderPP>
+                <ProviderBP>
+                  <ProviderSS>
+                    <ProviderFB>
+                      <ProviderCylinderEnd>
+                        <ProviderKnuckle>
+                          <ProviderBearing>
+                            <ProviderCVSAe>
+                              <ProviderTT>
+                                <ProviderPositions>{children}</ProviderPositions>
+                              </ProviderTT>
+                            </ProviderCVSAe>
+                          </ProviderBearing>
+                        </ProviderKnuckle>
+                      </ProviderCylinderEnd>
+                    </ProviderFB>
+                  </ProviderSS>
+                </ProviderBP>
+              </ProviderPP>
+            </ProviderRG>
+          </ProviderRod>
+        </ProviderPT>
+      </ProviderRT>
+    </ProviderDamper>
   );
 };
 
