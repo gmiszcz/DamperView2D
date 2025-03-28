@@ -206,9 +206,6 @@ const Groove = ({rodPosition}) => {
   
   const rodOuterRadius = Rod_OD / 2.0
   
-  // Additional Groove parameters
-  console.log("Groove x pos", rodPosition)
-  console.log("Groove Y pos", rodOuterRadius)
 
 //   if (isGrooveBackground) {
 //     return <>

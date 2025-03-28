@@ -8,7 +8,8 @@ import { useRod } from "../context/parts/RodContext";
 
 const HoverMenu = ({ visible, onFitView, openModal, isMaximized }) => {
   const parts = usePartsContext();
-  const {Rod } = usePartsContext()
+  const { Rod, Positions } = usePartsContext()
+  
 
   // const { Rod } = usePartsContext();
   
@@ -44,10 +45,13 @@ const HoverMenu = ({ visible, onFitView, openModal, isMaximized }) => {
     // In the other case, move rod 
     else {
       setValue(position);
-    
+      // Calculate rod position based on the selected button. 
+      // Use data from Positions Provider, stored in the geometry object.
+      const selectedPosition = Positions.state.geometry[position]
+      
     parts.Positions.dispatch({
-      type: "SET_ROD_POSITION_BY_BUTTON",
-      payload: { pressedButtonName: position, rodLength: Rod_Length},
+      type: "SET_ROD_POSITION",
+      payload: { rodPosition: selectedPosition, rodLength: Rod_Length},
     });
     }
     

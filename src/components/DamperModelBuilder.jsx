@@ -73,10 +73,11 @@ const DamperModelBuilder = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({ resetView }));
 
     // Set rod to default position "DL"
-    useEffect(function () {
+  useEffect(function () {
+    const selectedPosition = parts.Positions.state.geometry["DL"]
       parts.Positions.dispatch({
-        type: "SET_ROD_POSITION_BY_BUTTON",
-        payload: { pressedButtonName: "DL", rodLength: parts.Rod.state.geometry.Rod_Length},
+        type: "SET_ROD_POSITION",
+        payload: { rodPosition: selectedPosition, rodLength: parts.Rod.state.geometry.Rod_Length},
       });
     }, [])
   
