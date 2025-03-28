@@ -11,7 +11,7 @@ const Rod = () => {
   const { state: size } = useSize();
 
   // Get Rod dimensions
-  const { Rod_Length, Rod_OD, Rod_HD, Rod_SolidHollow } = Rod.state.geometry;
+  const { Rod_Length, Rod_OD, Rod_HD, Rod_HDLength, Rod_SolidHollow, Rod_Hollow_TH} = Rod.state.geometry;
 
   // Rod Load Application Point
   const { Rod_LoadDistance } = Rod.state.geometry;
@@ -39,6 +39,8 @@ const Rod = () => {
 
   const outerRadius = Rod_OD / 2; 
   const innerRadius = outerRadius - Rod_HD;
+
+  const hollowRodRadius = Rod_OD / 2.0 - Rod_Hollow_TH;
 
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
@@ -161,19 +163,28 @@ const Rod = () => {
         <>
           {/* Rod shape */}
           <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length-pistonPostConnectionLength} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
-          {/* Hardened layer */}
-          <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-innerRadius} width={Rod_Length-pistonPostConnectionLength} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
+          {/* Hardened layer Top */}
+          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+           {/* Hardened layer Bottom */}
+           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+          {/* Draw Hollow Rod */}
+          {Rod_SolidHollow.toLowerCase().includes("hollow") && <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-hollowRodRadius} width={Rod_Length-pistonPostConnectionLength} height={hollowRodRadius * 2.0} fill="#ffffff80" opacity={display ? opacity : 0.1} shadowBlur={0} />}
         </>
         :
         <>
           {/* Rod shape */}
           <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
-          {/* Hardened layer */}
-          <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-innerRadius} width={Rod_Length} height={innerRadius * 2.0} fill={changeBrightness(color, 0.5)} shadowBlur={0} />
+          {/* Hardened layer Top */}
+          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+           {/* Hardened layer Bottom */}
+           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+          {/* Draw Hollow Rod */}
+          {Rod_SolidHollow.toLowerCase().includes("hollow") && <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-hollowRodRadius} width={Rod_Length} height={hollowRodRadius * 2.0} fill="#ffffff80" opacity={display ? opacity : 0.1} shadowBlur={0} />}
         </>
       }
+
        {/* Add Grove */}
-       <Groove  positionXOffset={positionXOffset} positionYOffset={positionYOffset} rodPosition={Rod_CurrentPosition}/>
+       <Groove  rodPosition={Rod_CurrentPosition}/>
       {/* Add Load Application Point */}
       <Circle x={-Rod_CurrentPosition - Rod_Length - Rod_LoadDistance} y = { 0.0} radius = {loadApplicationPointRadius} fill={"black"}/>
     </Group>
@@ -194,11 +205,25 @@ const Groove = ({rodPosition}) => {
   const rodOuterRadius = Rod_OD / 2.0
   
   // Additional Groove parameters
-
-  const rodGroove_distanceFromCenter = Rod_grooveMidDiameter/2.0
   console.log("Groove x pos", rodPosition)
   console.log("Groove Y pos", rodOuterRadius)
+
+//   if (isGrooveBackground) {
+//     return <>
+
+//     <Circle
+//    x={-rodPosition - Rod_groovePosition}
+//    y={-rodOuterRadius}
+//   radius={Rod_grooveWidth}
+  
+//    fill={changeBrightness(color, 0.5)}
+//    shadowBlur={0}
+//    />
+//  </>
+//   }
+   
   return <>
+   
     {/* Rod Groove */}
     {
       Rod_isGroove &&

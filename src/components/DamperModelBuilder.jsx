@@ -109,7 +109,10 @@ const DamperModelBuilder = forwardRef((props, ref) => {
           {parts.Damper.state.geometry.StrutType.toLowerCase().includes("active") &&
             <CES />}
           <ReserveTube />
-          <ThirdTube /> 
+           {/* Render Third Tube based on the selected StrutType */}
+          {parts.Damper.state.geometry.StrutType.toLowerCase().includes("active") &&
+            <ThirdTube />
+          }
           <PressureTube />
           <BasePlate />
           <Bearing />
