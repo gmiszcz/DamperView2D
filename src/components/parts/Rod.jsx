@@ -45,6 +45,8 @@ const Rod = () => {
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
+  const rodHardeningLayerColor = "#800000ff"
+
   //********  ADDITIONAL ROD GEOMETRY PARAMETERS */
 
   const pistonPostConnectionLength = 5.0
@@ -164,9 +166,9 @@ const Rod = () => {
           {/* Rod shape */}
           <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length-pistonPostConnectionLength} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
           {/* Hardened layer Top */}
-          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
            {/* Hardened layer Bottom */}
-           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
           {/* Draw Hollow Rod */}
           {Rod_SolidHollow.toLowerCase().includes("hollow") && <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-hollowRodRadius} width={Rod_Length-pistonPostConnectionLength} height={hollowRodRadius * 2.0} fill="#ffffff80" opacity={display ? opacity : 0.1} shadowBlur={0} />}
         </>
@@ -175,9 +177,9 @@ const Rod = () => {
           {/* Rod shape */}
           <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
           {/* Hardened layer Top */}
-          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
            {/* Hardened layer Bottom */}
-           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength} height={Rod_HD} fill="#800000ff" shadowBlur={0} />
+           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
           {/* Draw Hollow Rod */}
           {Rod_SolidHollow.toLowerCase().includes("hollow") && <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-hollowRodRadius} width={Rod_Length} height={hollowRodRadius * 2.0} fill="#ffffff80" opacity={display ? opacity : 0.1} shadowBlur={0} />}
         </>
