@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Line, Group, Rect } from "react-konva";
 import { usePartsContext } from "../../context/PartsContext";
 import { useSize } from "../../context/SizeContext";
-import { GLOBAL_OFFSET } from "../../utils/constants";
+import { GLOBAL_OFFSET, annotationsVerticalPositions } from "../../utils/constants";
 import { changeBrightness } from "../../utils/utils";
 
 const RodGuide = () => {
@@ -27,7 +27,7 @@ const RodGuide = () => {
   // Bearing dimensions
   const { Bearing_TH } = BRG.state.geometry;
 
-  const { color, opacity, display } = RG.state.properties;
+  const { color, opacity, display, annotationsVisible } = RG.state.properties;
 
   // Position data
   const { PT_Position } = Positions.state.geometry;
@@ -52,6 +52,30 @@ const RodGuide = () => {
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
+    //**********  DIMENSION LINES *********/
+    
+    // Update or create annotation for Piston
+        useEffect(() => {
+          const isVisible = RG.state.properties.annotationsVisible;
+          // Pressure tube LENGTH annotation
+          RG.dispatch({
+            type: "UPDATE_OR_CREATE_ANNOTATION",
+            payload: {
+              id: "RG_Height_Annotation",
+              startX: RT_Length - RG_Height - RT_TH,
+              startY: annotationsVerticalPositions.topRodGuidePos,
+              direction: "horizontal",
+              value: RG_Height,
+              label: "Rod Guide Height",
+              display: isVisible,
+              important: true,
+            },
+          });
+        }, [RT_TH, RG_Height, annotationsVisible])
+
+  
+  //**********  GEOMETRY *********/
+  
 
   function generate_rodGuide_points(outerRadius) {
     //  ROD GUIDE PARAMETERS

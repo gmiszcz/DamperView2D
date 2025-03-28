@@ -27,6 +27,8 @@ const ReserveTube = () => {
   const outerRadius = RT_OD1 / 2;
   const innerRadius = outerRadius - RT_TH;
 
+  const RT_OD1_Annotation_Pos = 30.0
+
   const positionXOffset = size.width - GLOBAL_OFFSET.x;
   const positionYOffset = size.height - GLOBAL_OFFSET.y;
 
@@ -34,10 +36,68 @@ const ReserveTube = () => {
 
   //**********  DIMENSION LINES *********/
 
+  function render_RT_swages_annotations(swagesList, isVisible) {
+
+    const swagesAnnotationPositions = {
+      0: 25.0,
+      1: 40.0,
+      2: 55.0,
+    }
+    
+    let RT_Swage_Begin = 0
+    return swagesList.map((swage, id) => {
+    
+      // Reserve Tube Swage positon  annotation
+      RT.dispatch({
+        type: "UPDATE_OR_CREATE_ANNOTATION",
+        payload: {
+          id: `RT_Swage${id+1}_Position_Annotation`,
+          startX: 0,
+          startY: swagesAnnotationPositions[id],
+          direction: "horizontal",
+          value: swage[0],
+          label: `RT Swage ${id + 1} Pos`,
+          display: isVisible,
+          important: true,
+        },
+      });
+      // Reserve Tube Swage distance  annotation
+      RT.dispatch({
+        type: "UPDATE_OR_CREATE_ANNOTATION",
+        payload: {
+          id: `RT_Swage${id+1}_Distance_Annotation`,
+          startX: swage[0],
+          startY: swagesAnnotationPositions[id],
+          direction: "horizontal",
+          value: swage[2],
+          label: `RT Swage ${id + 1} Dist`,
+          display: isVisible,
+          important: true,
+        },
+      });
+      // Reserve Tube Swage Outer Diameter annotation
+      RT.dispatch({
+        type: "UPDATE_OR_CREATE_ANNOTATION",
+        payload: {
+          id: `RT_Swage${id+1}_OD_Annotation`,
+          startX: swage[0] + 20,
+          startY: -swage[1]/2,
+          direction: "vertical",
+          value: swage[1],
+          label: `RT Swage ${id + 1} OD`,
+          display: isVisible,
+          important: true,
+        },
+      });
+      RT_Swage_Begin = swage[0] 
+    })
+  }
+
+
   // Update or create annotation for Reserve Tube
     useEffect(() => {
       const isVisible = RT.state.properties.annotationsVisible;
-      // Pressure tube LENGTH annotation
+      // Reserve Tube LENGTH annotation
       RT.dispatch({
         type: "UPDATE_OR_CREATE_ANNOTATION",
         payload: {
@@ -53,7 +113,38 @@ const ReserveTube = () => {
           important: true,
         },
       });
-    }, [RT_Length, StrutMountingMethod, annotationsVisible])
+       // Reserve Tube LENGTH annotation
+       RT.dispatch({
+        type: "UPDATE_OR_CREATE_ANNOTATION",
+        payload: {
+          id: "RT_Length_Annotation",
+          startX: 0,
+          startY: StrutMountingMethod.toLowerCase().includes("knuckle") ?
+            annotationsVerticalPositions.bottomSecondRow
+            :annotationsVerticalPositions.bottomThirdRow,
+          direction: "horizontal",
+          value: RT_Length,
+          label: "RT Length",
+          display: isVisible,
+          important: true,
+        },
+       });
+      // Reserve Tube Fist Outer Diameter annotation
+      RT.dispatch({
+        type: "UPDATE_OR_CREATE_ANNOTATION",
+        payload: {
+          id: "RT_OD1_Annotation",
+          startX: RT_OD1_Annotation_Pos,
+          startY: -RT_OD1/2.0 ,
+          direction: "vertical",
+          value: RT_OD1,
+          label: "RT OD",
+          display: isVisible,
+          important: true,
+        },
+       });
+       render_RT_swages_annotations(RT_Swage_List, isVisible)
+    }, [RT_Length, StrutMountingMethod, RT_Swage_List, annotationsVisible])
 
 
 //**********  GEOMETRY *********/

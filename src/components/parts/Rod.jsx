@@ -11,7 +11,7 @@ const Rod = () => {
   const { state: size } = useSize();
 
   // Get Rod dimensions
-  const { Rod_Length, Rod_OD, Rod_HD, Rod_HDLength, Rod_SolidHollow, Rod_Hollow_TH} = Rod.state.geometry;
+  const { Rod_Length, Rod_OD, Rod_HD, Rod_HDLength, Rod_SolidHollow, Rod_Hollow_TH, Rod_isGroove, Rod_groovePosition} = Rod.state.geometry;
 
   // Rod Load Application Point
   const { Rod_LoadDistance } = Rod.state.geometry;
@@ -118,6 +118,37 @@ const Rod = () => {
             display: isVisible,
             important: true,
           },
+         });
+        
+        // ROD GROOVE POSITION POSITION annotation
+        Rod_isGroove &&
+          Rod.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "Rod_Groove_Position_Annotation",
+            startX: Rod_CurrentPosition,
+            startY: annotationsVerticalPositions.groovePosition,
+            direction: "horizontal",
+            value: Rod_groovePosition ,
+            label: "Groove Position",
+            display: isVisible,
+            important: true,
+          },
+          });
+        
+          // ROD HARDENING LAYER LENGTH annotation
+          Rod.dispatch({
+          type: "UPDATE_OR_CREATE_ANNOTATION",
+          payload: {
+            id: "Rod_Hardening_Layer_Length_Annotation",
+            startX: Rod_CurrentPosition + Rod_Length - Rod_HDLength,
+            startY: -annotationsVerticalPositions.groovePosition,
+            direction: "horizontal",
+            value: Rod_HDLength ,
+            label: "Rod HD Length",
+            display: isVisible,
+            important: true,
+          },
         });
         
         // ROD FROM KNUCKLE POSITION annotation
@@ -166,9 +197,9 @@ const Rod = () => {
           {/* Rod shape */}
           <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-outerRadius} width={Rod_Length-pistonPostConnectionLength} height={outerRadius * 2.0} fill={color} opacity={display ? opacity : 0.1} shadowBlur={1} />
           {/* Hardened layer Top */}
-          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
+          <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={-outerRadius} width={Rod_HDLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
            {/* Hardened layer Bottom */}
-           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength - pistonPostConnectionLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
+           <Rect x={-Rod_CurrentPosition - Rod_HDLength - (Rod_Length - Rod_HDLength) - Strut_Position_Offset} y={outerRadius - Rod_HD} width={Rod_HDLength} height={Rod_HD} fill={rodHardeningLayerColor} shadowBlur={0} />
           {/* Draw Hollow Rod */}
           {Rod_SolidHollow.toLowerCase().includes("hollow") && <Rect x={-Rod_CurrentPosition - Rod_Length - Strut_Position_Offset} y={-hollowRodRadius} width={Rod_Length-pistonPostConnectionLength} height={hollowRodRadius * 2.0} fill="#ffffff80" opacity={display ? opacity : 0.1} shadowBlur={0} />}
         </>

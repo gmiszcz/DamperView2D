@@ -64,6 +64,8 @@ export const genericAnnotation = {
 
 export const annotationsVerticalPositions = {
   mid: 0.0,
+  groovePosition: 20.0,
+  topRodGuidePos: 25.0,
   topFirstRow: 40.0,
   topSecondRow: 55.0,
   topThirdRow: 70.0,
